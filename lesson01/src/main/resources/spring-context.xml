@@ -8,9 +8,11 @@
     <bean id="applicationContextProvder"  class="ru.otus.spring01.contextprovider.ApplicationContextProvider" />
 
     <bean id="qlFillerCSV" class="ru.otus.spring01.domain.QuestionListFillerClassPathCSV" />
+    <bean id="qlFillerCSVUC" class="ru.otus.spring01.domain.QuestionListFillerClassPathCSVUppercase" />
     
     <bean id="questionList" class="ru.otus.spring01.domain.QuestionList">
-        <constructor-arg index="0" name="filler" ref="qlFillerCSV" />
+        <!-- <constructor-arg index="0" name="filler" ref="qlFillerCSV" /> -->
+        <constructor-arg index="0" name="filler" ref="qlFillerCSVUC" />
     </bean>
     
 
