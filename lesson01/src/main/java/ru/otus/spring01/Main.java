@@ -46,17 +46,19 @@ public class Main {
         for (String line: lines) {
             ql.addQuestion(new Question(line));
         }
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        System.out.println("Введите Ваши имя и фамилию:");
+        String userName = br.readLine();
         for (int i = 0; i < ql.getQuestionCount(); i++){
             Question q = ql.getQuestion(i);
             System.out.println("Вопрос: " + q.getQuestionText());
             System.out.println("Варианты ответов: " + q.getPossibleAnswersForUserDisplay());
             //System.out.println("Right answer is: " + q.getRigthAnswer() + " (" + q.getRightAnswerIndex() + ")");
-            BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
             System.out.println("Введите Ваш ответ:");
             String userInput = br.readLine();
             q.setUserEnteredAnswerIndex(userInput);
         }
-        System.out.println("Количество корректных ответов: " + ql.getNumberOfCorrectAnswers() + " из " + ql.getQuestionCount());
+        System.out.println(userName + ", ваше количество корректных ответов: " + ql.getNumberOfCorrectAnswers() + " из " + ql.getQuestionCount());
         for (int i = 0; i < ql.getQuestionCount(); i++){
             Question q = ql.getQuestion(i);
             System.out.println(q.getQuestionText() + " вы ответили " + (q.getRightAnswerIndex() == q.getUserEnteredAnswerIndex() ? "ВЕРНО" : "НЕВЕРНО"));
