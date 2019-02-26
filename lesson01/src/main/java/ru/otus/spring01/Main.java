@@ -12,6 +12,7 @@ import org.springframework.core.io.Resource;
 import ru.otus.spring01.domain.Person;
 import ru.otus.spring01.domain.Question;
 import ru.otus.spring01.domain.QuestionList;
+import ru.otus.spring01.domain.QuestionListFillerClassPathCSV;
 import ru.otus.spring01.service.IPersonService;
 
 
@@ -43,12 +44,8 @@ public class Main {
         Resource r = context.getResource("classpath:my.csv");
         InputStream is = r.getInputStream();
         String s = fastConvertStreamToString(is); // works too
-        QuestionList ql = context.getBean(QuestionList.class);
-        // заполнение объекта QuestionList вручную
-        String[] lines = s.split("\r?\n");
-        for (String line: lines) {
-            ql.addQuestion(new Question(line));
-        }
+        //QuestionList ql = context.getBean(QuestionList.class); // works
+        QuestionList ql = new QuestionList(new QuestionListFillerClassPathCSV());
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         System.out.println("Введите Ваши имя и фамилию:");
         String userName = br.readLine();

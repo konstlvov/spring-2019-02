@@ -11,6 +11,8 @@ import java.util.ArrayList;
  *
  * @author lvov_k
  */
+
+
 public class QuestionList {
 
     private ArrayList<Question> ql;
@@ -18,6 +20,12 @@ public class QuestionList {
     public QuestionList() {
         ql = new ArrayList<>();
     }
+    
+    public QuestionList(IQuestionListFiller filler) {
+        ql = new ArrayList<>();
+        filler.fillQuestionList(this);
+    }
+
     
     public void addQuestion(Question q) {
         ql.add(q);
