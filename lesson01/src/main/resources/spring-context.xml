@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+    
+    <!-- this bean does not work, dont know why -->
+    <bean id="applicationContextProvder"  class="ru.otus.spring01.contextprovider.ApplicationContextProvider" />
+
+    <bean id="qlFillerCSV" class="ru.otus.spring01.domain.QuestionListFillerClassPathCSV" />
+    <bean id="qlFillerCSVUC" class="ru.otus.spring01.domain.QuestionListFillerClassPathCSVUppercase" />
+    
+    <bean id="questionList" class="ru.otus.spring01.domain.QuestionList">
+        <!-- <constructor-arg index="0" name="filler" ref="qlFillerCSV" /> -->
+        <constructor-arg index="0" name="filler" ref="qlFillerCSVUC" />
+    </bean>
+    
+
+</beans>
