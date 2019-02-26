@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.core.io.Resource;
+import ru.otus.spring01.contextprovider.ApplicationContextProvider;
 import ru.otus.spring01.domain.Person;
 import ru.otus.spring01.domain.Question;
 import ru.otus.spring01.domain.QuestionList;
@@ -37,15 +38,13 @@ public class Main {
     public static void main(String[] args) throws IOException {
         //ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("/spring-context.xml");
         ApplicationContext context = new ClassPathXmlApplicationContext("/spring-context.xml");
-        IPersonService service = context.getBean(IPersonService.class);
-        Person ivan = service.getByName("Ivan");
-        System.out.println("name: " + ivan.getName() + " age: " + ivan.getAge());
+        //ApplicationContext context = ApplicationContextProvider.getApplicationContext();
         //System.out.println(context.getResource("classpath:my.csv").exists()); // works as expected
         Resource r = context.getResource("classpath:my.csv");
         InputStream is = r.getInputStream();
         String s = fastConvertStreamToString(is); // works too
-        //QuestionList ql = context.getBean(QuestionList.class); // works
-        QuestionList ql = new QuestionList(new QuestionListFillerClassPathCSV());
+        QuestionList ql = context.getBean(QuestionList.class); // UPD. now works! not works, and I don't know why
+        //QuestionList ql = new QuestionList(new QuestionListFillerClassPathCSV()); // works
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         System.out.println("Введите Ваши имя и фамилию:");
         String userName = br.readLine();

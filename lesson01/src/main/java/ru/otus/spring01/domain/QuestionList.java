@@ -5,6 +5,7 @@
  */
 package ru.otus.spring01.domain;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -17,11 +18,13 @@ public class QuestionList {
 
     private ArrayList<Question> ql;
 
-    public QuestionList() {
-        ql = new ArrayList<>();
-    }
+    //public QuestionList() {
+    //    ql = new ArrayList<>();
+    //}
     
-    public QuestionList(IQuestionListFiller filler) {
+    // IQuestionListFiller - correct case
+    // QuestionListFillerClassPathCSV - testing debug case
+    public QuestionList(IQuestionListFiller filler) throws IOException {
         ql = new ArrayList<>();
         filler.fillQuestionList(this);
     }
