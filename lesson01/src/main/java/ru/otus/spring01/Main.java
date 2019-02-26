@@ -10,7 +10,6 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.core.io.Resource;
 import ru.otus.spring01.contextprovider.ApplicationContextProvider;
-import ru.otus.spring01.domain.Person;
 import ru.otus.spring01.domain.Question;
 import ru.otus.spring01.domain.QuestionList;
 import ru.otus.spring01.domain.QuestionListFillerClassPathCSV;
