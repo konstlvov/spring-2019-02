@@ -38,13 +38,18 @@ public class Main {
     public static void main(String[] args) throws IOException {
         //ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("/spring-context.xml");
         ApplicationContext context = new ClassPathXmlApplicationContext("/spring-context.xml");
+        //
+        // this does not work for unknown reason:
         //ApplicationContext context = ApplicationContextProvider.getApplicationContext();
+        //
+        //
         //System.out.println(context.getResource("classpath:my.csv").exists()); // works as expected
-        Resource r = context.getResource("classpath:my.csv");
-        InputStream is = r.getInputStream();
-        String s = fastConvertStreamToString(is); // works too
+        //
+        // creating QuestionList object as bean...
         QuestionList ql = context.getBean(QuestionList.class); // UPD. now works! not works, and I don't know why
-        //QuestionList ql = new QuestionList(new QuestionListFillerClassPathCSV()); // works
+        //
+        // this is how we can create QuestionList object manually:
+        // QuestionList ql = new QuestionList(new QuestionListFillerClassPathCSV()); // works
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         System.out.println("Введите Ваши имя и фамилию:");
         String userName = br.readLine();
