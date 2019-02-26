@@ -3,16 +3,10 @@
        xmlns="http://www.springframework.org/schema/beans"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd">
-
-    <bean id="personDao" class="ru.otus.spring01.dao.PersonDaoSimple"/>
     
     <!-- this bean does not work, dont know why -->
     <bean id="applicationContextProvder"  class="ru.otus.spring01.contextprovider.ApplicationContextProvider" />
 
-    <bean id="personService" class="ru.otus.spring01.service.PersonServiceImpl">
-        <constructor-arg name="dao" ref="personDao"/>
-    </bean>
-    
     <bean id="qlFillerCSV" class="ru.otus.spring01.domain.QuestionListFillerClassPathCSV" />
     
     <bean id="questionList" class="ru.otus.spring01.domain.QuestionList">

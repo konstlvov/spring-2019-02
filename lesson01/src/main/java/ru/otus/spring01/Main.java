@@ -14,7 +14,6 @@ import ru.otus.spring01.domain.Person;
 import ru.otus.spring01.domain.Question;
 import ru.otus.spring01.domain.QuestionList;
 import ru.otus.spring01.domain.QuestionListFillerClassPathCSV;
-import ru.otus.spring01.service.IPersonService;
 
 
 public class Main {
