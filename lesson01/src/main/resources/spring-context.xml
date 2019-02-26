@@ -10,5 +10,7 @@
     <bean id="personService" class="ru.otus.spring01.service.PersonServiceImpl">
         <constructor-arg name="dao" ref="personDao"/>
     </bean>
+    
+    <bean id="questionList" class="ru.otus.spring01.domain.QuestionList" />
 
 </beans>

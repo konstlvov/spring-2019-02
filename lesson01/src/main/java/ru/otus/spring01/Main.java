@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.core.io.Resource;
 import ru.otus.spring01.domain.Person;
@@ -33,7 +34,8 @@ public class Main {
     }
     
     public static void main(String[] args) throws IOException {
-        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("/spring-context.xml");
+        //ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("/spring-context.xml");
+        ApplicationContext context = new ClassPathXmlApplicationContext("/spring-context.xml");
         IPersonService service = context.getBean(IPersonService.class);
         Person ivan = service.getByName("Ivan");
         System.out.println("name: " + ivan.getName() + " age: " + ivan.getAge());
@@ -41,7 +43,8 @@ public class Main {
         Resource r = context.getResource("classpath:my.csv");
         InputStream is = r.getInputStream();
         String s = fastConvertStreamToString(is); // works too
-        QuestionList ql = new QuestionList();
+        QuestionList ql = context.getBean(QuestionList.class);
+        // заполнение объекта QuestionList вручную
         String[] lines = s.split("\r?\n");
         for (String line: lines) {
             ql.addQuestion(new Question(line));
