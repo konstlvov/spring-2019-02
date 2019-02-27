@@ -34,12 +34,7 @@ public class Main {
     }
     
     public static void main(String[] args) throws IOException {
-        //ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("/spring-context.xml");
         ApplicationContext context = new ClassPathXmlApplicationContext("/spring-context.xml");
-        //
-        // this does not work for unknown reason:
-        //ApplicationContext context = ApplicationContextProvider.getApplicationContext();
-        //
         //
         //System.out.println(context.getResource("classpath:my.csv").exists()); // works as expected
         //
@@ -66,6 +61,5 @@ public class Main {
             System.out.println(q.getQuestionText() + " вы ответили " + (q.getRightAnswerIndex() == q.getUserEnteredAnswerIndex() ? "ВЕРНО" : "НЕВЕРНО"));
             System.out.println("Правильный ответ " + q.getRigthAnswer() + ", вы ответили " + q.getUserEnteredAnswer());
         }
-        
     }
 }
