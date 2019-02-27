@@ -45,8 +45,7 @@ public class QuestionList implements Iterable<Question> {
     
     public int getNumberOfCorrectAnswers() {
         int r = 0;
-        for (int i = 0; i < ql.size(); i++){
-            Question q = ql.get(i);
+        for (Question q: this.ql){
             if (q.getRightAnswerIndex() == q.getUserEnteredAnswerIndex()) {
                 r++;
             }
@@ -56,8 +55,7 @@ public class QuestionList implements Iterable<Question> {
     
     public int getNumberOfIncorrectAnswers() {
         int r = 0;
-        for (int i = 0; i < ql.size(); i++){
-            Question q = ql.get(i);
+        for (Question q: this.ql){
             if (q.getRightAnswerIndex() != q.getUserEnteredAnswerIndex()) {
                 r++;
             }
