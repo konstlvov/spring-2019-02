@@ -16,6 +16,8 @@ import ru.otus.spring01.domain.QuestionListFillerClassPathCSV;
 
 
 public class Main {
+    
+    private ApplicationContext context;
 
     public static String convertStreamToStringWithScanner(java.io.InputStream is) {
       java.util.Scanner s = new java.util.Scanner(is).useDelimiter("\\A");
@@ -32,9 +34,12 @@ public class Main {
             return result.toString("UTF-8");
         }        
     }
+
+    public Main(ApplicationContext context) {
+        this.context = context;
+    }
     
-    public static void main(String[] args) throws IOException {
-        ApplicationContext context = new ClassPathXmlApplicationContext("/spring-context.xml");
+    public void startDialogWithUser() throws IOException {
         // creating QuestionList object as bean...
         QuestionList ql = context.getBean(QuestionList.class); // UPD. now works! It did not work because
         // I tried to call ClassPathXmlApplicationContext one more time in bean constructor,
@@ -56,5 +61,11 @@ public class Main {
             System.out.println(q.getQuestionText() + " вы ответили " + (q.getRightAnswerIndex() == q.getUserEnteredAnswerIndex() ? "ВЕРНО" : "НЕВЕРНО"));
             System.out.println("Правильный ответ " + q.getRigthAnswer() + ", вы ответили " + q.getUserEnteredAnswer());
         }
+    }
+    
+    public static void main(String[] args) throws IOException {
+        ApplicationContext context = new ClassPathXmlApplicationContext("/spring-context.xml");
+        Main m = new Main(context);
+        m.startDialogWithUser();
     }
 }

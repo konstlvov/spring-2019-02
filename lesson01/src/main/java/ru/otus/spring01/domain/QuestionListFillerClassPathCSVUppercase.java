@@ -24,7 +24,6 @@ public class QuestionListFillerClassPathCSVUppercase implements IQuestionListFil
         String csvFileContent = fastConvertStreamToString(is);
         String[] lines = csvFileContent.split("\r?\n");
         for (String line: lines) {
-            //ql.addQuestion(new Question(line));
             Question q = new Question();
             String[] arrAnswers = line.split(",");
             String questionText = arrAnswers.length > 0? arrAnswers[0] : "";
