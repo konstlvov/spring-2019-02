@@ -35,21 +35,17 @@ public class Main {
     
     public static void main(String[] args) throws IOException {
         ApplicationContext context = new ClassPathXmlApplicationContext("/spring-context.xml");
-        //
-        //System.out.println(context.getResource("classpath:my.csv").exists()); // works as expected
-        //
         // creating QuestionList object as bean...
-        QuestionList ql = context.getBean(QuestionList.class); // UPD. now works! not works, and I don't know why
-        //
-        // this is how we can create QuestionList object manually:
-        // QuestionList ql = new QuestionList(new QuestionListFillerClassPathCSV()); // works
+        QuestionList ql = context.getBean(QuestionList.class); // UPD. now works! It did not work because
+        // I tried to call ClassPathXmlApplicationContext one more time in bean constructor,
+        // and it caused circular dependency and NoClassDefFoundError Spring exception
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         System.out.println("Введите Ваши имя и фамилию:");
         String userName = br.readLine();
+        System.out.println(ql.getQuestionCount());
         for (Question q: ql) {
             System.out.println("Вопрос: " + q.getQuestionText());
             System.out.println("Варианты ответов: " + q.getPossibleAnswersForUserDisplay());
-            //System.out.println("Right answer is: " + q.getRigthAnswer() + " (" + q.getRightAnswerIndex() + ")");
             System.out.println("Введите Ваш ответ:");
             String userInput = br.readLine();
             q.setUserEnteredAnswerIndex(userInput);
