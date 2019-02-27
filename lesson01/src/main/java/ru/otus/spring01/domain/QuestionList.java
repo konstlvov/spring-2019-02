@@ -7,6 +7,7 @@ package ru.otus.spring01.domain;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  *
@@ -14,7 +15,7 @@ import java.util.ArrayList;
  */
 
 
-public class QuestionList {
+public class QuestionList implements Iterable<Question> {
 
     private ArrayList<Question> ql;
 
@@ -62,6 +63,11 @@ public class QuestionList {
             }
         }
         return r;
+    }
+
+    @Override
+    public Iterator<Question> iterator() {
+        return ql.iterator();
     }
     
 }

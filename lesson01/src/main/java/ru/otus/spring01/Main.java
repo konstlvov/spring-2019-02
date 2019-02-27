@@ -46,8 +46,7 @@ public class Main {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         System.out.println("Введите Ваши имя и фамилию:");
         String userName = br.readLine();
-        for (int i = 0; i < ql.getQuestionCount(); i++){
-            Question q = ql.getQuestion(i);
+        for (Question q: ql) {
             System.out.println("Вопрос: " + q.getQuestionText());
             System.out.println("Варианты ответов: " + q.getPossibleAnswersForUserDisplay());
             //System.out.println("Right answer is: " + q.getRigthAnswer() + " (" + q.getRightAnswerIndex() + ")");
