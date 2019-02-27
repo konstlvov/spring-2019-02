@@ -15,6 +15,8 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  * @author lvov_k
  * 
  * UPD. Заработало САМО ПОЧЕМУ-ТО. ЭТОТ КЛАСС ПОЧЕМУ-ТО НЕ РАБОТАЛ, и я не понимаю почему
+ * UPD2. Выяснил: чтобы спринг вызвал тут setApplicationContext, надо для начала вызвать new ClassPathXmlApplicationContext прямо в main
+ * То есть правильная практика в том, чтобы вызывать new ClassPathXmlApplicationContext прямо в начале функции main
  */
 public class ApplicationContextProvider  implements ApplicationContextAware {
     private ApplicationContextProvider() {}
