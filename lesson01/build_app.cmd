@@ -1,2 +1,1 @@
-rmdir /S /Q target
-mvn package
+mvn clean package
