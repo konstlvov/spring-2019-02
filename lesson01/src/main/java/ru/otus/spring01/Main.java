@@ -16,6 +16,8 @@ import ru.otus.spring01.domain.QuestionListFillerClassPathCSV;
 
 
 public class Main {
+    
+    private ApplicationContext context;
 
     public static String convertStreamToStringWithScanner(java.io.InputStream is) {
       java.util.Scanner s = new java.util.Scanner(is).useDelimiter("\\A");
@@ -32,30 +34,23 @@ public class Main {
             return result.toString("UTF-8");
         }        
     }
+
+    public Main(ApplicationContext context) {
+        this.context = context;
+    }
     
-    public static void main(String[] args) throws IOException {
-        //ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("/spring-context.xml");
-        ApplicationContext context = new ClassPathXmlApplicationContext("/spring-context.xml");
-        //
-        // this does not work for unknown reason:
-        //ApplicationContext context = ApplicationContextProvider.getApplicationContext();
-        //
-        //
-        //System.out.println(context.getResource("classpath:my.csv").exists()); // works as expected
-        //
+    public void startDialogWithUser() throws IOException {
         // creating QuestionList object as bean...
-        QuestionList ql = context.getBean(QuestionList.class); // UPD. now works! not works, and I don't know why
-        //
-        // this is how we can create QuestionList object manually:
-        // QuestionList ql = new QuestionList(new QuestionListFillerClassPathCSV()); // works
+        QuestionList ql = context.getBean(QuestionList.class); // UPD. now works! It did not work because
+        // I tried to call ClassPathXmlApplicationContext one more time in bean constructor,
+        // and it caused circular dependency and NoClassDefFoundError Spring exception
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         System.out.println("Введите Ваши имя и фамилию:");
         String userName = br.readLine();
-        for (int i = 0; i < ql.getQuestionCount(); i++){
-            Question q = ql.getQuestion(i);
+        System.out.println(ql.getQuestionCount());
+        for (Question q: ql) {
             System.out.println("Вопрос: " + q.getQuestionText());
             System.out.println("Варианты ответов: " + q.getPossibleAnswersForUserDisplay());
-            //System.out.println("Right answer is: " + q.getRigthAnswer() + " (" + q.getRightAnswerIndex() + ")");
             System.out.println("Введите Ваш ответ:");
             String userInput = br.readLine();
             q.setUserEnteredAnswerIndex(userInput);
@@ -66,6 +61,11 @@ public class Main {
             System.out.println(q.getQuestionText() + " вы ответили " + (q.getRightAnswerIndex() == q.getUserEnteredAnswerIndex() ? "ВЕРНО" : "НЕВЕРНО"));
             System.out.println("Правильный ответ " + q.getRigthAnswer() + ", вы ответили " + q.getUserEnteredAnswer());
         }
-        
+    }
+    
+    public static void main(String[] args) throws IOException {
+        ApplicationContext context = new ClassPathXmlApplicationContext("/spring-context.xml");
+        Main m = new Main(context);
+        m.startDialogWithUser();
     }
 }

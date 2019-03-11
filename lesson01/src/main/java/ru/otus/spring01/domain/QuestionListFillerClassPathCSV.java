@@ -29,10 +29,23 @@ public class QuestionListFillerClassPathCSV  implements IQuestionListFiller {
     @Override
     public void fillQuestionList(QuestionList ql) throws IOException {
         InputStream is = QuestionListFillerClassPathCSV.class.getResourceAsStream("/my.csv");
-        String s = fastConvertStreamToString(is);
-        String[] lines = s.split("\r?\n");
+        String csvFileContent = fastConvertStreamToString(is);
+        String[] lines = csvFileContent.split("\r?\n");
         for (String line: lines) {
-            ql.addQuestion(new Question(line));
+            Question q = new Question();
+            String[] arrAnswers = line.split(",");
+            String questionText = arrAnswers.length > 0? arrAnswers[0] : "";
+            q.setQuestionText(questionText);
+            for (int i = 1; i < arrAnswers.length; i++) {
+                String ans = arrAnswers[i];
+                if (ans.charAt(0) == '_') { 
+                    q.addPossibleAnswer(ans.substring(1), true); // this is the right answer
+                }
+                else {
+                    q.addPossibleAnswer(ans, false);
+                }
+            }
+            ql.addQuestion(q);
         }
     }
 }

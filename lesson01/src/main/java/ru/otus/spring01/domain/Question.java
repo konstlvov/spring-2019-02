@@ -17,25 +17,20 @@ public class Question {
     private int rightAnswerIndex;
     private int userEnteredIndex;
     
-    public Question(String csvAnswers) {
+    public Question() {
         this.answers = new ArrayList<>();
-        
         this.rightAnswerIndex = -1;
         this.userEnteredIndex = -1;
-        
-        String[] arrAnswers = csvAnswers.split(",");
-        
-        this.questionText = arrAnswers.length > 0? arrAnswers[0] : "";
-        
-        for (int i = 1; i < arrAnswers.length; i++) {
-            String s = arrAnswers[i];
-            if (s.charAt(0) == '_') { // this is right answer
-                this.rightAnswerIndex = i - 1;
-                answers.add(s.substring(1));
-            }
-            else {
-                answers.add(s);
-            }
+    }
+    
+    public void setQuestionText(String questionText) {
+        this.questionText = questionText;
+    }
+    
+    public void addPossibleAnswer(String answer, boolean isCorrect) {
+        answers.add(answer);
+        if (isCorrect) {
+            this.rightAnswerIndex = answers.size() - 1; // zero-based
         }
     }
     

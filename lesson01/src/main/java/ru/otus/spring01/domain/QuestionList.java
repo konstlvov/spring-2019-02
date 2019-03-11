@@ -7,6 +7,7 @@ package ru.otus.spring01.domain;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  *
@@ -14,7 +15,7 @@ import java.util.ArrayList;
  */
 
 
-public class QuestionList {
+public class QuestionList implements Iterable<Question> {
 
     private ArrayList<Question> ql;
 
@@ -44,8 +45,7 @@ public class QuestionList {
     
     public int getNumberOfCorrectAnswers() {
         int r = 0;
-        for (int i = 0; i < ql.size(); i++){
-            Question q = ql.get(i);
+        for (Question q: this.ql){
             if (q.getRightAnswerIndex() == q.getUserEnteredAnswerIndex()) {
                 r++;
             }
@@ -55,13 +55,17 @@ public class QuestionList {
     
     public int getNumberOfIncorrectAnswers() {
         int r = 0;
-        for (int i = 0; i < ql.size(); i++){
-            Question q = ql.get(i);
+        for (Question q: this.ql){
             if (q.getRightAnswerIndex() != q.getUserEnteredAnswerIndex()) {
                 r++;
             }
         }
         return r;
+    }
+
+    @Override
+    public Iterator<Question> iterator() {
+        return ql.iterator();
     }
     
 }
