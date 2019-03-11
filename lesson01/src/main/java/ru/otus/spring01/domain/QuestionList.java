@@ -8,13 +8,14 @@ package ru.otus.spring01.domain;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
+import org.springframework.stereotype.Service;
 
 /**
  *
  * @author lvov_k
  */
 
-
+@Service
 public class QuestionList implements Iterable<Question> {
 
     private ArrayList<Question> ql;

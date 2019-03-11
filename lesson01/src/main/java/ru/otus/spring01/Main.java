@@ -7,6 +7,9 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.core.io.Resource;
 import ru.otus.spring01.contextprovider.ApplicationContextProvider;
@@ -14,7 +17,8 @@ import ru.otus.spring01.domain.Question;
 import ru.otus.spring01.domain.QuestionList;
 import ru.otus.spring01.domain.QuestionListFillerClassPathCSV;
 
-
+@Configuration
+@ComponentScan
 public class Main {
     
     private ApplicationContext context;
@@ -64,7 +68,7 @@ public class Main {
     }
     
     public static void main(String[] args) throws IOException {
-        ApplicationContext context = new ClassPathXmlApplicationContext("/spring-context.xml");
+        ApplicationContext context = new AnnotationConfigApplicationContext(Main.class);
         Main m = new Main(context);
         m.startDialogWithUser();
     }

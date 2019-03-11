@@ -7,12 +7,24 @@ package ru.otus.spring01.domain;
 
 import java.io.IOException;
 import java.io.InputStream;
+import org.springframework.stereotype.Service;
 import static ru.otus.spring01.Main.fastConvertStreamToString;
 
 /**
  *
  * @author lvov_k
  */
+// Поскольку хотим использовать QuestionListFillerClassPathCSV, а не QuestionListFillerClassPathCSVUppercase,
+// то аннотацию @Service на этом классе комментируем. Если оставить открытыми аннотацию @Service и на QuestionListFillerClassPathCSV, и на 
+// QuestionListFillerClassPathCSVUppercase (то есть одновременно на двух реализациях интерфейса IQuestionListFiller),
+// то спринг выдаст ошибку:
+// WARNING: Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'questionList' defined in file [C:\Users\lvov_k\spring\otus\spring-2019-02\lesson01\target\classes\ru\otus\spring01\domain\QuestionList.class]: Unsatisfied dependency expressed through constructor parameter 0; nested exception is org.springframework.beans.factory.NoUniqueBeanDefinitionException: No qualifying bean of type 'ru.otus.spring01.domain.IQuestionListFiller' available: expected single matching bean but found 2: questionListFillerClassPathCSV,questionListFillerClassPathCSVUppercase
+// Exception in thread "main" org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'questionList' defined in file [C:\Users\lvov_k\spring\otus\spring-2019-02\lesson01\target\classes\ru\otus\spring01\domain\QuestionList.class]: Unsatisfied dependency expressed through constructor parameter 0; nested exception is org.springframework.beans.factory.NoUniqueBeanDefinitionException: No qualifying bean of type 'ru.otus.spring01.domain.IQuestionListFiller' available: expected single matching bean but found 2: questionListFillerClassPathCSV,questionListFillerClassPathCSVUppercase
+//
+// Соответственно, если надо переключиться на использование реализации QuestionListFillerClassPathCSVUppercase, то здесь аннотацию @Service раскомментируем,
+// а в QuestionListFillerClassPathCSV - наоборот комментируем.
+
+//@Service
 public class QuestionListFillerClassPathCSVUppercase implements IQuestionListFiller {
     public QuestionListFillerClassPathCSVUppercase() {
         // empty constructor
