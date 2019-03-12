@@ -8,6 +8,7 @@ package ru.otus.spring01.domain;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 /**
@@ -17,6 +18,8 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class QuestionList implements Iterable<Question> {
+    @Value("${name}") public String defaultUserName;
+    @Value("${surname}") public String defaultUserSurname;
 
     private ArrayList<Question> ql;
 

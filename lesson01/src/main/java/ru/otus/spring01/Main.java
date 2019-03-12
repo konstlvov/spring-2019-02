@@ -6,10 +6,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.core.io.Resource;
 import ru.otus.spring01.contextprovider.ApplicationContextProvider;
@@ -18,6 +20,7 @@ import ru.otus.spring01.domain.QuestionList;
 import ru.otus.spring01.domain.QuestionListFillerClassPathCSV;
 
 @Configuration
+@PropertySource("classpath:application.properties")
 @ComponentScan
 public class Main {
     
@@ -44,13 +47,18 @@ public class Main {
     }
     
     public void startDialogWithUser() throws IOException {
+        
         // creating QuestionList object as bean...
         QuestionList ql = context.getBean(QuestionList.class); // UPD. now works! It did not work because
         // I tried to call ClassPathXmlApplicationContext one more time in bean constructor,
         // and it caused circular dependency and NoClassDefFoundError Spring exception
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        System.out.println("Введите Ваши имя и фамилию:");
-        String userName = br.readLine();
+        System.out.println("Введите Ваши имя и фамилию или нажмите ВВОД для использования имени по умолчанию ("
+          + ql.defaultUserName + " " + ql.defaultUserSurname +"):");
+        String  userName = br.readLine();
+        if (userName.isEmpty()) {
+            userName = ql.defaultUserName + " " + ql.defaultUserSurname;
+        }
         System.out.println(ql.getQuestionCount());
         for (Question q: ql) {
             System.out.println("Вопрос: " + q.getQuestionText());
