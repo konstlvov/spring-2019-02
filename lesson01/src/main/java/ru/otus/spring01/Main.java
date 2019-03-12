@@ -53,13 +53,12 @@ public class Main {
         // I tried to call ClassPathXmlApplicationContext one more time in bean constructor,
         // and it caused circular dependency and NoClassDefFoundError Spring exception
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        String defaultName = ql.defaultUserName + " " + ql.defaultUserSurname;
         System.out.println("Введите Ваши имя и фамилию или нажмите ВВОД для использования имени по умолчанию ("
-          + ql.defaultUserName + " " + ql.defaultUserSurname +"):");
+          + defaultName +"):");
         String  userName = br.readLine();
-        if (userName.isEmpty()) {
-            userName = ql.defaultUserName + " " + ql.defaultUserSurname;
-        }
-        System.out.println(ql.getQuestionCount());
+        userName = userName.isEmpty() ? defaultName : userName;
+        System.out.println(userName + ", Вам предлагается ответить на следующее количество вопросов: " + ql.getQuestionCount());
         for (Question q: ql) {
             System.out.println("Вопрос: " + q.getQuestionText());
             System.out.println("Варианты ответов: " + q.getPossibleAnswersForUserDisplay());
