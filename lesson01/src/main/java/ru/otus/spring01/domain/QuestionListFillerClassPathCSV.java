@@ -31,9 +31,8 @@ public class QuestionListFillerClassPathCSV  implements IQuestionListFiller {
     @Override
     public void fillQuestionList(QuestionList ql) throws IOException {
         ApplicationContext ctx = ApplicationContextProvider.getApplicationContext();
-        // System.out.println("fillQuestionList, application locale is " + ctx.getEnvironment().getProperty("locale")); // works
-        // todo: read questions from localized bundle
-        InputStream is = QuestionListFillerClassPathCSV.class.getResourceAsStream("/my.csv");
+        String loc = ctx.getEnvironment().getProperty("locale");
+        InputStream is = QuestionListFillerClassPathCSV.class.getResourceAsStream("/questions_" + loc + ".csv");
         String csvFileContent = fastConvertStreamToString(is);
         String[] lines = csvFileContent.split("\r?\n");
         for (String line: lines) {
