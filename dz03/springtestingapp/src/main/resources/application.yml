@@ -1,0 +1,8 @@
+spring:
+    profiles: test
+name: test-YAML
+ 
+---
+spring:
+    profiles: prod
+name: prod-YAML

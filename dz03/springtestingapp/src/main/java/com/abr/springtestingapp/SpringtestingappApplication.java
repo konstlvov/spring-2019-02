@@ -1,6 +1,7 @@
 package com.abr.springtestingapp;
 
 import java.util.Arrays;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -13,6 +14,9 @@ public class SpringtestingappApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(SpringtestingappApplication.class, args);
 	}
+        
+    @Autowired
+    private YAMLConfig myConfig;
     
     @Bean
     public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
@@ -23,6 +27,7 @@ public class SpringtestingappApplication {
             for (String beanName: beanNames) {
                 System.out.println(beanName);
             }
+            System.out.println("The \"name\" property in application.yml is: " + myConfig.getName());
         };
     }        
 
