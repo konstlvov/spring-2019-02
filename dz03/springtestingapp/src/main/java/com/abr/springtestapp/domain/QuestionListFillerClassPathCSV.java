@@ -42,8 +42,8 @@ public class QuestionListFillerClassPathCSV  implements IQuestionListFiller {
             q.setQuestionText(questionText);
             for (int i = 1; i < arrAnswers.length; i++) {
                 String ans = arrAnswers[i];
-                if (ans.charAt(0) == '_') { 
-                    q.addPossibleAnswer(ans.substring(1), true); // this is the right answer
+                if (ans.charAt(0) == '_') { // underscore at the beginning of the string means this is the right answer
+                    q.addPossibleAnswer(ans.substring(1), true);
                 }
                 else {
                     q.addPossibleAnswer(ans, false);
