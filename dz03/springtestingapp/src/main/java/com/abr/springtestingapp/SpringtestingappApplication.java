@@ -18,6 +18,11 @@ public class SpringtestingappApplication {
     @Autowired
     private YAMLConfig myConfig;
     
+    
+//    private void sayHello() {
+//        System.out.println("hello, context is " + ApplicationContextProvider.getApplicationContext()); // works
+//    }
+
     @Bean
     public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
         return args -> {
@@ -28,6 +33,9 @@ public class SpringtestingappApplication {
                 System.out.println(beanName);
             }
             System.out.println("The \"name\" property in application.yml is: " + myConfig.getName());
+            // works also:
+            //SpringtestingappApplication app = new SpringtestingappApplication();
+            //app.sayHello();
         };
     }        
 
