@@ -1,8 +1,14 @@
 spring:
     profiles: test
-name: test-YAML
+profilename: test-YAML
+name: Ivan
+surname: Ivanov
+#locale: ru_RU
+locale: en_US
  
 ---
 spring:
     profiles: prod
-name: prod-YAML
+profilename: prod-YAML
+name: Petr
+surname: Petrov

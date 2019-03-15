@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.abr.springtestapp.domain;
+package com.abr.springtestingapp.domain;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

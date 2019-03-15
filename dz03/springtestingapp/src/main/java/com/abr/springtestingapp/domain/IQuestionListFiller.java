@@ -1,4 +1,4 @@
-package com.abr.springtestapp.domain;
+package com.abr.springtestingapp.domain;
 
 import java.io.IOException;
 

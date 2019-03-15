@@ -1,14 +1,24 @@
 package com.abr.springtestingapp;
 
+import com.abr.springtestingapp.domain.QuestionList;
+import com.abr.springtestingapp.domain.Question;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Arrays;
+import java.util.Locale;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 
 @SpringBootApplication
+@PropertySource("classpath:application.properties")
 public class SpringtestingappApplication {
 
 	public static void main(String[] args) {
@@ -18,11 +28,60 @@ public class SpringtestingappApplication {
     @Autowired
     private YAMLConfig myConfig;
     
+    private ApplicationContext context;
+    private Locale locale;
+    public SpringtestingappApplication(ApplicationContext context) {
+        this.context = context;
+    }
     
-//    private void sayHello() {
-//        System.out.println("hello, context is " + ApplicationContextProvider.getApplicationContext()); // works
-//    }
+    public void setLocale(Locale locale) {
+        this.locale = locale;
+    }
+    
+    @Bean
+    public MessageSource messageSource() {
+        ReloadableResourceBundleMessageSource m = new ReloadableResourceBundleMessageSource();
+        m.setBasename("/i18n/bundle");
+        m.setDefaultEncoding("UTF-8");
+        return m;
+    }
+    
+    public void startDialogWithUser() throws IOException {
+        MessageSource ms = (MessageSource) context.getBean("messageSource");
+        //System.out.println(ms.getMessage("hello.world", null, Locale.ROOT)); // Locale.US -> en_US, Locale.ROOT -> default locale (russian)
+        //System.out.println(ms.getMessage("hello.world", null, new Locale("ru_RU"))); // this works too, "en_US" will also work
+        // System.out.println(ms.getMessage("hello.world", null, locale)); just for test
+        // creating QuestionList object as bean...
+        QuestionList ql = context.getBean(QuestionList.class); // UPD. now works! It did not work because
+        // I tried to call ClassPathXmlApplicationContext one more time in bean constructor,
+        // and it caused circular dependency and NoClassDefFoundError Spring exception
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        String defaultName = ql.defaultUserName + " " + ql.defaultUserSurname;
+        System.out.println(ms.getMessage("enter_name_prompt", null, locale) +  "(" + defaultName +"):");
+        String  userName = br.readLine();
+        userName = userName.isEmpty() ? defaultName : userName;
+        System.out.println(userName + ", " + ms.getMessage("num_answers", null, locale) + " " + ql.getQuestionCount());
+        for (Question q: ql) {
+            System.out.println(ms.getMessage("question", null, locale) + ": " + q.getQuestionText());
+            System.out.println(ms.getMessage("answers", null, locale) + ": " + q.getPossibleAnswersForUserDisplay());
+            System.out.println(ms.getMessage("enter_your_answer", null, locale) + ":");
+            String userInput = br.readLine();
+            q.setUserEnteredAnswerIndex(userInput);
+        }
+        // your_correct_answers=number of your correct answers
+        System.out.println(userName + ", " + ms.getMessage("your_correct_answers", null, locale) + ": " + ql.getNumberOfCorrectAnswers() 
+                + " " + ms.getMessage("of", null, locale) + " " + ql.getQuestionCount());
+        for (int i = 0; i < ql.getQuestionCount(); i++){
+            Question q = ql.getQuestion(i);
+            System.out.println(q.getQuestionText()
+                    + " " + ms.getMessage("you_answered", null, locale) + " "
+                    + (q.getRightAnswerIndex() == q.getUserEnteredAnswerIndex() ? ms.getMessage("big_correct", null, locale) : ms.getMessage("big_incorrect", null, locale)));
+            System.out.println(ms.getMessage("correct_answer", null, locale) + " " + q.getRigthAnswer() + ", " + ms.getMessage("you_answered", null, locale) 
+                    +" " + q.getUserEnteredAnswer());
+        }
+    }
 
+    
     @Bean
     public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
         return args -> {
@@ -34,8 +93,9 @@ public class SpringtestingappApplication {
             }
             System.out.println("The \"name\" property in application.yml is: " + myConfig.getName());
             // works also:
-            //SpringtestingappApplication app = new SpringtestingappApplication();
-            //app.sayHello();
+            SpringtestingappApplication app = new SpringtestingappApplication(ctx);
+            app.setLocale(new Locale(ctx.getEnvironment().getProperty("locale")));
+            app.startDialogWithUser();
         };
     }        
 
