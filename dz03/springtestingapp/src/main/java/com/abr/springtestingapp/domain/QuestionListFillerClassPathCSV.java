@@ -25,7 +25,6 @@ import org.springframework.beans.factory.annotation.Value;
 @Service
 public class QuestionListFillerClassPathCSV  implements IQuestionListFiller {
     
-    // todo: maybe pass csv file name here...
     private String qfilename;
     public QuestionListFillerClassPathCSV(@Value("${qfilename}") String qfilename) {
         this.qfilename = qfilename;
