@@ -25,9 +25,7 @@ public class YAMLConfig {
     public void setName(String n){
         this.name = n;
     }
-    //private String environment;
-    //private List<String> servers = new ArrayList<>();
-// 
-    // standard getters and setters
+    
+    // Upd. Выяснил, что тривиальные геттеры и сеттеры можно не писать
  
 }

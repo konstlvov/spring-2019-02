@@ -18,7 +18,6 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 
 @SpringBootApplication
-@PropertySource("classpath:application.properties")
 public class SpringtestingappApplication {
 
 	public static void main(String[] args) {
@@ -48,10 +47,6 @@ public class SpringtestingappApplication {
     
     public void startDialogWithUser() throws IOException {
         MessageSource ms = (MessageSource) context.getBean("messageSource");
-        //System.out.println(ms.getMessage("hello.world", null, Locale.ROOT)); // Locale.US -> en_US, Locale.ROOT -> default locale (russian)
-        //System.out.println(ms.getMessage("hello.world", null, new Locale("ru_RU"))); // this works too, "en_US" will also work
-        // System.out.println(ms.getMessage("hello.world", null, locale)); just for test
-        // creating QuestionList object as bean...
         QuestionList ql = context.getBean(QuestionList.class); // UPD. now works! It did not work because
         // I tried to call ClassPathXmlApplicationContext one more time in bean constructor,
         // and it caused circular dependency and NoClassDefFoundError Spring exception

@@ -1,9 +1,11 @@
+spring.banner.location: classpath:abr_banner.txt
+
 spring:
     profiles: test
 profilename: test-YAML
 name: Ivan
 surname: Ivanov
-#locale: ru_RU
+qfilename: questions
 locale: en_US
  
 ---
@@ -12,3 +14,5 @@ spring:
 profilename: prod-YAML
 name: Petr
 surname: Petrov
+qfilename: questions
+locale: ru_RU

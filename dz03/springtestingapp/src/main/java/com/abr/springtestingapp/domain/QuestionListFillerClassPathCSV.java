@@ -16,6 +16,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 import static com.abr.springtestingapp.StaticLib.fastConvertStreamToString;
 import com.abr.springtestingapp.ApplicationContextProvider;
+import org.springframework.beans.factory.annotation.Value;
 
 /**
  *
@@ -25,14 +26,16 @@ import com.abr.springtestingapp.ApplicationContextProvider;
 public class QuestionListFillerClassPathCSV  implements IQuestionListFiller {
     
     // todo: maybe pass csv file name here...
-    public QuestionListFillerClassPathCSV() {
+    private String qfilename;
+    public QuestionListFillerClassPathCSV(@Value("${qfilename}") String qfilename) {
+        this.qfilename = qfilename;
     }
     
     @Override
     public void fillQuestionList(QuestionList ql) throws IOException {
         ApplicationContext ctx = ApplicationContextProvider.getApplicationContext();
         String loc = ctx.getEnvironment().getProperty("locale");
-        InputStream is = QuestionListFillerClassPathCSV.class.getResourceAsStream("/questions_" + loc + ".csv");
+        InputStream is = QuestionListFillerClassPathCSV.class.getResourceAsStream("/" + qfilename + "_" + loc + ".csv");
         String csvFileContent = fastConvertStreamToString(is);
         String[] lines = csvFileContent.split("\r?\n");
         for (String line: lines) {
