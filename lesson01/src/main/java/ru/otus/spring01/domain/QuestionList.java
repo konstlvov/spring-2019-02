@@ -8,14 +8,18 @@ package ru.otus.spring01.domain;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 
 /**
  *
  * @author lvov_k
  */
 
-
+@Service
 public class QuestionList implements Iterable<Question> {
+    public String defaultUserName;
+    public String defaultUserSurname;
 
     private ArrayList<Question> ql;
 
@@ -25,8 +29,13 @@ public class QuestionList implements Iterable<Question> {
     
     // IQuestionListFiller - correct case
     // QuestionListFillerClassPathCSV - testing debug case
-    public QuestionList(IQuestionListFiller filler) throws IOException {
+    public QuestionList(IQuestionListFiller filler,
+            @Value("${name}") String defaultUserName
+            ,@Value("${surname}") String defaultUserSurname
+            ) throws IOException {
         ql = new ArrayList<>();
+        this.defaultUserName = defaultUserName;
+        this.defaultUserSurname = defaultUserSurname;
         filler.fillQuestionList(this);
     }
 

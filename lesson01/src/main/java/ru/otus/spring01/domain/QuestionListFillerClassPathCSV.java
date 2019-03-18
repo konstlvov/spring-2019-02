@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.core.io.Resource;
+import org.springframework.stereotype.Service;
 import static ru.otus.spring01.Main.fastConvertStreamToString;
 import ru.otus.spring01.contextprovider.ApplicationContextProvider;
 
@@ -20,6 +21,7 @@ import ru.otus.spring01.contextprovider.ApplicationContextProvider;
  *
  * @author lvov_k
  */
+@Service
 public class QuestionListFillerClassPathCSV  implements IQuestionListFiller {
     
     // todo: maybe pass csv file name here...
@@ -28,7 +30,9 @@ public class QuestionListFillerClassPathCSV  implements IQuestionListFiller {
     
     @Override
     public void fillQuestionList(QuestionList ql) throws IOException {
-        InputStream is = QuestionListFillerClassPathCSV.class.getResourceAsStream("/my.csv");
+        ApplicationContext ctx = ApplicationContextProvider.getApplicationContext();
+        String loc = ctx.getEnvironment().getProperty("locale");
+        InputStream is = QuestionListFillerClassPathCSV.class.getResourceAsStream("/questions_" + loc + ".csv");
         String csvFileContent = fastConvertStreamToString(is);
         String[] lines = csvFileContent.split("\r?\n");
         for (String line: lines) {
