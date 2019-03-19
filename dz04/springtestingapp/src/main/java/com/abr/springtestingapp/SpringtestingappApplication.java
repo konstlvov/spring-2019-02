@@ -20,9 +20,9 @@ import org.springframework.context.support.ReloadableResourceBundleMessageSource
 @SpringBootApplication
 public class SpringtestingappApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(SpringtestingappApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(SpringtestingappApplication.class, args);
+    }
         
     @Autowired
     private YAMLConfig myConfig;
@@ -77,21 +77,28 @@ public class SpringtestingappApplication {
     }
 
     
-    @Bean
-    public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
-        return args -> {
-            System.out.println("Let's inspect the beans provided by Spring Boot:");
-            String[] beanNames = ctx.getBeanDefinitionNames();
-            Arrays.sort(beanNames);
-            for (String beanName: beanNames) {
-                System.out.println(beanName);
-            }
-            System.out.println("The \"name\" property in application.yml is: " + myConfig.getName());
-            // works also:
-            SpringtestingappApplication app = new SpringtestingappApplication(ctx);
-            app.setLocale(new Locale(ctx.getEnvironment().getProperty("locale")));
-            app.startDialogWithUser();
-        };
-    }        
+//    @Bean
+//    public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
+//        return args -> {
+//            System.out.println("Let's inspect the beans provided by Spring Boot:");
+//            String[] beanNames = ctx.getBeanDefinitionNames();
+//            Arrays.sort(beanNames);
+//            for (String beanName: beanNames) {
+//                System.out.println(beanName);
+//            }
+//        };
+//    }        
+
+//    @Bean
+//    public CommandLineRunner commandLineRunner2(ApplicationContext ctx) {
+//        return (args) -> {
+//            System.out.println("The \"name\" property in application.yml is: " + myConfig.getName());
+//            // works also:
+//            SpringtestingappApplication app = new SpringtestingappApplication(ctx);
+//            app.setLocale(new Locale(ctx.getEnvironment().getProperty("locale")));
+//            //app.startDialogWithUser();
+//        };
+//    }        
+    
 
 }
