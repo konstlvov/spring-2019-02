@@ -1,3 +1,5 @@
+// Демонстрационный класс. Нужен только для того, чтобы протестировать тесты (что они запускаются и отрабатывают)
+
 package com.abr.springtestingapp.service;
 
 import org.springframework.stereotype.Service;

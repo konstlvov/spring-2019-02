@@ -15,7 +15,7 @@ public class HelloCommands {
         this.service = service;
     }
 
-    @ShellMethod("Translate text from one language to another.")
+    @ShellMethod("Says hello to user.")
     public String hello(
             @ShellOption String name
     ) {
