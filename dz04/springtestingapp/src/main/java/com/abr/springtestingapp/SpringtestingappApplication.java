@@ -20,17 +20,18 @@ import org.springframework.context.support.ReloadableResourceBundleMessageSource
 @SpringBootApplication
 public class SpringtestingappApplication {
 
+    @Bean(name = "messageSource")
+    public MessageSource messageSource() {
+        ReloadableResourceBundleMessageSource m = new ReloadableResourceBundleMessageSource();
+        m.setBasename("classpath:/i18n/bundle");
+        m.setDefaultEncoding("UTF-8");
+        return m;
+    }
+
     public static void main(String[] args) {
         SpringApplication.run(SpringtestingappApplication.class, args);
     }
         
-    @Bean
-    public MessageSource messageSource() {
-        ReloadableResourceBundleMessageSource m = new ReloadableResourceBundleMessageSource();
-        m.setBasename("/i18n/bundle");
-        m.setDefaultEncoding("UTF-8");
-        return m;
-    }
     
 
 }
