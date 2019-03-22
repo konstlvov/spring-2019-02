@@ -1,8 +1,9 @@
-spring.banner.location: "classpath:abr_banner.txt"
+#spring.banner.location: "classpath:abr_banner_en.txt"
 
 spring:
     profiles: test
 profilename: test-YAML
+spring.banner.location: "classpath:abr_banner_en.txt"
 name: Ivan
 surname: Ivanov
 qfilename: questions
@@ -12,7 +13,8 @@ locale: en_US
 spring:
     profiles: prod
 profilename: prod-YAML
-name: Petr
-surname: Petrov
+spring.banner.location: "classpath:abr_banner_ru.txt"
+name: Петр
+surname: Петров
 qfilename: questions
 locale: ru_RU
