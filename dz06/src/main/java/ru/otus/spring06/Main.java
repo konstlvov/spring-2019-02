@@ -1,6 +1,6 @@
 package ru.otus.spring06;
 
-import org.h2.tools.Console;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
@@ -36,6 +36,5 @@ public class Main {
             System.out.println("Person with id " + p.getId() + " has name of " + p.getName());
         }
 
-        Console.main(args);
     }
 }

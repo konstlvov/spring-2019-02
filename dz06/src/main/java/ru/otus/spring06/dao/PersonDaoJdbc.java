@@ -32,7 +32,7 @@ public class PersonDaoJdbc implements PersonDao {
        HashMap<String, Object> params = new HashMap<>();
        params.put("id", person.getId());
        params.put("name", person.getName());
-       jdbc.update("insert into persons (id, `name`) values (:id, :name)", params);
+       jdbc.update("insert into persons (id, name) values (:id, :name)", params);
     }
     @Override
     public Person getById(int id) {
