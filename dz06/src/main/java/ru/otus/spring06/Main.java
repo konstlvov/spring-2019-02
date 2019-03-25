@@ -29,7 +29,6 @@ public class Main {
             System.out.println("There is no Person with ID 2, inserting");
             dao.insert(new Person(2, "ivan"));
         }
-        
 
         //System.out.println("Ivan id: " + ivan.getId() + " name: " + ivan.getName());
         for(Person p: dao.getAll()) {
