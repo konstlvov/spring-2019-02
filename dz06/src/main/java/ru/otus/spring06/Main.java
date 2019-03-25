@@ -15,8 +15,8 @@ public class Main {
     // jdbc:h2:~/test.db - будет сохранять в файл test.db
     // jdbc:h2:mem:testdb - будет использовать БД в памяти
     public static void main(String[] args) throws Exception {
-
         ApplicationContext context = SpringApplication.run(Main.class);
+        // после shell:>exit попадаем сюда
         PersonDao dao = context.getBean(PersonDao.class);
 
         System.out.println("All count " + dao.count());
