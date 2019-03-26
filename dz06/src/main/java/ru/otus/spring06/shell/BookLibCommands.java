@@ -11,8 +11,10 @@ import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
 import ru.otus.spring06.dao.AuthorDaoJdbc;
+import ru.otus.spring06.dao.BookDaoJdbc;
 import ru.otus.spring06.dao.GenreDaoJdbc;
 import ru.otus.spring06.domain.Author;
+import ru.otus.spring06.domain.Book;
 import ru.otus.spring06.domain.Genre;
 
 
@@ -24,6 +26,9 @@ public class BookLibCommands {
     
     @Autowired
     GenreDaoJdbc genreDao;
+    
+    @Autowired
+    BookDaoJdbc bookDao;
     
 
     @ShellMethod("Shows all authors")
@@ -48,6 +53,13 @@ public class BookLibCommands {
     public void showGenres() {
         for(Genre g: genreDao.getAllGenres()) {
             System.out.println("Genre with id " + g.getId() + " is " + g.getName());
+        }
+    }
+
+    @ShellMethod("Shows all books")
+    public void showBooks() {
+        for(Book b: bookDao.getAllBooks ()) {
+            System.out.println("Book with id " + b.getId() + " is " + b.getName());
         }
     }
 

@@ -37,7 +37,7 @@ public class GenreDaoJdbc implements IGenreDao {
 
     }
 
-    private static class GenreMapper implements RowMapper<Genre> {
+    public static class GenreMapper implements RowMapper<Genre> {
       @Override
       public Genre mapRow(ResultSet resultSet, int rowNum) throws SQLException {
           int id = resultSet.getInt("GenreID");

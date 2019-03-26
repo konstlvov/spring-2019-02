@@ -37,14 +37,8 @@ public class AuthorDaoJdbc implements IAuthorDao {
        params.put("authorName", a.getName());
        jo.update("insert into Author (AuthorId, AuthorName) values (:authorId, :authorName)", params);
   };
-  
-  public Author getById(int id){
-        HashMap<String, Object> params = new HashMap<>();
-        params.put("authorId", id);
-        return jo.queryForObject("select * from Author where AuthorId = :authorId", params, new AuthorDaoJdbc.AuthorMapper());
-  };
 
-  private static class AuthorMapper implements RowMapper<Author> {
+  public static class AuthorMapper implements RowMapper<Author> {
       @Override
       public Author mapRow(ResultSet resultSet, int rowNum) throws SQLException {
           int id = resultSet.getInt("AuthorID");
@@ -52,6 +46,13 @@ public class AuthorDaoJdbc implements IAuthorDao {
           return new Author(id, name);
       }
   }
+  
+  public Author getById(int id){
+        HashMap<String, Object> params = new HashMap<>();
+        params.put("authorId", id);
+        return jo.queryForObject("select * from Author where AuthorId = :authorId", params, new AuthorDaoJdbc.AuthorMapper());
+  };
+
   
   public List<Author> getAllAuthors(){
       return jo.getJdbcOperations().query("select * from Author", new AuthorMapper());
