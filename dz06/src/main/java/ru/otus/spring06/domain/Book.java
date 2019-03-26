@@ -12,13 +12,16 @@ public class Book {
     private final int authorId;
     private final int genreId;
     private final Author author;
+    private final Genre genre;
     
-    public Book(int bookId, String bookName, int authorId, int genreId, Author author) {
+    public Book(int bookId, String bookName, int authorId, int genreId,
+      Author author, Genre genre) {
         this.bookId = bookId;
         this.bookName = bookName;
         this.authorId = authorId;
         this.genreId = genreId;
         this.author = author;
+        this.genre = genre;
     }
     
     public int getId() {
@@ -40,5 +43,10 @@ public class Book {
     public Author getAuthor() {
         return author;
     }
+    
+    public Genre getGenre() {
+      return genre;
+    }
+
     
 }

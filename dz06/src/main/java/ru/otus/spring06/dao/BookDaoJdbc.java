@@ -16,12 +16,16 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 import org.springframework.stereotype.Repository;
 import ru.otus.spring06.domain.Author;
 import ru.otus.spring06.domain.Book;
+import ru.otus.spring06.domain.Genre;
 
 @Repository
 public class BookDaoJdbc implements IBookDao {
 
     @Autowired
     AuthorDaoJdbc authorDao;
+    
+    @Autowired
+    GenreDaoJdbc genreDao;
 
     private final NamedParameterJdbcOperations jo;
     public BookDaoJdbc(NamedParameterJdbcOperations jdbcOperations) {
@@ -51,7 +55,8 @@ public class BookDaoJdbc implements IBookDao {
           int authorId = resultSet.getInt("AuthorId");
           int genreId = resultSet.getInt("GenreId");
           Author author = authorDao.getById(authorId);
-          return new Book(id, name, authorId, genreId, author);
+          Genre genre = genreDao.getById(genreId);
+          return new Book(id, name, authorId, genreId, author, genre);
       }
   }
 

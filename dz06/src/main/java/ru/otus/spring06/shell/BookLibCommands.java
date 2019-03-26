@@ -60,7 +60,9 @@ public class BookLibCommands {
     public void showBooks() {
         for(Book b: bookDao.getAllBooks ()) {
             System.out.println("Book with id " + b.getId() + " is " + b.getName()
-            + " and it's author is " + b.getAuthor().getName());
+            + " and it's author is " + b.getAuthor().getName()
+            + " and it's genre is " + b.getGenre().getName()
+            );
         }
     }
 
