@@ -27,7 +27,7 @@ public class Main {
         catch (EmptyResultDataAccessException e) {
             System.out.println(e.getMessage());
             System.out.println("There is no Person with ID 2, inserting");
-            dao.insert(new Person(2, "ivan"));
+            dao.insert(new Person(2, "Ivan Petrov"));
         }
 
         //System.out.println("Ivan id: " + ivan.getId() + " name: " + ivan.getName());
