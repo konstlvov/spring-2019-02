@@ -66,6 +66,13 @@ public class BookDaoJdbc implements IBookDao {
         params.put("bookId", id);
         return jo.queryForObject("select * from Book where BookId = :bookId", params, new BookMapper());
     }
+    
+    @Override
+    public void deleteById(int id) {
+        HashMap<String, Object> params = new HashMap<>();
+        params.put("bookId", id);
+        jo.update("delete from Book where BookId = :bookId", params);
+    }
 
     @Override
     public List<Book> getAllBooks() {

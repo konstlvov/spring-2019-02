@@ -81,4 +81,10 @@ public class BookLibCommands {
         bookDao.insertBook(new Book(bookId, bookName, authorDao.getById(authorId),
           genreDao.getById(genreId)));
     }
+    
+    @ShellMethod("Delete book by ID")
+    public void deleteBook(int bookId) {
+        bookDao.deleteById(bookId);
+    }
+    
 }
