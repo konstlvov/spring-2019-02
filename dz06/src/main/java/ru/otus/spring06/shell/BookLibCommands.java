@@ -65,6 +65,20 @@ public class BookLibCommands {
             );
         }
     }
+    
+    @ShellMethod("Inserts new genre")
+    public void insertGenre(int genreId, String genreName) {
+        genreDao.insertGenre(new Genre(genreId, genreName));
+    }
 
+    @ShellMethod("Inserts new author")
+    public void insertAuthor(int authorId, String authorName) {
+        authorDao.insertAuthor(new Author(authorId, authorName));
+    }
 
+    @ShellMethod("Inserts new book")
+    public void insertBook(int bookId, String bookName, int authorId, int genreId) {
+        bookDao.insertBook(new Book(bookId, bookName, authorDao.getById(authorId),
+          genreDao.getById(genreId)));
+    }
 }

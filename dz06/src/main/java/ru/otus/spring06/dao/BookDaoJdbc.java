@@ -56,7 +56,7 @@ public class BookDaoJdbc implements IBookDao {
           int genreId = resultSet.getInt("GenreId");
           Author author = authorDao.getById(authorId);
           Genre genre = genreDao.getById(genreId);
-          return new Book(id, name, authorId, genreId, author, genre);
+          return new Book(id, name, author, genre);
       }
   }
 

@@ -9,17 +9,12 @@ public class Book {
     
     private final int bookId;
     private String bookName;
-    private final int authorId;
-    private final int genreId;
     private final Author author;
     private final Genre genre;
     
-    public Book(int bookId, String bookName, int authorId, int genreId,
-      Author author, Genre genre) {
+    public Book(int bookId, String bookName, Author author, Genre genre) {
         this.bookId = bookId;
         this.bookName = bookName;
-        this.authorId = authorId;
-        this.genreId = genreId;
         this.author = author;
         this.genre = genre;
     }
@@ -33,11 +28,11 @@ public class Book {
     }
     
     public int getAuthorId() {
-        return authorId;
+        return author.getId();
     }
     
     public int getGenreId() {
-        return genreId;
+        return genre.getId();
     }
     
     public Author getAuthor() {

@@ -34,7 +34,6 @@ public class GenreDaoJdbc implements IGenreDao {
        params.put("genreId", g.getId());
        params.put("genreName", g.getName());
        jo.update("insert into Genre (GenreId, GenreName) values (:genreId, :genreName)", params);
-
     }
 
     public static class GenreMapper implements RowMapper<Genre> {
