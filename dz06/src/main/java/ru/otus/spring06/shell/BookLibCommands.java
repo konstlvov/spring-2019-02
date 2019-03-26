@@ -59,7 +59,8 @@ public class BookLibCommands {
     @ShellMethod("Shows all books")
     public void showBooks() {
         for(Book b: bookDao.getAllBooks ()) {
-            System.out.println("Book with id " + b.getId() + " is " + b.getName());
+            System.out.println("Book with id " + b.getId() + " is " + b.getName()
+            + " and it's author is " + b.getAuthor().getName());
         }
     }
 

@@ -10,14 +10,19 @@ import java.sql.SQLException;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 import org.springframework.stereotype.Repository;
-import static ru.otus.spring06.dao.AuthorDaoJdbc.AuthorMapper;
+import ru.otus.spring06.domain.Author;
 import ru.otus.spring06.domain.Book;
 
 @Repository
 public class BookDaoJdbc implements IBookDao {
+
+    @Autowired
+    AuthorDaoJdbc authorDao;
+
     private final NamedParameterJdbcOperations jo;
     public BookDaoJdbc(NamedParameterJdbcOperations jdbcOperations) {
         jo = jdbcOperations;
@@ -38,14 +43,15 @@ public class BookDaoJdbc implements IBookDao {
        jo.update("insert into Book (BookId, BookName, AuthorId, GenreId) values (:bookId, :bookName, :authorId, :genreId)", params);
     }
   
-    public static class BookMapper implements RowMapper<Book> {
+    public class BookMapper implements RowMapper<Book> {
       @Override
       public Book mapRow(ResultSet resultSet, int rowNum) throws SQLException {
           int id = resultSet.getInt("BookID");
           String name = resultSet.getString("BookName");
           int authorId = resultSet.getInt("AuthorId");
           int genreId = resultSet.getInt("GenreId");
-          return new Book(id, name, authorId, genreId);
+          Author author = authorDao.getById(authorId);
+          return new Book(id, name, authorId, genreId, author);
       }
   }
 
