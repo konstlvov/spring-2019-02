@@ -11,7 +11,9 @@ import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
 import ru.otus.spring06.dao.AuthorDaoJdbc;
+import ru.otus.spring06.dao.GenreDaoJdbc;
 import ru.otus.spring06.domain.Author;
+import ru.otus.spring06.domain.Genre;
 
 
 @ShellComponent
@@ -19,6 +21,10 @@ public class BookLibCommands {
     
     @Autowired
     AuthorDaoJdbc authorDao;
+    
+    @Autowired
+    GenreDaoJdbc genreDao;
+    
 
     @ShellMethod("Shows all authors")
     public void showAuthors() {
@@ -35,6 +41,13 @@ public class BookLibCommands {
         }
         catch (EmptyResultDataAccessException e) {
             System.out.println("Author with ID " + authorId + " not found");
+        }
+    }
+
+    @ShellMethod("Shows all genres")
+    public void showGenres() {
+        for(Genre g: genreDao.getAllGenres()) {
+            System.out.println("Genre with id " + g.getId() + " is " + g.getName());
         }
     }
 
