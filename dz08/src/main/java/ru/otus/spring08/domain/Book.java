@@ -5,18 +5,38 @@
  */
 package ru.otus.spring08.domain;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="BOOK")
 public class Book {
+    @Id
+    @GeneratedValue
+    @Column(name="BOOKID", nullable=false)
+    private int bookId;
     
-    private final int bookId;
+    @Column(name="BOOKNAME")
     private String bookName;
-    private final Author author;
-    private final Genre genre;
     
-    public Book(int bookId, String bookName, Author author, Genre genre) {
+    @ManyToOne
+    @JoinColumn(name="AuthorID")
+    private Author author;
+    
+    //private Genre genre;
+    
+    public Book() {}
+    
+    public Book(int bookId, String bookName, Author author) {
         this.bookId = bookId;
         this.bookName = bookName;
         this.author = author;
-        this.genre = genre;
+        //this.genre = genre;
     }
     
     public int getId() {
@@ -32,7 +52,8 @@ public class Book {
     }
     
     public int getGenreId() {
-        return genre.getId();
+        return 0;
+        //return genre.getId();
     }
     
     public Author getAuthor() {
@@ -40,7 +61,8 @@ public class Book {
     }
     
     public Genre getGenre() {
-      return genre;
+      return null;
+      //return genre;
     }
 
     

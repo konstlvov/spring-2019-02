@@ -9,7 +9,7 @@ import java.util.List;
 import ru.otus.spring08.domain.Author;
 
 public interface IAuthorDao {
-  int getAuthorCount();
+  Long getAuthorCount();
   void insertAuthor(Author a);
   Author getById(int id);
   List<Author> getAllAuthors();

@@ -5,16 +5,28 @@
  */
 package ru.otus.spring08.domain;
 
-/**
- *
- * @author lvov_k
- */
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+
+@Entity
+@Table(name="AUTHOR")
 public class Author {
-    private final int authorId;
-    private final String authorName;
+
+    @Id
+    @GeneratedValue
+    @Column(name="AUTHORID", nullable=false)
+    private int authorId;
     
-    public Author(int id, String name) {
-        this.authorId = id;
+    @Column(name="AUTHORNAME")
+    private String authorName;
+    
+    public Author() {}
+    
+    public Author(String name) {
         this.authorName = name;
     }
     

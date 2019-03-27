@@ -11,9 +11,8 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
-import ru.otus.spring08.dao.AuthorDaoJdbc;
-import ru.otus.spring08.dao.BookDaoJdbc;
-import ru.otus.spring08.dao.GenreDaoJdbc;
+import ru.otus.spring08.dao.AuthorDaoJpa;
+import ru.otus.spring08.dao.BookDaoJpa;
 import ru.otus.spring08.dao.PersonDaoJpa;
 import ru.otus.spring08.domain.Author;
 import ru.otus.spring08.domain.Book;
@@ -27,12 +26,22 @@ public class BookLibCommands {
     @Autowired
     ApplicationContext context;
     
-    @ShellMethod("Says hello")
-    public void hello() {
-        System.out.println("hello!");
-        PersonDaoJpa repo = context.getBean(PersonDaoJpa.class);
-        Person p = new Person("Ivan Ivanov");
-        repo.insert(p);
+    @ShellMethod("Tests code snippet")
+    public void test() {
+        BookDaoJpa bd = context.getBean(BookDaoJpa.class);
+        for(Book b: bd.getAllBooks()) {
+            System.out.println("Book " + b.getName() + " written by " + b.getAuthor().getName());
+        }
+//        // this block works too
+//        AuthorDaoJpa ar = context.getBean(AuthorDaoJpa.class);
+//        System.out.println("There are totally " + ar.getAuthorCount() + " author(s)");
+//        
+//        //this block works
+//        System.out.println("hello!");
+//        PersonDaoJpa repo = context.getBean(PersonDaoJpa.class);
+//        Person p = new Person("Ivan Ivanov");
+//        repo.insert(p);
+        
         //p.setId(1); // setId вызывать не надо, потому что используются @Id � @GeneratedValue
         // преподаватель говорил что-то вроде что если самому указывать id, то потом надо использовать em.merge
         //Person ivan = repository.getById(1);

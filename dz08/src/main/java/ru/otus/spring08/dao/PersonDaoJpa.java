@@ -22,7 +22,7 @@ public class PersonDaoJpa implements PersonDao {
 
     @Override
     public int count() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return (int) em.createQuery("select count(p) from Person p").getSingleResult();
     }
 
     @Override

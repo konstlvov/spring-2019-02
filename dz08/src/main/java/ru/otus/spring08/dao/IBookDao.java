@@ -9,7 +9,7 @@ import java.util.List;
 import ru.otus.spring08.domain.Book;
 
 public interface IBookDao {
-  int getBookCount();
+  Long getBookCount();
   void insertBook(Book b);
   Book getById(int id);
   void deleteById(int id);
