@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ru.otus.spring06.dao;
+package ru.otus.spring08.dao;
 
 import java.util.List;
-import ru.otus.spring06.domain.Book;
+import ru.otus.spring08.domain.Book;
 
 public interface IBookDao {
   int getBookCount();

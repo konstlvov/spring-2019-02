@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ru.otus.spring06.dao;
+package ru.otus.spring08.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -14,9 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 import org.springframework.stereotype.Repository;
-import ru.otus.spring06.domain.Author;
-import ru.otus.spring06.domain.Book;
-import ru.otus.spring06.domain.Genre;
+import ru.otus.spring08.domain.Author;
+import ru.otus.spring08.domain.Book;
+import ru.otus.spring08.domain.Genre;
 
 @Repository
 public class BookDaoJdbc implements IBookDao {

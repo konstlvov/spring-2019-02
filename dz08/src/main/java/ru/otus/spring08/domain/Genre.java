@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ru.otus.spring06.domain;
+package ru.otus.spring08.domain;
 
 /**
  *

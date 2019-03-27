@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ru.otus.spring06.dao;
+package ru.otus.spring08.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,8 +13,8 @@ import java.util.List;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 import org.springframework.stereotype.Repository;
-import ru.otus.spring06.domain.Author;
-import ru.otus.spring06.domain.Person;
+import ru.otus.spring08.domain.Author;
+import ru.otus.spring08.domain.Person;
 
 @Repository
 public class AuthorDaoJdbc implements IAuthorDao {

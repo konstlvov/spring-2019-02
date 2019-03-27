@@ -3,14 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ru.otus.spring06.dao;
+package ru.otus.spring08.dao;
 
 import java.util.List;
-import ru.otus.spring06.domain.Author;
+import ru.otus.spring08.domain.Genre;
 
-public interface IAuthorDao {
-  int getAuthorCount();
-  void insertAuthor(Author a);
-  Author getById(int id);
-  List<Author> getAllAuthors();
+public interface IGenreDao {
+  int getGenreCount();
+  void insertGenre(Genre a);
+  Genre getById(int id);
+  List<Genre> getAllGenres();
 }

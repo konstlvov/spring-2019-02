@@ -1,6 +1,6 @@
-package ru.otus.spring06.dao;
+package ru.otus.spring08.dao;
 
-import ru.otus.spring06.domain.Person;
+import ru.otus.spring08.domain.Person;
 
 import java.util.List;
 
