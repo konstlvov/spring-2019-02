@@ -34,8 +34,7 @@ public class Book {
     
     public Book() {}
     
-    public Book(int bookId, String bookName, Author author, Genre genre) {
-        this.bookId = bookId;
+    public Book(String bookName, Author author, Genre genre) {
         this.bookName = bookName;
         this.author = author;
         this.genre = genre;
@@ -49,7 +48,7 @@ public class Book {
         return bookName;
     }
     
-    public int getAuthorId() {
+    public Long getAuthorId() {
         return author.getId();
     }
     

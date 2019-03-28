@@ -23,7 +23,7 @@ public class Author {
     @Id
     @GeneratedValue
     @Column(name="AUTHORID", nullable=false)
-    private int authorId;
+    private Long authorId;
     
     @Column(name="AUTHORNAME")
     private String authorName;
@@ -39,7 +39,7 @@ public class Author {
         this.authorName = name;
     }
     
-    public int getId() {
+    public Long getId() {
         return authorId;
     }
     

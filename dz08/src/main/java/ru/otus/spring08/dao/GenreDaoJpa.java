@@ -11,33 +11,34 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 import org.springframework.stereotype.Repository;
-import ru.otus.spring08.domain.Author;
+import ru.otus.spring08.domain.Genre;
 
 @Repository
 @Transactional
-public class AuthorDaoJpa implements IAuthorDao {
-    
+public class GenreDaoJpa implements IGenreDao {
+
     @PersistenceContext
-    private EntityManager em;
+    EntityManager em;
+    
 
     @Override
-    public Long getAuthorCount() {
-        return (Long) em.createQuery("select count(p) from Person p").getSingleResult();
+    public Long getGenreCount() {
+        return (Long) em.createQuery("select count(g) from Genre g").getSingleResult();
     }
 
     @Override
-    public void insertAuthor(Author a) {
-        em.persist(a);
+    public void insertGenre(Genre g) {
+        em.persist(g);
     }
 
     @Override
-    public Author getById(Long id) {
-        return em.find(Author.class, id);
+    public Genre getById(Long id) {
+        return em.find(Genre.class, id);
     }
 
     @Override
-    public List<Author> getAllAuthors() {
-        TypedQuery<Author> q = em.createQuery("select a from Author a", Author.class);
+    public List<Genre> getAllGenres() {
+        TypedQuery<Genre> q = em.createQuery("select g from Genre g", Genre.class);
         return q.getResultList();
     }
     

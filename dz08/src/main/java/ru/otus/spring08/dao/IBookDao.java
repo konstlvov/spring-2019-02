@@ -12,6 +12,6 @@ public interface IBookDao {
   Long getBookCount();
   void insertBook(Book b);
   Book getById(int id);
-  void deleteById(int id);
+  void deleteById(Long id);
   List<Book> getAllBooks();
 }

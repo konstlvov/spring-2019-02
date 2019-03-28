@@ -11,6 +11,6 @@ import ru.otus.spring08.domain.Author;
 public interface IAuthorDao {
   Long getAuthorCount();
   void insertAuthor(Author a);
-  Author getById(int id);
+  Author getById(Long id);
   List<Author> getAllAuthors();
 }
