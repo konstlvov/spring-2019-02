@@ -9,6 +9,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
+import ru.otus.spring08.domain.Author;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest()
@@ -21,10 +22,9 @@ public class AuthorTest {
     
     @Test
     public void saveAndGet() {
-      assertEquals(0, 0);
-        //Person p = new Person("Petr Petrov");
-        //Integer id = em.persistAndGetId(p, Integer.class);
-        //Person fromDb = em.find(Person.class, id);
-        //assertEquals(fromDb.getName(), p.getName());
+        Author a = new Author("Vladimir Nabokov");
+        Long id = em.persistAndGetId(a, Long.class);
+        Author fromDb = em.find(Author.class, id);
+        assertEquals(fromDb.getName(), a.getName());
     }
 }
