@@ -12,7 +12,6 @@ import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 import org.springframework.stereotype.Repository;
 import ru.otus.spring08.domain.Book;
-import ru.otus.spring08.domain.Person;
 
 @Repository
 @Transactional
@@ -28,17 +27,20 @@ public class BookDaoJpa implements IBookDao {
 
     @Override
     public void insertBook(Book b) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        em.persist(b);
     }
 
     @Override
     public Book getById(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return em.find(Book.class, id);
     }
 
     @Override
     public void deleteById(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Book b = em.find(Book.class, id);
+        em.getTransaction().begin();
+        em.remove(b);
+        em.getTransaction().commit();
     }
 
     @Override

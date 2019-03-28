@@ -5,25 +5,47 @@
  */
 package ru.otus.spring08.domain;
 
-/**
- *
- * @author lvov_k
- */
+import java.util.List;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="GENRE")
 public class Genre {
-    private final int genreId;
-    private final String genreName;
+    @Id
+    @GeneratedValue
+    @Column(name="GENREID", nullable=false)
+    private Long genreId;
     
-    public Genre(int id, String name) {
-        this.genreId = id;
+    @Column(name="GENRENAME")
+    private String genreName;
+
+    @OneToMany(fetch=FetchType.EAGER, mappedBy="genre", cascade=CascadeType.ALL)
+    private List<Book> books;
+    
+    
+    public Genre() {}
+    
+    public Genre(String name) {
         this.genreName = name;
     }
     
-    public int getId() {
+    public Long getId() {
         return genreId;
     }
     
     public String getName() {
         return genreName;
+    }
+    
+    public List<Book> getBooks() {
+        return books;
     }
     
 }

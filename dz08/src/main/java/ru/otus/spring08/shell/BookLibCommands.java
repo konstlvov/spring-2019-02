@@ -13,24 +13,23 @@ import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
 import ru.otus.spring08.dao.AuthorDaoJpa;
 import ru.otus.spring08.dao.BookDaoJpa;
-import ru.otus.spring08.dao.PersonDaoJpa;
 import ru.otus.spring08.domain.Author;
 import ru.otus.spring08.domain.Book;
 import ru.otus.spring08.domain.Genre;
-import ru.otus.spring08.domain.Person;
 
 
 @ShellComponent
 public class BookLibCommands {
     
     @Autowired
-    ApplicationContext context;
+    BookDaoJpa bd;
     
     @ShellMethod("Tests code snippet")
     public void test() {
-        BookDaoJpa bd = context.getBean(BookDaoJpa.class);
         for(Book b: bd.getAllBooks()) {
-            System.out.println("Book " + b.getName() + " written by " + b.getAuthor().getName());
+            System.out.println("Book " + b.getName() + " written by " + b.getAuthor().getName()
+              + " in genre " + b.getGenre().getName());
+            // System.out.println(b.getAuthor().getBooks().get(0).getName()); // this works
         }
 //        // this block works too
 //        AuthorDaoJpa ar = context.getBean(AuthorDaoJpa.class);

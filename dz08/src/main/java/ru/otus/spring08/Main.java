@@ -1,12 +1,9 @@
 package ru.otus.spring08;
 
-
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.dao.EmptyResultDataAccessException;
-import ru.otus.spring08.dao.PersonDao;
-import ru.otus.spring08.domain.Person;
 
 @SpringBootApplication
 public class Main {
@@ -16,6 +13,6 @@ public class Main {
     // jdbc:h2:mem:testdb - будет использовать БД в памяти
     public static void main(String[] args) throws Exception {
         ApplicationContext context = SpringApplication.run(Main.class);
-        // после shell:>exit попадаем сюда
+        System.out.println("Looks like you have just typed shell:>exit. Goodbye!");
     }
 }

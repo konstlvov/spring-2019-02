@@ -25,18 +25,20 @@ public class Book {
     private String bookName;
     
     @ManyToOne
-    @JoinColumn(name="AuthorID")
+    @JoinColumn(name="AUTHORID", referencedColumnName="AUTHORID")
     private Author author;
-    
-    //private Genre genre;
+
+    @ManyToOne
+    @JoinColumn(name="GENREID", referencedColumnName="GENREID")
+    private Genre genre;
     
     public Book() {}
     
-    public Book(int bookId, String bookName, Author author) {
+    public Book(int bookId, String bookName, Author author, Genre genre) {
         this.bookId = bookId;
         this.bookName = bookName;
         this.author = author;
-        //this.genre = genre;
+        this.genre = genre;
     }
     
     public int getId() {
@@ -51,9 +53,8 @@ public class Book {
         return author.getId();
     }
     
-    public int getGenreId() {
-        return 0;
-        //return genre.getId();
+    public Long getGenreId() {
+        return genre.getId();
     }
     
     public Author getAuthor() {
@@ -61,8 +62,7 @@ public class Book {
     }
     
     public Genre getGenre() {
-      return null;
-      //return genre;
+      return genre;
     }
 
     
