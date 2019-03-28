@@ -13,6 +13,17 @@ declare
       execute immediate('DROP TABLE ' || tableName);
     end if;
   end;
+  procedure dropSequenceIfExists(seqName varchar2) is
+  begin
+    cnt := 0;
+    select count(*) into cnt from user_sequences where UPPER(sequence_name) = UPPER(seqName);
+    if cnt = 0 then
+      dbms_output.put_line('sequence ' || seqName || ' not exists');
+    else
+      dbms_output.put_line('sequence ' || seqName || ' exists, about to drop it...');
+      execute immediate('DROP sequence ' || seqName);
+    end if;
+  end;
 begin
   dropTableIfExists('PERSONS');
   execute immediate('CREATE TABLE PERSONS(ID INT PRIMARY KEY, NAME VARCHAR(255))');
@@ -27,5 +38,7 @@ begin
     || ' , GENREID INT  '  -- REFERENCES GENRE(GENREID)
     || ' ) '
     );
+  dropSequenceIfExists('HIBERNATE_SEQUENCE');
+  execute immediate 'CREATE SEQUENCE HIBERNATE_SEQUENCE INCREMENT BY 1 MINVALUE 1000 MAXVALUE 999999999999999999999999999 CACHE 20 NOCYCLE';
 end;
 /
