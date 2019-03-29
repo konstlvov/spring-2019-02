@@ -1,5 +1,6 @@
 package ru.otus.spring08.dao;
 
+import javax.persistence.TypedQuery;
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,6 +26,10 @@ public class AuthorTest {
         Author a = new Author("Vladimir Nabokov");
         Long id = em.persistAndGetId(a, Long.class);
         Author fromDb = em.find(Author.class, id);
+        TypedQuery<Author> q = em.getEntityManager().createQuery("select a from Author a", Author.class);
+        for(Author au: q.getResultList()) {
+            System.out.println("Test author: " + au.getId() + " " + au.getName());
+        }
         assertEquals(fromDb.getName(), a.getName());
     }
 }

@@ -11,10 +11,12 @@ import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
 import ru.otus.spring08.dao.AuthorDaoJpa;
 import ru.otus.spring08.dao.BookDaoJpa;
+import ru.otus.spring08.dao.CommentDaoJpa;
 import ru.otus.spring08.dao.GenreDaoJpa;
 import ru.otus.spring08.domain.Author;
 import ru.otus.spring08.domain.Book;
 import ru.otus.spring08.domain.Genre;
+import ru.otus.spring08.service.CommentService;
 
 
 @ShellComponent
@@ -28,6 +30,10 @@ public class BookLibCommands {
 
     @Autowired
     AuthorDaoJpa authorDao;
+
+    @Autowired
+    CommentService commentService;
+
     
     
     @ShellMethod("Tests code snippet")
@@ -90,5 +96,11 @@ public class BookLibCommands {
     public void deleteBook(Long bookId) {
         bookDao.deleteById(bookId);
     }
+    
+    @ShellMethod("Adds comment on book")
+    public void addComment(Long bookId, String commentText) {
+        commentService.addCommentByBookId(bookId, commentText);
+    }
+
     
 }

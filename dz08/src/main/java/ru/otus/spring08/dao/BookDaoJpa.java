@@ -31,7 +31,7 @@ public class BookDaoJpa implements IBookDao {
     }
 
     @Override
-    public Book getById(int id) {
+    public Book getById(Long id) {
         return em.find(Book.class, id);
     }
 

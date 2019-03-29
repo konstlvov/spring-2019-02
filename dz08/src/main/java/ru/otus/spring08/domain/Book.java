@@ -5,12 +5,16 @@
  */
 package ru.otus.spring08.domain;
 
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -19,7 +23,7 @@ public class Book {
     @Id
     @GeneratedValue
     @Column(name="BOOKID", nullable=false)
-    private int bookId;
+    private Long bookId;
     
     @Column(name="BOOKNAME")
     private String bookName;
@@ -31,6 +35,9 @@ public class Book {
     @ManyToOne
     @JoinColumn(name="GENREID", referencedColumnName="GENREID")
     private Genre genre;
+
+    @OneToMany(fetch=FetchType.EAGER, mappedBy="book", cascade=CascadeType.ALL)
+    private List<Comment> comments;
     
     public Book() {}
     
@@ -40,7 +47,7 @@ public class Book {
         this.genre = genre;
     }
     
-    public int getId() {
+    public Long getId() {
         return this.bookId;
     }
     
@@ -62,6 +69,10 @@ public class Book {
     
     public Genre getGenre() {
       return genre;
+    }
+    
+    public List<Comment> getComments() {
+        return comments;
     }
 
     

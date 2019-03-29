@@ -11,7 +11,7 @@ import ru.otus.spring08.domain.Book;
 public interface IBookDao {
   Long getBookCount();
   void insertBook(Book b);
-  Book getById(int id);
+  Book getById(Long id);
   void deleteById(Long id);
   List<Book> getAllBooks();
 }
