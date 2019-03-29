@@ -27,8 +27,12 @@ public class BookLibCommands {
     @Autowired
     GenreDaoJdbc genreDao;
     
-    @Autowired
-    BookDaoJdbc bookDao;
+    //@Autowired
+    private final BookDaoJdbc bookDao;
+    
+    public BookLibCommands(BookDaoJdbc bookDao) {
+        this.bookDao = bookDao;
+    }
     
 
     @ShellMethod("Shows all authors")
