@@ -38,7 +38,7 @@ public class BookLibCommands {
     
     @ShellMethod("Tests code snippet")
     public void test() {
-        System.out.println("This is method for instant code testing");
+        System.out.println("This method is intended for instant code testing");
     }
     
     @ShellMethod("Shows all authors")
