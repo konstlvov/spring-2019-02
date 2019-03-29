@@ -38,22 +38,17 @@ public class AuthorDaoJdbc implements IAuthorDao {
     jo.update("insert into Author (AuthorId, AuthorName) values (:authorId, :authorName)", params);
   }
 
-  public static class AuthorMapper implements RowMapper<Author> {
-    @Override
-    public Author mapRow(ResultSet resultSet, int rowNum) throws SQLException {
-      int id = resultSet.getInt("AuthorID");
-      String name = resultSet.getString("AuthorName");
-      return new Author(id, name);
-    }
-  }
+  public static RowMapper<Author> authorMapper = (rs, rn) -> {return new Author(rs.getInt("AuthorID"), rs.getString("AuthorName"));};
   
   public Author getById(int id){
     HashMap<String, Object> params = new HashMap<>();
     params.put("authorId", id);
-    return jo.queryForObject("select * from Author where AuthorId = :authorId", params, new AuthorDaoJdbc.AuthorMapper());
+    return jo.queryForObject("select * from Author where AuthorId = :authorId", params, authorMapper);
   }
   
   public List<Author> getAllAuthors(){
-    return jo.getJdbcOperations().query("select * from Author", new AuthorMapper());
+    // this illustrates how to create fully anonymous RowMapper:
+    // return jo.getJdbcOperations().query("select * from Author", (rs, rn) -> {return new Author(rs.getInt("AuthorID"), rs.getString("AuthorName"));} );
+    return jo.getJdbcOperations().query("select * from Author", authorMapper);
   }
 }
