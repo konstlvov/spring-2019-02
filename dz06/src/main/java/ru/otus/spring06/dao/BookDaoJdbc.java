@@ -26,6 +26,9 @@ public class BookDaoJdbc implements IBookDao {
     private final GenreDaoJdbc genreDao;
 
     private final NamedParameterJdbcOperations jo;
+
+    // тут спринг понимает AuthorDaoJdbc authorDao как @Autowired AuthorDaoJdbc authorDao,
+    // он автоматически считает, что там написано @Autowired
     public BookDaoJdbc(NamedParameterJdbcOperations jdbcOperations,
       AuthorDaoJdbc authorDao, GenreDaoJdbc genreDao) {
         jo = jdbcOperations;
@@ -48,7 +51,13 @@ public class BookDaoJdbc implements IBookDao {
        jo.update("insert into Book (BookId, BookName, AuthorId, GenreId) values (:bookId, :bookName, :authorId, :genreId)", params);
     }
   
-    public class BookMapper implements RowMapper<Book> {
+    private static class BookMapper implements RowMapper<Book> {
+      private final AuthorDaoJdbc authorDao;
+      private final GenreDaoJdbc genreDao;
+      public BookMapper(AuthorDaoJdbc authorDao, GenreDaoJdbc genreDao) {
+        this.authorDao = authorDao;
+        this.genreDao = genreDao;
+      }
       @Override
       public Book mapRow(ResultSet resultSet, int rowNum) throws SQLException {
           int id = resultSet.getInt("BookID");
@@ -59,13 +68,13 @@ public class BookDaoJdbc implements IBookDao {
           Genre genre = genreDao.getById(genreId);
           return new Book(id, name, author, genre);
       }
-  }
+    }
 
     @Override
     public Book getById(int id) {
         HashMap<String, Object> params = new HashMap<>();
         params.put("bookId", id);
-        return jo.queryForObject("select * from Book where BookId = :bookId", params, new BookMapper());
+        return jo.queryForObject("select * from Book where BookId = :bookId", params, new BookMapper(authorDao, genreDao));
     }
     
     @Override
@@ -77,7 +86,7 @@ public class BookDaoJdbc implements IBookDao {
 
     @Override
     public List<Book> getAllBooks() {
-        return jo.getJdbcOperations().query("select * from Book", new BookMapper());
+        return jo.getJdbcOperations().query("select * from Book", new BookMapper(authorDao, genreDao));
     }
     
 }
