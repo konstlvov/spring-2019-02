@@ -21,15 +21,16 @@ import ru.otus.spring06.domain.Genre;
 @Repository
 public class BookDaoJdbc implements IBookDao {
 
-    @Autowired
-    AuthorDaoJdbc authorDao;
+    private final AuthorDaoJdbc authorDao;
     
-    @Autowired
-    GenreDaoJdbc genreDao;
+    private final GenreDaoJdbc genreDao;
 
     private final NamedParameterJdbcOperations jo;
-    public BookDaoJdbc(NamedParameterJdbcOperations jdbcOperations) {
+    public BookDaoJdbc(NamedParameterJdbcOperations jdbcOperations,
+      AuthorDaoJdbc authorDao, GenreDaoJdbc genreDao) {
         jo = jdbcOperations;
+        this.authorDao = authorDao;
+        this.genreDao = genreDao;
     }
 
     @Override
