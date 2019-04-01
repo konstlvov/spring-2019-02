@@ -6,11 +6,12 @@
 package ru.otus.spring06.dao;
 
 import java.util.List;
-import ru.otus.spring06.domain.Genre;
+import ru.otus.spring06.domain.Book;
 
-public interface IGenreDao {
-  int getGenreCount();
-  void insertGenre(Genre a);
-  Genre getById(int id);
-  List<Genre> getAllGenres();
+public interface BookDao {
+  int getBookCount();
+  void insertBook(Book b);
+  Book getById(int id);
+  void deleteById(int id);
+  List<Book> getAllBooks();
 }

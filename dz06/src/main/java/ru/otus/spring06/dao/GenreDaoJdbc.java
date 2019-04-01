@@ -16,7 +16,7 @@ import org.springframework.stereotype.Repository;
 import ru.otus.spring06.domain.Genre;
 
 @Repository
-public class GenreDaoJdbc implements IGenreDao {
+public class GenreDaoJdbc implements GenreDao {
     private final NamedParameterJdbcOperations jo;
 
     public GenreDaoJdbc(NamedParameterJdbcOperations jdbcOperations) {

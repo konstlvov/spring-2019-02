@@ -19,7 +19,7 @@ import ru.otus.spring06.domain.Book;
 import ru.otus.spring06.domain.Genre;
 
 @Repository
-public class BookDaoJdbc implements IBookDao {
+public class BookDaoJdbc implements BookDao {
 
     private final AuthorDaoJdbc authorDao;
     

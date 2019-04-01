@@ -6,12 +6,11 @@
 package ru.otus.spring06.dao;
 
 import java.util.List;
-import ru.otus.spring06.domain.Book;
+import ru.otus.spring06.domain.Author;
 
-public interface IBookDao {
-  int getBookCount();
-  void insertBook(Book b);
-  Book getById(int id);
-  void deleteById(int id);
-  List<Book> getAllBooks();
+public interface AuthorDao {
+  int getAuthorCount();
+  void insertAuthor(Author a);
+  Author getById(int id);
+  List<Author> getAllAuthors();
 }

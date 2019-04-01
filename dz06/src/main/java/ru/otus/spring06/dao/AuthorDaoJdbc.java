@@ -17,7 +17,7 @@ import ru.otus.spring06.domain.Author;
 import ru.otus.spring06.domain.Person;
 
 @Repository
-public class AuthorDaoJdbc implements IAuthorDao {
+public class AuthorDaoJdbc implements AuthorDao {
 
   private final NamedParameterJdbcOperations jo;
 
