@@ -23,19 +23,17 @@ import ru.otus.spring06.domain.Person;
 @ShellComponent
 public class BookLibCommands {
     
-    @Autowired
-    AuthorDaoJdbc authorDao;
-    
-    @Autowired
-    GenreDaoJdbc genreDao;
-    
-    //@Autowired
+    private final AuthorDaoJdbc authorDao;
+    private final GenreDaoJdbc genreDao;
     private final BookDaoJdbc bookDao;
     private final PersonDaoJdbc personDao;
     
-    public BookLibCommands(BookDaoJdbc bookDao, PersonDaoJdbc personDao) {
+    public BookLibCommands(BookDaoJdbc bookDao, PersonDaoJdbc personDao,
+      AuthorDaoJdbc authorDao, GenreDaoJdbc genreDao) {
         this.bookDao = bookDao;
         this.personDao = personDao;
+        this.authorDao = authorDao;
+        this.genreDao = genreDao;
     }
 
     @ShellMethod("Shows all persons")
