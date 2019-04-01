@@ -91,4 +91,10 @@ public class BookLibCommands {
         bookDao.deleteById(bookId);
     }
     
+    @ShellMethod("Get author count")
+    public void getAuthorCount() {
+        System.out.println("There are " + authorDao.getAuthorCount() + " author(s)");
+    }
+
+    
 }

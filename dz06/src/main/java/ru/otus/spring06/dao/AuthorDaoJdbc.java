@@ -27,7 +27,7 @@ public class AuthorDaoJdbc implements IAuthorDao {
     
   @Override
   public int getAuthorCount(){
-    return jo.queryForObject("select count(*) from Author", Collections.EMPTY_MAP, Integer.class);
+    return jo.queryForObject("select count(*) from Author", Collections.emptyMap(), Integer.class);
   }
   
   @Override
