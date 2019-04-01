@@ -47,6 +47,6 @@ public class AuthorDaoJdbc implements IAuthorDao {
   public List<Author> getAllAuthors(){
     // this illustrates how to create fully anonymous RowMapper:
     // return jo.getJdbcOperations().query("select * from Author", (rs, rn) -> {return new Author(rs.getInt("AuthorID"), rs.getString("AuthorName"));} );
-    return jo.getJdbcOperations().query("select * from Author", authorMapper);
+    return jo.query("select * from Author", authorMapper);
   }
 }
