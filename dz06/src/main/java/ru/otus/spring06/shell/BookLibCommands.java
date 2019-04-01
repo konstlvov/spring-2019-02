@@ -13,9 +13,11 @@ import org.springframework.shell.standard.ShellOption;
 import ru.otus.spring06.dao.AuthorDaoJdbc;
 import ru.otus.spring06.dao.BookDaoJdbc;
 import ru.otus.spring06.dao.GenreDaoJdbc;
+import ru.otus.spring06.dao.PersonDaoJdbc;
 import ru.otus.spring06.domain.Author;
 import ru.otus.spring06.domain.Book;
 import ru.otus.spring06.domain.Genre;
+import ru.otus.spring06.domain.Person;
 
 
 @ShellComponent
@@ -29,9 +31,18 @@ public class BookLibCommands {
     
     //@Autowired
     private final BookDaoJdbc bookDao;
+    private final PersonDaoJdbc personDao;
     
-    public BookLibCommands(BookDaoJdbc bookDao) {
+    public BookLibCommands(BookDaoJdbc bookDao, PersonDaoJdbc personDao) {
         this.bookDao = bookDao;
+        this.personDao = personDao;
+    }
+
+    @ShellMethod("Shows all persons")
+    public void showPersons() {
+      for (Person p: personDao.getAll()) {
+        System.out.println(p.getName());
+      }
     }
     
 

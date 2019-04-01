@@ -44,11 +44,7 @@ public class PersonDaoJdbc implements PersonDao {
 
     @Override
     public List<Person> getAll() {
-        // упс, In mutiple return rows, RowMapper is not supported in queryForList() method, you need to map it manually.
-        return jdbc.getJdbcOperations().query("select * from persons", new PersonMapper()); // это работает правильно
-        //return jdbc.queryForList("select * from persons", Person.class); // так тоже не работает
-        //return jdbc.queryForList("select * from persons", Collections.EMPTY_MAP, Person.class); // не работает
-        //return jdbc.queryForList("select * from persons", Collections.EMPTY_MAP); // ? какой-то автоматический мэппер использует, и не работает
+        return jdbc.query("select * from persons", new PersonMapper()); // это тоже работает правильно
     }
 
     private static class PersonMapper implements RowMapper<Person> {
