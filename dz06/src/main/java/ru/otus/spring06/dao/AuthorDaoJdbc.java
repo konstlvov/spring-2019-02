@@ -41,9 +41,7 @@ public class AuthorDaoJdbc implements IAuthorDao {
   public static RowMapper<Author> authorMapper = (rs, rn) -> {return new Author(rs.getInt("AuthorID"), rs.getString("AuthorName"));};
   
   public Author getById(int id){
-    HashMap<String, Object> params = new HashMap<>();
-    params.put("authorId", id);
-    return jo.queryForObject("select * from Author where AuthorId = :authorId", params, authorMapper);
+    return jo.queryForObject("select * from Author where AuthorId = :authorId", Collections.singletonMap("authorId", id), authorMapper);
   }
   
   public List<Author> getAllAuthors(){
