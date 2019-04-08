@@ -5,6 +5,7 @@
  */
 package ru.otus.spring10.shell;
 
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
@@ -15,7 +16,9 @@ import ru.otus.spring10.dao.CommentDaoJpa;
 import ru.otus.spring10.dao.GenreDaoJpa;
 import ru.otus.spring10.domain.Author;
 import ru.otus.spring10.domain.Book;
+import ru.otus.spring10.domain.Comment;
 import ru.otus.spring10.domain.Genre;
+import ru.otus.spring10.repository.CommentRepository;
 import ru.otus.spring10.service.CommentService;
 
 
@@ -33,12 +36,18 @@ public class BookLibCommands {
 
     @Autowired
     CommentService commentService;
+    
+    @Autowired
+    CommentRepository comRep;
 
     
     
     @ShellMethod("Tests code snippet")
     public void test() {
         System.out.println("This method is intended for instant code testing");
+        for(Comment c: comRep.findAll()) {
+          System.out.println(c.getId() + ": " + c.getText());
+        }
     }
     
     @ShellMethod("Shows all authors")
