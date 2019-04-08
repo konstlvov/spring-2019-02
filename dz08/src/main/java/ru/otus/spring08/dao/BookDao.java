@@ -8,7 +8,7 @@ package ru.otus.spring08.dao;
 import java.util.List;
 import ru.otus.spring08.domain.Book;
 
-public interface IBookDao {
+public interface BookDao {
   Long getBookCount();
   void insertBook(Book b);
   Book getById(Long id);

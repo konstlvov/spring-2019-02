@@ -8,7 +8,7 @@ package ru.otus.spring08.dao;
 import java.util.List;
 import ru.otus.spring08.domain.Genre;
 
-public interface IGenreDao {
+public interface GenreDao {
   Long getGenreCount();
   void insertGenre(Genre a);
   Genre getById(Long id);

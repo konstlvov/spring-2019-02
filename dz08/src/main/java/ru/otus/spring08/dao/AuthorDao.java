@@ -8,7 +8,7 @@ package ru.otus.spring08.dao;
 import java.util.List;
 import ru.otus.spring08.domain.Author;
 
-public interface IAuthorDao {
+public interface AuthorDao {
   Long getAuthorCount();
   void insertAuthor(Author a);
   Author getById(Long id);

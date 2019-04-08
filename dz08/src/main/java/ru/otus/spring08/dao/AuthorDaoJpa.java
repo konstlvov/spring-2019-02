@@ -15,7 +15,7 @@ import ru.otus.spring08.domain.Author;
 
 @Repository
 @Transactional
-public class AuthorDaoJpa implements IAuthorDao {
+public class AuthorDaoJpa implements AuthorDao {
     
     @PersistenceContext
     private EntityManager em;

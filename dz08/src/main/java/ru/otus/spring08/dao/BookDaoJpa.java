@@ -15,7 +15,7 @@ import ru.otus.spring08.domain.Book;
 
 @Repository
 @Transactional
-public class BookDaoJpa implements IBookDao {
+public class BookDaoJpa implements BookDao {
     
     @PersistenceContext
     EntityManager em;
