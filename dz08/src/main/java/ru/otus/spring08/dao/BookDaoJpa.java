@@ -18,7 +18,7 @@ import ru.otus.spring08.domain.Book;
 public class BookDaoJpa implements BookDao {
     
     @PersistenceContext
-    EntityManager em;
+    private EntityManager em;
 
     @Override
     public Long getBookCount() {

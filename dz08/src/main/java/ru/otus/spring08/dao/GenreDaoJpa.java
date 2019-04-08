@@ -18,7 +18,7 @@ import ru.otus.spring08.domain.Genre;
 public class GenreDaoJpa implements GenreDao {
 
     @PersistenceContext
-    EntityManager em;
+    private EntityManager em;
     
 
     @Override
