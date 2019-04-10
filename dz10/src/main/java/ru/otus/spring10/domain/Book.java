@@ -36,8 +36,8 @@ public class Book {
     @JoinColumn(name="GENREID", referencedColumnName="GENREID")
     private Genre genre;
 
-    //@OneToMany(fetch=FetchType.EAGER, mappedBy="book", cascade=CascadeType.ALL)
-    //private List<Comment> comments;
+    @OneToMany(fetch=FetchType.EAGER, mappedBy="book", cascade=CascadeType.ALL)
+    private List<Comment> comments;
     
     public Book() {}
     

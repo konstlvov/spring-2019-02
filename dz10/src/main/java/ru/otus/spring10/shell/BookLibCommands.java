@@ -158,17 +158,14 @@ public class BookLibCommands {
     public void deleteComment(Long commentId) {
       Optional<Comment> c = commentRepo.findById(commentId);
       if (c.isPresent()) {
-         commentRepo.delete(c.get()); // does not work?
-         //commentRepo.deleteById(c.get().getId()); // also does not work
+         commentRepo.delete(c.get()); // at present state this works
       }
       else {
         System.out.println("Comment with ID " + commentId + " not found");
       }
-      // this works when 
-//        em.createQuery("delete from Comment where CommentID = :id")
-//          .setParameter("id", c.get().getId())
-//          .executeUpdate();        
-//      }
+      //this works when commentRepo.delete does not work, but @Transactional is mandatory
+      //em.createQuery("delete from Comment where CommentID = :id")
+      //.setParameter("id", c.get().getId())
+      //.executeUpdate();        
     }
-    
 }
