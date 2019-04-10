@@ -132,6 +132,7 @@ public class BookLibCommands {
     }
     
     @ShellMethod("Adds comment on book")
+    @Transactional
     public void addComment(Long bookId, String commentText) {
         commentService.addCommentByBookId(bookId, commentText);
     }

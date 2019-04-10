@@ -27,7 +27,7 @@ public class Comment {
     @Column(name="COMMENTTEXT")
     private String commentText;
     
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name="BOOKID", referencedColumnName="BOOKID")
     private Book book;
     
