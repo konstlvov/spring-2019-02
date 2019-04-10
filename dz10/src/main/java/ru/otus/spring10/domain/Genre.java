@@ -12,6 +12,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -26,7 +27,8 @@ public class Genre {
     @Column(name="GENRENAME")
     private String genreName;
 
-    @OneToMany(fetch=FetchType.EAGER, mappedBy="genre", cascade=CascadeType.ALL)
+    @OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
+    @JoinColumn(name="GENREID")
     private List<Book> books;
     
     
