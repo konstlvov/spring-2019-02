@@ -27,11 +27,6 @@ public class Genre {
     @Column(name="GENRENAME")
     private String genreName;
 
-    @OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
-    @JoinColumn(name="GENREID")
-    private List<Book> books;
-    
-    
     public Genre() {}
     
     public Genre(String name) {
@@ -44,10 +39,6 @@ public class Genre {
     
     public String getName() {
         return genreName;
-    }
-    
-    public List<Book> getBooks() {
-        return books;
     }
     
     public String getDescription() {

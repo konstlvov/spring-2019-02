@@ -29,12 +29,6 @@ public class Author {
     @Column(name="AUTHORNAME")
     private String authorName;
     
-    // работает и без cascade=CascadeType.ALL, но напишу все равно,
-    // а вот если не указать FetchType.EAGER, то не работает
-    @OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
-    @JoinColumn(name="AUTHORID")
-    private List<Book> books;
-    
     public Author() {}
     
     public Author(String name) {
@@ -47,10 +41,6 @@ public class Author {
     
     public String getName() {
         return authorName;
-    }
-    
-    public List<Book> getBooks() {
-        return books;
     }
     
     public String getDescription() {
