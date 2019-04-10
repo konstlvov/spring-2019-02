@@ -29,11 +29,11 @@ public class Book {
     @Column(name="BOOKNAME")
     private String bookName;
     
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="AUTHORID", referencedColumnName="AUTHORID")
     private Author author;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="GENREID", referencedColumnName="GENREID")
     private Genre genre;
 
