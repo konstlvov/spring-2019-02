@@ -98,17 +98,17 @@ public class BookLibCommands {
     }
     
     @ShellMethod("Inserts new genre")
-    public void insertGenre(String genreName) {
+    public void addGenre(String genreName) {
       genreRepo.save(new Genre(genreName));
     }
 
     @ShellMethod("Inserts new author")
-    public void insertAuthor(String authorName) {
+    public void addAuthor(String authorName) {
       authorRepo.save(new Author(authorName));
     }
 
-    @ShellMethod("Inserts new book")
-    public void insertBook(String bookName, Long authorId, Long genreId) {
+    @ShellMethod("Adds new book")
+    public void addBook(String bookName, Long authorId, Long genreId) {
       Optional<Author> a = authorRepo.findById(authorId);
       Optional<Genre> g = genreRepo.findById(genreId);
       if (a.isPresent() && g.isPresent()) {
