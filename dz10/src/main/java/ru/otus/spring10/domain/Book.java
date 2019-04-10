@@ -16,6 +16,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.transaction.Transactional;
 
 @Entity
 @Table(name="BOOK")
@@ -36,7 +37,8 @@ public class Book {
     @JoinColumn(name="GENREID", referencedColumnName="GENREID")
     private Genre genre;
 
-    @OneToMany(fetch=FetchType.EAGER, mappedBy="book", cascade=CascadeType.ALL)
+    @OneToMany(orphanRemoval=true, fetch=FetchType.EAGER, cascade=CascadeType.ALL)
+    @JoinColumn(name="COMMENTID")
     private List<Comment> comments;
     
     public Book() {}
