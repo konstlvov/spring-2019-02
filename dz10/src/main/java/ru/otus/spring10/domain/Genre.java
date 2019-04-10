@@ -48,4 +48,8 @@ public class Genre {
         return books;
     }
     
+    public String getDescription() {
+      return "Genre with id " + this.genreId + " is " + this.genreName;
+    }
+    
 }

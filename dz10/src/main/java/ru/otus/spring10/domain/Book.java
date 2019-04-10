@@ -36,8 +36,8 @@ public class Book {
     @JoinColumn(name="GENREID", referencedColumnName="GENREID")
     private Genre genre;
 
-    @OneToMany(fetch=FetchType.EAGER, mappedBy="book", cascade=CascadeType.ALL)
-    private List<Comment> comments;
+    //@OneToMany(fetch=FetchType.EAGER, mappedBy="book", cascade=CascadeType.ALL)
+    //private List<Comment> comments;
     
     public Book() {}
     
@@ -71,8 +71,15 @@ public class Book {
       return genre;
     }
     
-    public List<Comment> getComments() {
-        return comments;
+    //public List<Comment> getComments() {
+    //  return comments;
+    //}
+    
+    public String getDescription() {
+      return "Book with ID " + this.getId()
+        + " is named " + this.getName()
+        + " and it's author is " + this.getAuthor().getName()
+        + " and it's genre is " + this.getGenre().getName();
     }
 
     

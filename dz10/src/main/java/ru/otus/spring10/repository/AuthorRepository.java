@@ -5,11 +5,13 @@
  */
 package ru.otus.spring10.repository;
 
-import java.util.List;
-import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
-import ru.otus.spring10.domain.Comment;
+import ru.otus.spring10.domain.Author;
 
-public interface CommentRepository extends CrudRepository<Comment, Long> {
+/**
+ *
+ * @author lvov_k
+ */
+public interface AuthorRepository extends CrudRepository<Author, Long> {
+  
 }

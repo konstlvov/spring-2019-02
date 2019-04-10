@@ -51,4 +51,8 @@ public class Author {
         return books;
     }
     
+    public String getDescription() {
+      return "Author with ID " + this.authorId + " has name of " + this.authorName;
+    }
+    
 }

@@ -5,8 +5,10 @@
  */
 package ru.otus.spring10.domain;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -25,7 +27,7 @@ public class Comment {
     @Column(name="COMMENTTEXT")
     private String commentText;
     
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name="BOOKID", referencedColumnName="BOOKID")
     private Book book;
     
@@ -46,6 +48,12 @@ public class Comment {
     
     public Book getBook() {
         return this.book;
+    }
+    
+    public String getFullText() {
+        return "Comment with ID " + this.commentId + " was made on book \"" + this.book.getName() + "\""
+          + " written by " + this.book.getAuthor().getName()
+          + " and is says \"" + this.commentText + "\"";
     }
     
 }
