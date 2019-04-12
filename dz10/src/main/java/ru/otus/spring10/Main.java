@@ -1,7 +1,5 @@
 package ru.otus.spring10;
 
-import ch.qos.logback.classic.Level;
-import com.sun.istack.internal.logging.Logger;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
@@ -14,7 +12,6 @@ public class Main {
     // jdbc:h2:~/test.db - будет сохранять в файл test.db
     // jdbc:h2:mem:testdb - будет использовать БД в памяти
     public static void main(String[] args) throws Exception {
-      
         ApplicationContext context = SpringApplication.run(Main.class);
         System.out.println("Looks like you have just typed shell:>exit. Goodbye!");
     }

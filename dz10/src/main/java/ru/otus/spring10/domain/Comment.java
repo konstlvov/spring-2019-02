@@ -34,26 +34,26 @@ public class Comment {
     public Comment() {}
     
     public Comment(Book b, String text) {
-        this.book = b;
-        this.commentText = text;
+      this.book = b;
+      this.commentText = text;
     }
     
     public Long getId() {
-        return commentId;
+      return commentId;
     }
     
     public String getText() {
-        return this.commentText;
+      return this.commentText;
     }
     
     public Book getBook() {
-        return this.book;
+      return this.book;
     }
     
     public String getFullText() {
-        return "Comment with ID " + this.commentId + " was made on book \"" + this.book.getName() + "\""
-          + " written by " + this.book.getAuthor().getName()
-          + " and is says \"" + this.commentText + "\"";
+      return "Comment with ID " + this.commentId + " was made on book \"" + this.book.getName() + "\""
+        + " written by " + this.book.getAuthor().getName()
+        + " and it says \"" + this.commentText + "\"";
     }
     
 }

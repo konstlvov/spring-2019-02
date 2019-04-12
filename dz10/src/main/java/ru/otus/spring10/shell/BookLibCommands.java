@@ -25,7 +25,7 @@ import ru.otus.spring10.repository.AuthorRepository;
 import ru.otus.spring10.repository.BookRepository;
 import ru.otus.spring10.repository.CommentRepository;
 import ru.otus.spring10.repository.GenreRepository;
-import ru.otus.spring10.service.CommentService;
+
 
 @ShellComponent
 public class BookLibCommands {
@@ -33,7 +33,6 @@ public class BookLibCommands {
   private BookDaoJpa bookDao;
   private GenreDaoJpa genreDao;
   private AuthorDaoJpa authorDao;
-  private CommentService commentService;
   private CommentRepository commentRepo;
   private BookRepository bookRepo;
   private AuthorRepository authorRepo;
@@ -44,12 +43,11 @@ public class BookLibCommands {
 
   @Autowired
   public BookLibCommands(BookDaoJpa bookDao, GenreDaoJpa genreDao, AuthorDaoJpa authorDao,
-    CommentService commentService, CommentRepository commentRepo, BookRepository bookRepo,
+    CommentRepository commentRepo, BookRepository bookRepo,
     AuthorRepository authorRepo, GenreRepository genreRepo){
     this.bookDao = bookDao;
     this.genreDao = genreDao;
     this.authorDao = authorDao;
-    this.commentService = commentService;
     this.commentRepo = commentRepo;
     this.bookRepo = bookRepo;
     this.authorRepo = authorRepo;
@@ -133,8 +131,14 @@ public class BookLibCommands {
     
     @ShellMethod("Adds comment on book")
     @Transactional
-    public void addComment(Long bookId, String commentText) {
-        commentService.addCommentByBookId(bookId, commentText);
+    public void addComment(String commentText, Long bookId) {
+      Optional<Book> b = bookRepo.findById(bookId);
+      if (b.isPresent()) {
+        commentRepo.save(new Comment(b.get(), commentText));
+      }
+      else {
+        System.out.println("Book with ID " + bookId + " is not present, so I can't add comment on it");
+      }
     }
     
     @ShellMethod("Shows all comments")
@@ -168,5 +172,22 @@ public class BookLibCommands {
       //em.createQuery("delete from Comment where CommentID = :id")
       //.setParameter("id", c.get().getId())
       //.executeUpdate();        
+    }
+    
+    @ShellMethod("Shows comments on specified book")
+    public void showCommentsOnBook(Long bookId) {
+      Optional<Book> b = bookRepo.findById(bookId);
+      if (b.isPresent()) {
+        // реализация без Hibernate, @OneToMany как-то очень странно себя ведет, почти не работает
+        // NOTE: такая реализация требует переопределения метода Book::equals
+        for(Comment c: commentRepo.findAll()) {
+          if(c.getBook().equals(b.get())) {
+            System.out.println(c.getFullText());
+          }
+        }
+      }
+      else {
+        System.out.println("There is no book with ID " + bookId);
+      }
     }
 }

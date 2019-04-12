@@ -37,16 +37,16 @@ public class Book {
     @JoinColumn(name="GENREID", referencedColumnName="GENREID")
     private Genre genre;
 
-    @OneToMany(orphanRemoval=true, fetch=FetchType.EAGER, cascade=CascadeType.ALL)
-    @JoinColumn(name="COMMENTID")
-    private List<Comment> comments;
-    
     public Book() {}
     
     public Book(String bookName, Author author, Genre genre) {
         this.bookName = bookName;
         this.author = author;
         this.genre = genre;
+    }
+    
+    public boolean equals(Book b) {
+      return this.bookId.equals(b.getId());
     }
     
     public Long getId() {
@@ -72,10 +72,6 @@ public class Book {
     public Genre getGenre() {
       return genre;
     }
-    
-    //public List<Comment> getComments() {
-    //  return comments;
-    //}
     
     public String getDescription() {
       return "Book with ID " + this.getId()
