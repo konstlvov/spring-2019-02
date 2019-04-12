@@ -1,3 +1,4 @@
 nbactions.xml
 /.idea
 spring-shell.log
+/spring-io-guides/accessing-data-mongodb/target/
