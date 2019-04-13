@@ -1,0 +1,9 @@
+spring:
+  data:
+    mongodb:
+#      database: company
+       host: ds020208.mlab.com
+       port: 20208
+       database: tsstarter
+       username: tsstarter
+       password: tsstarter00
