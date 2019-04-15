@@ -1,4 +1,5 @@
 spring:
+  profiles: home
   data:
     mongodb:
 #      database: company
@@ -7,3 +8,12 @@ spring:
        database: tsstarter
        username: tsstarter
        password: tsstarter00
+
+---
+spring:
+  profiles: work
+  data:
+    mongodb:
+       host: vm-dit-lvov.abr.loc
+       port: 8200
+       database: test

@@ -9,10 +9,10 @@ import com.mongodb.DBCollection;
 @ChangeLog
 public class DatabaseChangelog {
 
-    @ChangeSet(order = "001", id = "addLermontov", author = "ydvorzhetskiy")
-    public void insertLermontov(DB db) {
-        DBCollection myCollection = db.getCollection("persons");
-        BasicDBObject doc = new BasicDBObject().append("name", "Lermontov");
-        myCollection.insert(doc);
-    }
+//    @ChangeSet(order = "001", id = "addLermontov", author = "ydvorzhetskiy")
+//    public void insertLermontov(DB db) {
+//        DBCollection myCollection = db.getCollection("persons");
+//        BasicDBObject doc = new BasicDBObject().append("name", "Lermontov");
+//        myCollection.insert(doc);
+//    }
 }
