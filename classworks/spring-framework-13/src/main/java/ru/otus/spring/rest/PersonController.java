@@ -8,6 +8,7 @@ import ru.otus.spring.repostory.PersonRepository;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import org.springframework.http.HttpStatus;
 
 @RestController
 public class PersonController {
@@ -40,17 +41,16 @@ public class PersonController {
         return PersonDto.toDto(person);
     }
 
-    @RequestMapping(
-            value = "/person/",
-            method = RequestMethod.POST
+    @PostMapping(
+            value = "/person"
     )
     public @ResponseBody
-    PersonDto create(
+    ResponseEntity<PersonDto> create(
             @RequestBody PersonDto dto
     ) {
         Person account = PersonDto.toDomainObject(dto);
         Person accountWithId = repository.save(account);
-        return PersonDto.toDto(accountWithId);
+        return ResponseEntity.status(HttpStatus.CREATED).body(PersonDto.toDto(accountWithId));
     }
 
     @DeleteMapping("/person/{id}")
