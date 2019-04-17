@@ -42,7 +42,7 @@ public class PersonController {
     }
 
     @PostMapping(
-            value = "/person"
+            value = "/person/"
     )
     public @ResponseBody
     ResponseEntity<PersonDto> create(
