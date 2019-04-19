@@ -37,6 +37,14 @@ public class ShellInterface {
   public void test() {
   }
   
+  @ShellMethod("Reset person repo")
+  public void reset() {
+    personRepo.deleteAll();
+    personRepo.save(new Person("Pushkin Alexander Sergeevich"));
+    personRepo.save(new Person("Lermontov Mikhail Yurievich"));
+    personRepo.save(new Person("Gogol Nikolay Vasilievich"));
+  }
+  
   @ShellMethod("Shows all persons")
   public void showPersons() {
     for(Person p: personRepo.findAll()) {
@@ -54,6 +62,19 @@ public class ShellInterface {
     Person p = mongoOps.findOne(query(where("name").is(s)), Person.class);
     if (p != null) {
       System.out.println("Person found by mongoOps: " + p.getName());
+    }
+  }
+  
+  @ShellMethod("Add person")
+  public void addPerson(String name) {
+    personRepo.save(new Person(name));
+  }
+  
+  @ShellMethod("Delete person by substrign match")
+  public void deletePerson(String substring) {
+    for (Person p: personRepo.findAllBySubstring(substring)){
+      System.out.println("About to delete person: " + p.getName());
+      personRepo.delete(p);
     }
   }
   
