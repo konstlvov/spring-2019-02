@@ -33,9 +33,9 @@
         <span th:text="${p.id}">1</span>
     </div>
 
-    <div class="row">
+    <div class="row" th:object="${p}">
         <label>Name:&nbsp;</label>
-        <span th:text="${p.name}">John Doe</span>
+        <span th:text="*{name}">John Doe</span>
     </div>
 
     <div class="row">
