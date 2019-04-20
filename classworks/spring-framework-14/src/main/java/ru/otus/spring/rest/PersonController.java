@@ -34,6 +34,28 @@ public class PersonController {
         model.addAttribute("p", person);
         return "edit";
     }
+
+    @PostMapping("/edit")
+    public String editPage(@RequestParam("id") int id, @RequestParam("name") String name, Model model) {
+        if (id == 0) { // this is addition of new Person
+            Person p = new Person(name);
+            repository.save(p);
+            return "redirect:/";
+        }
+        else {
+            Person person = repository.findById(id).orElseThrow(NotFoundException::new);
+            person.setName(name);
+            repository.save(person);
+        }
+        return "redirect:/";
+    }
+
+    @GetMapping("/add")
+    public String addPage(Model model) {
+        Person person = new Person("");
+        model.addAttribute("p", person);
+        return "edit";
+    }
     
     @GetMapping("/delete")
     public String deletePage(@RequestParam("id") int id, Model model) {
@@ -49,21 +71,7 @@ public class PersonController {
       return "redirect:/";
     }
     
-    @GetMapping("/add")
-    public String addPage(Model model) {
-        Person person = new Person("");
-        repository.save(person);
-        model.addAttribute("p", person);
-        return "edit";
-    }
     
 
-    @PostMapping("/edit")
-    public String editPage(@RequestParam("id") int id, @RequestParam("name") String name, Model model) {
-        Person person = repository.findById(id).orElseThrow(NotFoundException::new);
-        person.setName(name);
-        repository.save(person);
-        return "redirect:/";
-    }
     
 }
