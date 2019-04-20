@@ -26,11 +26,11 @@
     </tr>
     </thead>
     <tbody>
-    <tr>
-        <td>1</td>
-        <td>John Doe</td>
+    <tr th:each="p: ${persons}">
+        <td th:text="${p.id}">1</td>
+        <td th:text="${p.name}">John Doe</td>
         <td>
-            <a href="edit.html">Edit</a>
+            <a th:href="@{/edit(id=${p.id})}" href="edit.html">Edit</a>
         </td>
     </tr>
     </tbody>
