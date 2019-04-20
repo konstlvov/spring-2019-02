@@ -38,8 +38,15 @@ public class PersonController {
     @GetMapping("/delete")
     public String deletePage(@RequestParam("id") int id, Model model) {
         Person person = repository.findById(id).orElseThrow(NotFoundException::new);
-        repository.delete(person);
-        return "redirect:/";
+        model.addAttribute("p", person);
+        return "delete";
+    }
+    
+    @PostMapping("/confirmdelete")
+    public String confirmdeletePage(@RequestParam("id") int id, Model model) {
+      Person person = repository.findById(id).orElseThrow(NotFoundException::new);
+      repository.delete(person);
+      return "redirect:/";
     }
     
     @GetMapping("/add")
