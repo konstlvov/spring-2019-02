@@ -34,6 +34,22 @@ public class PersonController {
         model.addAttribute("p", person);
         return "edit";
     }
+    
+    @GetMapping("/delete")
+    public String deletePage(@RequestParam("id") int id, Model model) {
+        Person person = repository.findById(id).orElseThrow(NotFoundException::new);
+        repository.delete(person);
+        return "redirect:/";
+    }
+    
+    @GetMapping("/add")
+    public String addPage(Model model) {
+        Person person = new Person("");
+        repository.save(person);
+        model.addAttribute("p", person);
+        return "edit";
+    }
+    
 
     @PostMapping("/edit")
     public String editPage(@RequestParam("id") int id, @RequestParam("name") String name, Model model) {
