@@ -31,7 +31,7 @@ public class PersonController {
     @GetMapping("/edit")
     public String editPage(@RequestParam("id") int id, Model model) {
         Person person = repository.findById(id).orElseThrow(NotFoundException::new);
-        model.addAttribute("person", person);
+        model.addAttribute("p", person);
         return "edit";
     }
 }
