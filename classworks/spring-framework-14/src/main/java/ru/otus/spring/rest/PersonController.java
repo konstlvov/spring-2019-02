@@ -34,4 +34,13 @@ public class PersonController {
         model.addAttribute("p", person);
         return "edit";
     }
+
+    @PostMapping("/edit")
+    public String editPage(@RequestParam("id") int id, @RequestParam("name") String name, Model model) {
+        Person person = repository.findById(id).orElseThrow(NotFoundException::new);
+        person.setName(name);
+        repository.save(person);
+        return "redirect:/";
+    }
+    
 }
