@@ -32,8 +32,12 @@
         <td>
             <a th:href="@{/edit(id=${p.id})}" href="edit.html">Edit</a>
         </td>
+        <td>
+            <a th:href="@{/delete(id=${p.id})}" href="delete.html">Delete</a>
+        </td>
     </tr>
     </tbody>
 </table>
+<a th:href="@{/add}" href="add.html" >Add</a>
 </body>
 </html>
