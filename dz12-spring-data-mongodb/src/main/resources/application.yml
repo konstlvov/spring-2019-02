@@ -1,0 +1,18 @@
+spring:
+  profiles: home
+  data:
+    mongodb:
+       host: ds020208.mlab.com
+       port: 20208
+       database: tsstarter
+       username: tsstarter
+       password: tsstarter00
+
+---
+spring:
+  profiles: work
+  data:
+    mongodb:
+       host: vm-dit-lvov.abr.loc
+       port: 8200
+       database: books
