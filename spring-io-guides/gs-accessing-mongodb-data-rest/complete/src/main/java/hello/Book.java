@@ -1,7 +1,9 @@
 package hello;
 
+import java.util.Date;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 @Document(collection="books") // имя коллекции в mongodb. По умолчанию будет book
 public class Book {
@@ -13,6 +15,16 @@ public class Book {
   private String author;
   private String description;
   private String publisher;
+  @Field("updated_date")
+  private Date updatedDate;
+  
+  public Date getUpdatedDate() {
+    return updatedDate;
+  }
+
+  public void setUpdatedDate(Date date) {
+    this.updatedDate = date;
+  }
   
 
 	public String getIsbn() {
