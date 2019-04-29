@@ -18,11 +18,15 @@ public class Book {
   @Field("updated_date")
   private Date updated_date;
   
-  public Date getUpdatedDate() {
+  public String get_id() {
+    return id;
+  }
+  
+  public Date getupdated_date() {
     return updated_date;
   }
 
-  public void setUpdatedDate(Date date) {
+  public void setupdated_date(Date date) {
     this.updated_date = date;
   }
   
