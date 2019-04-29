@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -38,7 +39,28 @@ public class BookController {
     }
  
     @PostMapping("/books")
-    void addBook(@RequestBody Book book) {
+    public void addBook(@RequestBody Book book) {
         bookRepository.save(book);
     }
+
+    @PutMapping("/books/{id}")
+    public Book updateBook(@PathVariable("id") String id, @RequestBody Book book) {
+      Optional<Book> ob = bookRepository.findById(id);
+      if (ob.isPresent()) {
+        Book b = ob.get();
+        b.setIsbn(book.getIsbn());
+        b.setAuthor(book.getAuthor());
+        b.setPublisher(book.getPublisher());
+        b.setpublished_year(book.getpublished_year());
+        b.setupdated_date(book.getupdated_date());
+        b.setDescription(book.getDescription());
+        bookRepository.save(b);
+        return b;
+      }
+      else {
+        return null;
+      }
+    }
+
+    
 }

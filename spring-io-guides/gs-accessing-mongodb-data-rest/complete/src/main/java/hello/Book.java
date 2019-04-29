@@ -15,13 +15,27 @@ public class Book {
   private String author;
   private String description;
   private String publisher;
-  @Field("updated_date")
+  @Field("published_year")
+  private String published_year;
+  @Field("updated_date") // так задаем имя поля внутри БД монги
   private Date updated_date;
   
+  // надо чтобы в JSON оно выглядело как "_id":"5b6d46e8dc78061a6c664c58"
+  // такое именование геттера позволяет этого достичь
   public String get_id() {
     return id;
   }
   
+  public String getpublished_year() {
+    return published_year;
+  }
+  
+  public void setpublished_year(String published_year) {
+    this.published_year = published_year;
+  }
+  
+  // аналогично, надо чтобы в JSON оно было в виде "updated_date":"2018-08-10T08:03:52.648+0000"
+  // поэтому геттер назван не в camelCase, а так, как назван
   public Date getupdated_date() {
     return updated_date;
   }
