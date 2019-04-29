@@ -51,6 +51,7 @@ public class BookController {
       if (ob.isPresent()) {
         Book b = ob.get();
         b.setIsbn(book.getIsbn());
+        b.setTitle(book.getTitle());
         b.setAuthor(book.getAuthor());
         b.setPublisher(book.getPublisher());
         b.setpublished_year(book.getpublished_year());
