@@ -40,12 +40,13 @@ public class BookController {
     }
  
     @PostMapping("/books")
-    public void addBook(@RequestBody Book book) {
-        bookRepository.save(book);
+    public Book addBook(@RequestBody Book book) {
+        bookRepository.insert(book);
+        return book;
     }
 
     @PutMapping("/books/{id}")
-    public Book updateBook(@PathVariable("id") String id, @RequestBody Book book) {
+    public Optional<Book> updateBook(@PathVariable("id") String id, @RequestBody Book book) {
       Optional<Book> ob = bookRepository.findById(id);
       if (ob.isPresent()) {
         Book b = ob.get();
@@ -56,11 +57,8 @@ public class BookController {
         b.setupdated_date(book.getupdated_date());
         b.setDescription(book.getDescription());
         bookRepository.save(b);
-        return b;
       }
-      else {
-        return null;
-      }
+      return ob;
     }
     
     @DeleteMapping("/books/{id}")
