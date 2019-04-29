@@ -5,7 +5,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
-@Document(collection="books") // имя коллекции в mongodb. По умолчанию будет book
+@Document(collection="books") // имя коллекции в mongodb. По умолчанию будет book, если явно не задать collection="books"
 public class Book {
 
 	@Id private String id;
@@ -16,14 +16,14 @@ public class Book {
   private String description;
   private String publisher;
   @Field("updated_date")
-  private Date updatedDate;
+  private Date updated_date;
   
   public Date getUpdatedDate() {
-    return updatedDate;
+    return updated_date;
   }
 
   public void setUpdatedDate(Date date) {
-    this.updatedDate = date;
+    this.updated_date = date;
   }
   
 
