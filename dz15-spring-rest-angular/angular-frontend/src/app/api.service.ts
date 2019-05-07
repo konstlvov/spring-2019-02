@@ -6,7 +6,10 @@ import { catchError, tap, map } from 'rxjs/operators';
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
 };
-const apiUrl = "/api";
+
+//const apiUrl = "/api"; // pointer to Express backed API
+//const apiUrl = "http://localhost:8080/books"; // pointed to Spring backed API - BookController
+const apiUrl = "http://localhost:8080/booklist"; // pointed to Spring backed autowired API: @RepositoryRestResource
 
 @Injectable({
   providedIn: 'root'
@@ -35,9 +38,14 @@ export class ApiService {
     return body || { };
   }  
 
+  private extractBooklistData(res: Response) {
+    let body = res['_embedded'].books;
+    return body || { };
+  }  
+
   getBooks(): Observable<any> {
     return this.http.get(apiUrl, httpOptions).pipe(
-      map(this.extractData),
+      map(this.extractBooklistData),
       catchError(this.handleError));
   }
 

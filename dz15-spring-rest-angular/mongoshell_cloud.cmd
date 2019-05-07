@@ -1,0 +1,1 @@
+"C:\Program Files\MongoDB\Server\4.0\bin\mongo.exe" ds020208.mlab.com:20208/tsstarter -u tsstarter -p tsstarter00
