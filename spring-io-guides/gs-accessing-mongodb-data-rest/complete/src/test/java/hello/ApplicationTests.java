@@ -44,6 +44,9 @@ public class ApplicationTests {
 	@Autowired
 	private PersonRepository personRepository;
 
+  @Autowired
+	private BookRepository bookRepository;
+
 	@Before
 	public void deleteAllBeforeTests() throws Exception {
 		personRepository.deleteAll();
@@ -55,6 +58,11 @@ public class ApplicationTests {
 		mockMvc.perform(get("/")).andDo(print()).andExpect(status().isOk()).andExpect(
 				jsonPath("$._links.people").exists());
 	}
+  
+  @Test
+  public void shouldReturnBookRepositoryIndex() throws Exception {
+    mockMvc.perform(get("/booklist")).andDo(print());
+  }
 
 	@Test
 	public void shouldCreateEntity() throws Exception {
