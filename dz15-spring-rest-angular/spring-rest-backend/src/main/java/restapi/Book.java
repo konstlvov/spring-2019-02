@@ -1,4 +1,4 @@
-package hello;
+package restapi;
 
 import java.util.Date;
 import org.springframework.data.annotation.Id;
@@ -43,7 +43,6 @@ public class Book {
   public void setupdated_date(Date date) {
     this.updated_date = date;
   }
-  
 
 	public String getIsbn() {
 		return isbn;
