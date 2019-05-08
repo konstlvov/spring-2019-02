@@ -1,5 +1,5 @@
 spring:
-  profiles: home
+  profiles: cloud
   data:
     mongodb:
        host: ds020208.mlab.com
@@ -10,7 +10,7 @@ spring:
 
 ---
 spring:
-  profiles: work
+  profiles: abr
   data:
     mongodb:
        host: vm-dit-lvov.abr.loc
