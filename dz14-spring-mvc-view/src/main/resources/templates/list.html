@@ -2,22 +2,23 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
-    <title>List of all persons</title>
+    <title>List of all books</title>
     <style type="text/css">
         body {
             padding: 50px;
+            font-family: monospace;
         }
 
-        .persons, .persons td {
+        .books, .books td {
             border: 1px solid lightgray;
             padding: 5px;
         }
     </style>
 </head>
 <body>
-<h1>Persons:</h1>
+<h1>Books:</h1>
 
-<table class="persons">
+<table class="books">
     <thead>
     <tr>
         <th>ID</th>
@@ -26,14 +27,14 @@
     </tr>
     </thead>
     <tbody>
-    <tr th:each="p: ${persons}">
-        <td th:text="${p.id}">1</td>
-        <td th:text="${p.name}">John Doe</td>
+    <tr th:each="b: ${books}">
+        <td th:text="${b.id}">1</td>
+        <td th:text="${b.name}">John Doe</td>
         <td>
-            <a th:href="@{/edit(id=${p.id})}" href="edit.html">Edit</a>
+            <a th:href="@{/edit(id=${b.id})}" href="edit.html">Edit</a>
         </td>
         <td>
-            <a th:href="@{/delete(id=${p.id})}" href="delete.html">Delete</a>
+            <a th:href="@{/delete(id=${b.id})}" href="delete.html">Delete</a>
         </td>
     </tr>
     </tbody>

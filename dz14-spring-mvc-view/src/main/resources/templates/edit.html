@@ -6,6 +6,7 @@
     <style type="text/css">
         body {
             padding: 50px;
+            font-family: monospace;
         }
 
         label {
@@ -25,21 +26,27 @@
 <body>
 
 <!-- Person edition -->
-<form id="edit-form" th:action="@{/edit(id=${p.id})}" th:method="post" action="edit.html">
+<form id="edit-form" th:action="@{/edit(id=${b.id})}" th:method="post" action="edit.html">
     <h1>Change Person Info:</h1>
 
     <div class="row">
         <label for="id-input">ID:</label>
-        <input id="id-input" type="text" readonly="readonly" th:value="${p.id}" value="1"/>
+        <input id="id-input" type="text" readonly="readonly" th:value="${b.id}" value="5cd2abe370af4b1d74b4dba1"/>
     </div>
 
     <div class="row">
         <label for="holder-input">Name:</label>
-        <input id="holder-input" name="name" type="text" th:value="${p.name}" value="John Doe"/>
+        <input id="holder-input" name="name" type="text" th:value="${b.name}" value="The Catcher in the Rye"/>
     </div>
 
     <div class="row">
         <button type="submit">Save</button>
+    </div>
+</form>
+
+<form id="cancel" th:method="get" action="/">
+    <div class="row">
+        <button type="submit">Cancel</button>
     </div>
 </form>
 
