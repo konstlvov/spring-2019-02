@@ -28,6 +28,6 @@ public class AnnotatedController {
             return state + 1;
         })
                 .delayElements(Duration.ofSeconds(1L))
-                .map(i -> "" + i);
+                .map(i -> String.valueOf(i)); // или String::valueOf внутри скобок
     }
 }

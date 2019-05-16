@@ -21,7 +21,7 @@ public class PersonController {
     }
 
     @GetMapping("/person/{id}")
-    public Mono<Person> byId(String id) {
+    public Mono<Person> byId(@PathVariable("id") String id) {
         return repository.findById(id);
     }
 

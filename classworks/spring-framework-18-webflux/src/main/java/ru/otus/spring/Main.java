@@ -26,6 +26,7 @@ public class Main {
         ApplicationContext context = SpringApplication.run(Main.class);
         PersonRepository repository = context.getBean(PersonRepository.class);
 
+        repository.deleteAll().subscribe(p -> System.out.println("Repository cleaned: "));
         repository.saveAll(Arrays.asList(
                 new Person("Pushkin", 22),
                 new Person("Lermontov", 22),
@@ -44,6 +45,11 @@ public class Main {
                 .GET("/func/person/{id}", accept(APPLICATION_JSON),
                         request -> repository.findById(request.pathVariable("id"))
                                 .flatMap(person -> ok().contentType(APPLICATION_JSON).body(fromObject(person)))
+                )
+               .GET(
+                 "/func/personbylastname/{lastName}"
+                 ,accept(APPLICATION_JSON)
+                 ,request -> repository.findAllByLastName(request.pathVariable("lastName")).flatMap(person -> ok().contentType(APPLICATION_JSON).body(fromObject(person))).next()
                 )
                 .build();
 
