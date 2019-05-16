@@ -1,3 +1,4 @@
 nbactions.xml
 /.idea
 spring-shell.log
+/dz15-spring-rest-angular/spring-rest-backend/target/

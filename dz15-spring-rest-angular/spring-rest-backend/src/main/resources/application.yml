@@ -1,0 +1,17 @@
+spring:
+  profiles: abr
+  data:
+    mongodb:
+      host: vm-dit-lvov.abr.loc 
+      port: 8200
+      database: mean-angular6
+---
+spring:
+  profiles: cloud
+  data:
+    mongodb:
+      host: ds020208.mlab.com
+      port: 20208
+      database: tsstarter
+      username: tsstarter
+      password: tsstarter00
