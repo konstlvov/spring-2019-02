@@ -1,11 +1,13 @@
 package ru.otus.spring.domain;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import javax.xml.bind.annotation.XmlRootElement;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 @Document
+@XmlRootElement
 public class Person {
 
     @Id

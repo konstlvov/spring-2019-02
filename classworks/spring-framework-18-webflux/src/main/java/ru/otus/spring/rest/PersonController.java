@@ -1,5 +1,6 @@
 package ru.otus.spring.rest;
 
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -15,12 +16,12 @@ public class PersonController {
         this.repository = repository;
     }
 
-    @GetMapping("/person")
+    @GetMapping(value = "/person", produces = { MediaType.APPLICATION_JSON_VALUE})
     public Flux<Person> all() {
         return repository.findAll();
     }
 
-    @GetMapping("/person/{id}")
+    @RequestMapping(value = "/person/{id}", method = RequestMethod.GET, produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE  })
     public Mono<Person> byId(@PathVariable("id") String id) {
         return repository.findById(id);
     }
