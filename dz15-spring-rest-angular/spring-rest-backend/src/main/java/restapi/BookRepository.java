@@ -10,6 +10,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 // collectionResourceRel - имя коллекции в mongodb
 // booklist - api endpoint (http://localhost:8080/booklist)
 @RepositoryRestResource(collectionResourceRel = "books", path = "booklist")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = {"http://localhost:3000", "http://localhost:4200"})
 public interface BookRepository extends MongoRepository<Book, String> {
 }

@@ -10,7 +10,7 @@ import { Observable } from 'rxjs';
 })
 export class BookComponent implements OnInit {
 
-  books: any;
+  books: IBook[];
   displayedColumns = ['isbn', 'title', 'author'];
   dataSource = new BookDataSource(this.api);  
   constructor(private api: ApiService) { }
@@ -21,12 +21,12 @@ export class BookComponent implements OnInit {
 
 }
 
-export class BookDataSource extends DataSource<any> {
+export class BookDataSource extends DataSource<IBook[]> {
   constructor(private api: ApiService) {
     super();
   }
 
-  connect() {
+  connect(): Observable<any> {
     return this.api.getBooks();
   }
 
