@@ -1,4 +1,4 @@
-package restapi;
+package booklib;
 
 import java.util.Date;
 import org.springframework.data.annotation.Id;

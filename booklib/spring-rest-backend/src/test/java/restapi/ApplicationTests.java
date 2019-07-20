@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package restapi;
+package booklib;
 
-import restapi.BookRepository;
+import booklib.BookRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
