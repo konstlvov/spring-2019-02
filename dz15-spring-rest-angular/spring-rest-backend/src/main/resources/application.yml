@@ -15,3 +15,11 @@ spring:
       database: tsstarter
       username: tsstarter
       password: tsstarter00
+---
+spring:
+  profiles: udelny
+  data:
+    mongodb:
+      host: vm-oel75
+      port: 27017
+      database: mean-angular6
