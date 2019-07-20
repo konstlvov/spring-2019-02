@@ -34,14 +34,10 @@ export class ApiService {
     return throwError('Something bad happened; please try again later.');
   };  
 
-  private extractData(res: Response) {
-    let body = res;
-    return body || { };
-  }  
-
-  private extractBooklistData(res: Response) {
-    let body = res['_embedded'].books;
-    return body || { };
+  // функция нужна, потому что список книг содержится в ключе _embedded
+  private extractBooklistData(res: Response): IBook[] {
+    let body: IBook[] = res['_embedded'].books;
+    return body;
   }  
 
   getBooks(): Observable<IBook[]> {
@@ -50,23 +46,22 @@ export class ApiService {
       catchError(this.handleError));
   }
 
-  getBook(id: string): Observable<any> {
+  getBook(id: string): Observable<IBook> {
     const url = `${apiUrl}/${id}`;
-    return this.http.get(url, httpOptions).pipe(
-      map(this.extractData),
+    return this.http.get<IBook>(url, httpOptions).pipe(
       catchError(this.handleError));
   }
 
-  postBook(data): Observable<any> {
-    return this.http.post(apiUrl, data, httpOptions)
+  postBook(book: IBook): Observable<IBook> {
+    return this.http.post<IBook>(apiUrl, book, httpOptions)
       .pipe(
         catchError(this.handleError)
       );
   }
 
-  updateBook(id: string, data): Observable<any> {
+  updateBook(id: string, book: IBook): Observable<IBook> {
     const url = `${apiUrl}/${id}`;
-    return this.http.put(url, data, httpOptions)
+    return this.http.put<IBook>(url, book, httpOptions)
       .pipe(
         catchError(this.handleError)
       );
@@ -74,7 +69,7 @@ export class ApiService {
 
   deleteBook(id: string): Observable<{}> {
     const url = `${apiUrl}/${id}`;
-    return this.http.delete(url, httpOptions)
+    return this.http.delete<IBook>(url, httpOptions)
       .pipe(
         catchError(this.handleError)
       );

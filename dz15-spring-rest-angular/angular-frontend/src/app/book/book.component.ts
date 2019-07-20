@@ -26,7 +26,7 @@ export class BookDataSource extends DataSource<IBook[]> {
     super();
   }
 
-  connect(): Observable<IBook[]> {
+  connect(): Observable<any> {
     return this.api.getBooks();
   }
 
