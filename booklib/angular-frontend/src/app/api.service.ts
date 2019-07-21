@@ -10,7 +10,8 @@ const httpOptions = {
 
 //const apiUrl = "/api"; // pointer to Express backed API
 //const apiUrl = "http://localhost:8080/books"; // pointed to Spring backed API - BookController
-const apiUrl = "http://localhost:8080/booklist"; // pointed to Spring backed autowired API: @RepositoryRestResource
+//const apiUrl = "http://localhost:8080/booklist"; // pointed to Spring backed autowired API: @RepositoryRestResource
+const apiUrl = "http://localhost:8080/fluxbooks"; // pointed to WebFlux backed API implemented in BookController.java again
 
 @Injectable({
   providedIn: 'root'
@@ -34,15 +35,8 @@ export class ApiService {
     return throwError('Something bad happened; please try again later.');
   };  
 
-  // функция нужна, потому что список книг содержится в ключе _embedded
-  private extractBooklistData(res: Response): IBook[] {
-    let body: IBook[] = res['_embedded'].books;
-    return body;
-  }  
-
   getBooks(): Observable<IBook[]> {
-    return this.http.get(apiUrl, httpOptions).pipe(
-      map(this.extractBooklistData),
+    return this.http.get<IBook[]>(apiUrl, httpOptions).pipe(
       catchError(this.handleError));
   }
 
