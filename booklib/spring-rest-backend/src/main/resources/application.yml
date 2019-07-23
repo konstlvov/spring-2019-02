@@ -23,3 +23,11 @@ spring:
       host: vm-oel75
       port: 27017
       database: mean-angular6
+---
+spring:
+  profiles: udelny-docker
+  data:
+    mongodb:
+      host: 172.17.0.1
+      port: 27000
+      database: mean-angular6

@@ -11,7 +11,8 @@ const httpOptions = {
 //const apiUrl = "/api"; // pointer to Express backed API
 //const apiUrl = "http://localhost:8080/books"; // pointed to Spring backed API - BookController
 //const apiUrl = "http://localhost:8080/booklist"; // pointed to Spring backed autowired API: @RepositoryRestResource
-const apiUrl = "http://localhost:8080/fluxbooks"; // pointed to WebFlux backed API implemented in BookController.java again
+// const apiUrl = "http://localhost:8080/fluxbooks"; // pointed to WebFlux backed API implemented in BookController.java again
+const apiUrl = "http://vm-oel75:8080/fluxbooks";
 
 @Injectable({
   providedIn: 'root'
