@@ -36,18 +36,18 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@AutoConfigureMockMvc
+//@AutoConfigureMockMvc
 public class ApplicationTests {
 
-	@Autowired
-	private MockMvc mockMvc;
+	//@Autowired
+	//private MockMvc mockMvc;
 
-  @Autowired
-	private BookRepository bookRepository;
+  //@Autowired
+	//private BookRepository bookRepository;
  
   @Test
   public void shouldReturnBookRepositoryIndex() throws Exception {
-    mockMvc.perform(get("/booklist")).andDo(print());
+    //mockMvc.perform(get("/fluxbooks")).andDo(print());
   }
 }
 
