@@ -37,15 +37,8 @@ export class ApiService {
     return throwError('Something bad happened; please try again later.');
   };  
 
-  // функция нужна, потому что список книг содержится в ключе _embedded
-  private extractBooklistData(res: Response): IBook[] {
-    let body: IBook[] = res['_embedded'].books;
-    return body;
-  }  
-
   getBooks(): Observable<IBook[]> {
-    return this.http.get(apiUrl, httpOptions).pipe(
-      map(this.extractBooklistData),
+    return this.http.get<IBook[]>(apiUrl, httpOptions).pipe(
       catchError(this.handleError));
   }
 
