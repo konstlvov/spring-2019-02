@@ -23,3 +23,11 @@ spring:
       host: vm-oel75
       port: 27017
       database: mean-angular6
+---
+spring:
+  profiles: abr-docker
+  data:
+    mongodb:
+      host: orsapps-tst.abr.loc 
+      port: 27017
+      database: mean-angular6

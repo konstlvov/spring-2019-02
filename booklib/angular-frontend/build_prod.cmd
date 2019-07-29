@@ -1,0 +1,1 @@
+ng build --prod --base-href "http://orsapps-tst.abr.loc:3000/"
