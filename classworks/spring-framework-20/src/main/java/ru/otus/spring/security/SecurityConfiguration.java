@@ -26,8 +26,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 // По умолчанию SecurityContext хранится в сессии
                 // Это необходимо, чтобы он нигде не хранился
                 // и данные приходили каждый раз с запросом
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
-                //.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                //.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and().authorizeRequests().antMatchers("/public").permitAll()
                 .and().authorizeRequests().antMatchers("/authenticated", "/success", "/greeting").authenticated()
                 // Включает Form-based аутентификацию (используется либо .formLogin(), либо .httpBasic() )
@@ -39,7 +39,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 // Включает Remember-me аутентифкацию: на форме появляется галка "Remember me". Надо использовать,
                 // наверное, совместно с formLogin() и SessionCreationPolicy.STATELESS,
                 // когда Спринг не использует HTTP-сессию для аутентификации
-                //.and().rememberMe().key("someSecret")
+                .and().rememberMe().key("someSecret")
         ;
     }
 
