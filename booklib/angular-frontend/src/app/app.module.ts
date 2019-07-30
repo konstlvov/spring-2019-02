@@ -10,6 +10,7 @@ import { BookDetailComponent } from './book-detail/book-detail.component';
 import { BookCreateComponent } from './book-create/book-create.component';
 import { BookEditComponent } from './book-edit/book-edit.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ApiService } from './api.service';
 
 import {
   MatInputModule,
@@ -74,7 +75,7 @@ const appRoutes: Routes = [
     MatCardModule,
     MatFormFieldModule    
   ],
-  providers: [],
+  providers: [ApiService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

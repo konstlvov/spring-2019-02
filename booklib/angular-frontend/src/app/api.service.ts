@@ -5,7 +5,7 @@ import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http
 import { catchError, tap, map } from 'rxjs/operators';
 
 const httpOptions = {
-  headers: new HttpHeaders({'Content-Type': 'application/json'})
+  headers: new HttpHeaders({'Content-Type': 'application/json', 'Cookie': 'SESSION=4df4826f-f486-4700-b924-6dc504caee33'})
 };
 
 //const apiUrl = "/api"; // pointer to Express backed API
@@ -13,15 +13,33 @@ const httpOptions = {
 //const apiUrl = "http://localhost:8080/booklist"; // pointed to Spring backed autowired API: @RepositoryRestResource
 //const apiUrl = "http://localhost:8080/fluxbooks"; // pointed to WebFlux backed API implemented in BookController.java again
 //const apiUrl = "http://vm-oel71:8080/fluxbooks";
-//const apiUrl = "http://localhost:8080/fluxbooks"; // pointed to WebFlux backed API implemented in BookController.java again
-const apiUrl = "http://orsapps-tst:8080/fluxbooks";
+const apiUrl = "http://localhost:8080/fluxbooks"; // pointed to WebFlux backed API implemented in BookController.java again
+//const apiUrl = "http://orsapps-tst:8080/fluxbooks";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
+  authenticated: boolean = false;
 
   constructor(private http: HttpClient) { }
+
+  authenticate(credentials, callback) {
+
+          const headers = new HttpHeaders(credentials ? {
+              authorization : 'Basic ' + btoa(credentials.username + ':' + credentials.password)
+          } : {});
+
+          this.http.get('user', {headers: headers}).subscribe(response => {
+              if (response['name']) {
+                  this.authenticated = true;
+              } else {
+                  this.authenticated = false;
+              }
+              return callback && callback();
+          });
+
+      }
 
   private handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {
