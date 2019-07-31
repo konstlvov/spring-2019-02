@@ -28,6 +28,6 @@ spring:
   profiles: udelny-docker
   data:
     mongodb:
-      host: vm-oel75
-      port: 27000
+      host: mongo-mang6
+      port: 27017
       database: mean-angular6

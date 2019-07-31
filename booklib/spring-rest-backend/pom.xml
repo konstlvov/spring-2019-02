@@ -5,7 +5,8 @@
 
     <groupId>org.springframework</groupId>
     <artifactId>booklib</artifactId>
-    <version>0.1.0</version>
+    <version>release</version>
+
 
     <parent>
         <groupId>org.springframework.boot</groupId>
