@@ -5,7 +5,8 @@ import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http
 import { catchError, tap, map } from 'rxjs/operators';
 
 const httpOptions = {
-  headers: new HttpHeaders({'Content-Type': 'application/json', 'Cookie': 'SESSION=4df4826f-f486-4700-b924-6dc504caee33'})
+  headers: new HttpHeaders({'Content-Type': 'application/json', 'Accept': 'application/json, application/xml, text/plain, */*' ,  'Cookie': 'SESSION=4df4826f-f486-4700-b924-6dc504caee33'})
+  ,withCredentials: true
 };
 
 //const apiUrl = "/api"; // pointer to Express backed API

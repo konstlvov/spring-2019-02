@@ -22,8 +22,14 @@ import {
   MatButtonModule,
   MatCardModule,
   MatFormFieldModule } from "@angular/material";
+import { LoginComponent } from './login/login.component';
 
 const appRoutes: Routes = [
+  {
+    path: 'login',
+    component: LoginComponent,
+    data: { title: 'Login page' }
+  },
   {
     path: 'books',
     component: BookComponent,
@@ -56,7 +62,8 @@ const appRoutes: Routes = [
     BookComponent,
     BookDetailComponent,
     BookCreateComponent,
-    BookEditComponent
+    BookEditComponent,
+    LoginComponent
   ],
   imports: [
     RouterModule.forRoot(appRoutes),
