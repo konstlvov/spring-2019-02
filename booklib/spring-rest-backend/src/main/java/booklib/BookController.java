@@ -6,7 +6,10 @@ import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.io.IOException;
+
 //@CrossOrigin(origins = {"http://localhost:4200", "http://localhost:8080"})
+//@CrossOrigin(origins = {"http://localhost:8080"})
 @RestController
 @CrossOrigin
 public class BookController {
