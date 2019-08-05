@@ -6,10 +6,6 @@ import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.io.IOException;
-
-//@CrossOrigin(origins = {"http://localhost:4200", "http://localhost:8080"})
-//@CrossOrigin(origins = {"http://localhost:8080"})
 @RestController
 @CrossOrigin
 public class BookController {
@@ -37,10 +33,8 @@ public class BookController {
 
     @PutMapping("/fluxbooks/{id}")
     public Mono<ResponseEntity<Book>> updateBook(@PathVariable("id") String id, @RequestBody Book book) {
-        //Mono<Book> ob = bookRepository.findById(id);
         return bookRepository.findById(id)
           .flatMap(existingBook -> {
-              //existingBook.setText(book.getText());
               existingBook.setIsbn(book.getIsbn());
               existingBook.setTitle(book.getTitle());
               existingBook.setAuthor(book.getAuthor());
