@@ -1,90 +1,41 @@
 package booklib;
 
 import org.springframework.context.annotation.Bean;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.MapReactiveUserDetailsService;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.server.SecurityWebFilterChain;
-import org.springframework.security.web.server.ServerAuthenticationEntryPoint;
 import org.springframework.security.web.server.authentication.RedirectServerAuthenticationSuccessHandler;
-import org.springframework.security.web.server.authentication.WebFilterChainServerAuthenticationSuccessHandler;
-import org.springframework.security.web.server.savedrequest.ServerRequestCache;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.reactive.CorsConfigurationSource;
-import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
-import org.springframework.web.server.ServerWebExchange;
-import reactor.core.publisher.Mono;
-
-import java.net.URI;
+import java.net.URISyntaxException;
 
 @EnableWebFluxSecurity
 public class SecurityConfig {
-	@Bean
-	public MapReactiveUserDetailsService userDetailsService() {
-		UserDetails user = User.withDefaultPasswordEncoder()
-						.username("user")
-						.password("user")
-						.roles("USER")
-						.build();
-		return new MapReactiveUserDetailsService(user);
+	private final UsersService us;
+
+	public SecurityConfig(UsersService us) {
+		this.us = us;
 	}
 
-//	private CorsConfigurationSource configurationSource() {
-//		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-//		CorsConfiguration config = new CorsConfiguration();
-//		config.addAllowedOrigin("*");
-//		config.setAllowCredentials(true);
-//		config.addAllowedHeader("X-Requested-With");
-//		config.addAllowedHeader("Content-Type");
-//		config.addAllowedHeader("Cookie");
-//		config.addAllowedHeader("Access-Control-Allow-Credentials");
-//		config.addAllowedMethod(HttpMethod.POST);
-//		config.addAllowedMethod(HttpMethod.OPTIONS);
-//		config.addAllowedMethod(HttpMethod.GET);
-//		config.addAllowedMethod(HttpMethod.PUT);
-//		source.registerCorsConfiguration("/fluxbooks/**", config);
-//		return source;
-//	}
-
+	@Bean
+	public MapReactiveUserDetailsService userDetailsService() {
+		return new MapReactiveUserDetailsService(us.getUsers());
+	}
 
 	@Bean
-	public SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http) {
-
-		// allow all:
-		// http.authorizeExchange().anyExchange().permitAll();
-
+	public SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http) throws URISyntaxException {
 		// что-то похожее на правду: страница /login отдается всем, а все остальное - только после авторизации
 		RedirectServerAuthenticationSuccessHandler h = new RedirectServerAuthenticationSuccessHandler("/index.html");
 		http.authorizeExchange().pathMatchers("/login").permitAll()
 						.and().authorizeExchange().anyExchange().authenticated()
-						//.and().cors().configurationSource(configurationSource())
-		        .and().formLogin().authenticationSuccessHandler(h)
-
+						.and().formLogin().authenticationSuccessHandler(h)
 						.and().csrf().disable()
-    ;
-
-		// allow all
-//		http.authorizeExchange().anyExchange().permitAll().and().cors().configurationSource(configurationSource())
-//		.and().csrf()
-//		.and().formLogin()
-//		;
-
-		// allow all but HttpMethod.DELETE
-		//		http.authorizeExchange().pathMatchers(HttpMethod.DELETE).denyAll()
-    //						.and().authorizeExchange().anyExchange().permitAll()
-    //						;
-
-//		http.authorizeExchange()
-//						.anyExchange().authenticated()
-//						//.and().httpBasic()
-//						.and().formLogin();
-
-
+						;
+		http.requestCache().disable(); // наконец-то! если это не написать, то надо открывать только по ссылке http://localhost:8080/login,
+		// а если открыть просто по адресу http://localhost:8080, то после успешного логина получим ошибку Whitelabel error page
+		// потому что оно будет думать, что мы просили /, а не index.html, а на / у нас ничего не висит,
+		// а перенаправление на index.html само по себе тут не работает.
+		// Если же написать http.requestCache().disable(), то можно открывать по ссылке http://localhost:8080,
+		// и оно отработает без ошибок.
 		return http.build();
 	}
 }

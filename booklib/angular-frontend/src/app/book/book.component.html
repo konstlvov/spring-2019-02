@@ -2,7 +2,6 @@
   <a mat-raised-button color="primary" [routerLink]="['/book-create']"><mat-icon>add</mat-icon></a>
 </div>
 <div class="example-container mat-elevation-z8">
-  <a href="/logout">Log out</a>
   <table mat-table #table [dataSource]="dataSource">
 
     <!--- Note that these columns can be defined in any order.
@@ -29,4 +28,7 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;" [routerLink]="['/book-details/', row._id]"></tr>
   </table>
+</div>
+<div>
+  <a href="/logout">Log out</a>
 </div>
