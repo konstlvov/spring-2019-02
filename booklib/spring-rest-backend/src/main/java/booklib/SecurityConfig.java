@@ -39,13 +39,16 @@ public class SecurityConfig {
 		config.addAllowedMethod(HttpMethod.OPTIONS);
 		config.addAllowedMethod(HttpMethod.GET);
 		config.addAllowedMethod(HttpMethod.PUT);
+		config.addAllowedMethod(HttpMethod.DELETE);
 		source.registerCorsConfiguration("/fluxbooks/**", config);
 		return source;
 	}
 
 	@Bean
 	public SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http) throws URISyntaxException {
-		http.authorizeExchange().anyExchange().permitAll()
+		http
+			.authorizeExchange().pathMatchers(HttpMethod.DELETE, "/fluxbooks/**").denyAll() // .hasAuthority("DELETE_EVERYTHING") //   .hasRole("admin")
+			.and().authorizeExchange().anyExchange().permitAll()
 			.and().cors().configurationSource(configurationSource())
 		  .and().csrf().disable()
 		;

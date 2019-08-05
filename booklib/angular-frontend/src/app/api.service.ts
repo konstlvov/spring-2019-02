@@ -4,6 +4,9 @@ import { Observable, of, throwError } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { catchError, tap, map } from 'rxjs/operators';
 
+
+
+
 const httpOptions = {
   headers: new HttpHeaders({
     'Content-Type': 'application/json'
@@ -45,6 +48,7 @@ export class ApiService {
           });
 
       }
+      
 
   private handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {
@@ -56,6 +60,13 @@ export class ApiService {
       console.error(
         `Backend returned code ${error.status}, ` +
         `body was: ${error.error}`);
+      if (error.status == 401) {
+        console.log('Не получилось Вас узнать');
+        //this.openDialog();
+      }
+      if (error.status == 403) {
+        console.log('У Вас нет прав на данное действие');
+      }
     }
     // return an observable with a user-facing error message
     return throwError('Something bad happened; please try again later.');

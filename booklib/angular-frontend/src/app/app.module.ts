@@ -21,7 +21,11 @@ import {
   MatIconModule,
   MatButtonModule,
   MatCardModule,
-  MatFormFieldModule } from "@angular/material";
+  MatFormFieldModule,
+  MatDialogModule } from "@angular/material";
+
+import { MsgboxComponent } from './msgbox/msgbox.component';
+
 
 const appRoutes: Routes = [
   {
@@ -61,7 +65,8 @@ const appRoutes: Routes = [
     BookComponent,
     BookDetailComponent,
     BookCreateComponent,
-    BookEditComponent
+    BookEditComponent,
+    MsgboxComponent
   ],
   imports: [
     RouterModule.forRoot(appRoutes),
@@ -78,9 +83,11 @@ const appRoutes: Routes = [
     MatIconModule,
     MatButtonModule,
     MatCardModule,
-    MatFormFieldModule    
+    MatFormFieldModule,
+    MatDialogModule    
   ],
   providers: [ApiService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [MsgboxComponent]
 })
 export class AppModule { }
