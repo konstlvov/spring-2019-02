@@ -3,9 +3,8 @@ import { Injectable } from '@angular/core';
 import { Observable, of, throwError } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { catchError, tap, map } from 'rxjs/operators';
-
-
-
+import {MatDialog, MatDialogConfig} from "@angular/material";
+import {MsgboxComponent} from './msgbox/msgbox.component';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -30,25 +29,21 @@ const apiUrl = "http://localhost:8080/fluxbooks"; // pointed to WebFlux backed A
 export class ApiService {
   authenticated: boolean = false;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private dialog: MatDialog) { }
 
-  authenticate(credentials, callback) {
-
-          const headers = new HttpHeaders(credentials ? {
-              authorization : 'Basic ' + btoa(credentials.username + ':' + credentials.password)
-          } : {});
-
-          this.http.get('user', {headers: headers}).subscribe(response => {
-              if (response['name']) {
-                  this.authenticated = true;
-              } else {
-                  this.authenticated = false;
-              }
-              return callback && callback();
-          });
-
-      }
-      
+  public MessageBox(title: string, msg: string) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = false;
+    dialogConfig.autoFocus = true;
+    dialogConfig.data = {
+      title: title
+      ,msg: msg
+    };
+    const dialogRef = this.dialog.open(MsgboxComponent, dialogConfig);
+    dialogRef.afterClosed().subscribe(
+        data => console.log("Dialog output:", data)
+    );    
+  }
 
   private handleError(error: HttpErrorResponse) {
     var errForUser: IErrMsg = {status: 0, errMsg: ''};
@@ -65,15 +60,8 @@ export class ApiService {
       console.error(msg);
       errForUser.errMsg = msg;
       errForUser.status = error.status;
-      //if (error.status == 401) {
-      //  console.log('Не получилось Вас узнать');
-      //}
-      //if (error.status == 403) {
-      //  console.log('У Вас нет прав на данное действие');
-      //}
     }
     // return an observable with a user-facing error message
-    //return throwError('Something bad happened; please try again later.');
     return throwError(errForUser);
   };  
 

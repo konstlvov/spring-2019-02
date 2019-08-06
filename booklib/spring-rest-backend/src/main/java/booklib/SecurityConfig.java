@@ -44,39 +44,47 @@ public class SecurityConfig {
 		return source;
 	}
 
-	@Bean
-	public SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http) throws URISyntaxException {
+	public SecurityWebFilterChain securityForAngularLiveDevServ(ServerHttpSecurity http) throws URISyntaxException {
+		// тестовое, для отладки фронтенда: запретить всем выполнять HttpMethod.DELETE
 		http
-			.authorizeExchange().pathMatchers(HttpMethod.DELETE, "/fluxbooks/**").denyAll() // .hasAuthority("DELETE_EVERYTHING") //   .hasRole("admin")
-			.and().authorizeExchange().anyExchange().permitAll()
-			.and().cors().configurationSource(configurationSource())
-		  .and().csrf().disable()
+						.authorizeExchange().pathMatchers(HttpMethod.DELETE, "/fluxbooks/**").denyAll() // .hasAuthority("DELETE_EVERYTHING") //   .hasRole("admin")
+						.and().authorizeExchange().anyExchange().permitAll()
+						.and().cors().configurationSource(configurationSource())
+						.and().csrf().disable()
 		;
 		return http.build();
+		// конец отладочного блока
+	}
 
-//		// что-то похожее на правду: страница /login отдается всем, а все остальное - только после авторизации
-//		// Конфигурация доступа:
-//		// После успешной авторизации перейти на index.html:
-//		RedirectServerAuthenticationSuccessHandler h = new RedirectServerAuthenticationSuccessHandler("/index.html");
-//
-//		http.authorizeExchange().pathMatchers("/login").permitAll()// страницу /login отдавать можно всем
-//						// Конфигурация: изменение данных доступно только пользователю с ролью admin
-//						// (URL в antPatterns можно не указывать, тогда запрет на вызов метода будет распространяться на любой URL,
-//						// но, поскольку в задании надо сделать разграничение по URL, то указываю его. Таким образом можно
-//						// регулировать доступ более гранулярно, выдавая доступ к нужным api пользователям с конкретными ролями).
-//						.and().authorizeExchange().pathMatchers(HttpMethod.DELETE, "/fluxbooks/**").hasRole("admin")
-//						.and().authorizeExchange().pathMatchers(HttpMethod.POST, "/fluxbooks/**").hasRole("admin")
-//						.and().authorizeExchange().pathMatchers(HttpMethod.PUT, "/fluxbooks/**").hasRole("admin")
-//						.and().authorizeExchange().anyExchange().authenticated()// anyExchange должен идти последним в списке, иначе приложение не стартует
-//						.and().formLogin().authenticationSuccessHandler(h)
-//						.and().csrf().disable() // нужно, чтобы работали cross-origin запросы. В данном случае ангулярное приложение хостит тот же веб-контейнер, что и api, и это можно не писать
-//						;
-//		http.requestCache().disable(); // наконец-то! если это не написать, то надо открывать только по ссылке http://localhost:8080/login,
-//		// а если открыть просто по адресу http://localhost:8080, то после успешного логина получим ошибку Whitelabel error page
-//		// потому что оно будет думать, что мы просили /, а не index.html, а на / у нас ничего не висит,
-//		// а перенаправление на index.html само по себе тут не работает.
-//		// Если же написать http.requestCache().disable(), то можно открывать по ссылке http://localhost:8080,
-//		// и оно отработает без ошибок.
-//		return http.build();
+	public SecurityWebFilterChain securityForAngularProd(ServerHttpSecurity http) throws URISyntaxException {
+		// что-то похожее на правду: страница /login отдается всем, а все остальное - только после авторизации
+		// Конфигурация доступа:
+		// После успешной авторизации перейти на index.html:
+		RedirectServerAuthenticationSuccessHandler h = new RedirectServerAuthenticationSuccessHandler("/index.html");
+		http.authorizeExchange().pathMatchers("/login").permitAll()// страницу /login отдавать можно всем
+						// Конфигурация: изменение данных доступно только пользователю с ролью admin
+						// (URL в antPatterns можно не указывать, тогда запрет на вызов метода будет распространяться на любой URL,
+						// но, поскольку в задании надо сделать разграничение по URL, то указываю его. Таким образом можно
+						// регулировать доступ более гранулярно, выдавая доступ к нужным api пользователям с конкретными ролями).
+						.and().authorizeExchange().pathMatchers(HttpMethod.DELETE, "/fluxbooks/**").hasRole("admin")
+						.and().authorizeExchange().pathMatchers(HttpMethod.POST, "/fluxbooks/**").hasRole("admin")
+						.and().authorizeExchange().pathMatchers(HttpMethod.PUT, "/fluxbooks/**").hasRole("admin")
+						.and().authorizeExchange().anyExchange().authenticated()// anyExchange должен идти последним в списке, иначе приложение не стартует
+						.and().formLogin().authenticationSuccessHandler(h)
+						.and().csrf().disable() // нужно, чтобы работали cross-origin запросы. В данном случае ангулярное приложение хостит тот же веб-контейнер, что и api, и это можно не писать
+		;
+		http.requestCache().disable(); // наконец-то! если это не написать, то надо открывать только по ссылке http://localhost:8080/login,
+		// а если открыть просто по адресу http://localhost:8080, то после успешного логина получим ошибку Whitelabel error page
+		// потому что оно будет думать, что мы просили /, а не index.html, а на / у нас ничего не висит,
+		// а перенаправление на index.html само по себе тут не работает.
+		// Если же написать http.requestCache().disable(), то можно открывать по ссылке http://localhost:8080,
+		// и оно отработает без ошибок.
+		return http.build();
+	}
+
+	@Bean
+	public SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http) throws URISyntaxException {
+		//return securityForAngularLiveDevServ(http);
+		return securityForAngularProd(http);
 	}
 }

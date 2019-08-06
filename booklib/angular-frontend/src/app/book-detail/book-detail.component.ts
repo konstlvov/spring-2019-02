@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from '../api.service';
-import {MatDialog, MatDialogConfig} from "@angular/material";
-import {MsgboxComponent} from '../msgbox/msgbox.component';
 
 @Component({
   selector: 'app-book-detail',
@@ -12,7 +10,7 @@ import {MsgboxComponent} from '../msgbox/msgbox.component';
 export class BookDetailComponent implements OnInit {
 
   book: IBook;
-  constructor(private route: ActivatedRoute, private api: ApiService, private router: Router, private dialog: MatDialog) { }
+  constructor(private route: ActivatedRoute, private api: ApiService, private router: Router) { }
 
   getBookDetails(id) {
     this.api.getBook(id).subscribe(data => { console.log(data); this.book = data; });
@@ -22,20 +20,6 @@ export class BookDetailComponent implements OnInit {
     this.getBookDetails(this.route.snapshot.params['id']);
   }
 
-  private openDialog(msg: string): void {
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.disableClose = false;
-    dialogConfig.autoFocus = true;
-    dialogConfig.data = {
-      title: 'Ошибка'
-      ,msg: msg
-    };
-    const dialogRef = this.dialog.open(MsgboxComponent, dialogConfig);
-    dialogRef.afterClosed().subscribe(
-        data => console.log("Dialog output:", data)
-    );    
-  }  
-
   deleteBook(id) {
     this.api.deleteBook(id)
     .subscribe(res => {
@@ -43,13 +27,13 @@ export class BookDetailComponent implements OnInit {
       }, (err: IErrMsg) => {
         console.log(err.errMsg);
         if (err.status == 401) {
-          this.openDialog('Не получилось Вас узнать. Пожалуйста, войдите под своим логином и паролем.');
+          this.api.MessageBox('Ошибка', 'Не получилось Вас узнать. Пожалуйста, войдите под своим логином и паролем.');
         }
         else if (err.status == 403) {
-          this.openDialog('Похоже, у Вас недостаточно прав для данного действия');
+          this.api.MessageBox('Ошибка', 'Похоже, у Вас недостаточно прав для удаления записи.');
         }
         else {
-          this.openDialog(err.errMsg);
+          this.api.MessageBox('Ошибка', err.errMsg);
         }
       }
     );
