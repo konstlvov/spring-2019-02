@@ -22,34 +22,35 @@ export class BookDetailComponent implements OnInit {
     this.getBookDetails(this.route.snapshot.params['id']);
   }
 
-  private openDialog(): void {
-    console.log('xxx');
-          const dialogConfig = new MatDialogConfig();
-
-          dialogConfig.disableClose = true;
-          dialogConfig.autoFocus = true;
-
-          dialogConfig.data = {
-              id: 1,
-              title: 'Angular For Beginners'
-          };
-
-          this.dialog.open(MsgboxComponent, dialogConfig);
-          
-          const dialogRef = this.dialog.open(MsgboxComponent, dialogConfig);
-
-          dialogRef.afterClosed().subscribe(
-              data => console.log("Dialog output:", data)
-          );    
-      }  
+  private openDialog(msg: string): void {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = false;
+    dialogConfig.autoFocus = true;
+    dialogConfig.data = {
+      title: 'Ошибка'
+      ,msg: msg
+    };
+    const dialogRef = this.dialog.open(MsgboxComponent, dialogConfig);
+    dialogRef.afterClosed().subscribe(
+        data => console.log("Dialog output:", data)
+    );    
+  }  
 
   deleteBook(id) {
     this.api.deleteBook(id)
     .subscribe(res => {
         this.router.navigate(['/books']);
-      }, (err) => {
-        console.log(err);
-        this.openDialog();
+      }, (err: IErrMsg) => {
+        console.log(err.errMsg);
+        if (err.status == 401) {
+          this.openDialog('Не получилось Вас узнать. Пожалуйста, войдите под своим логином и паролем.');
+        }
+        else if (err.status == 403) {
+          this.openDialog('Похоже, у Вас недостаточно прав для данного действия');
+        }
+        else {
+          this.openDialog(err.errMsg);
+        }
       }
     );
   }

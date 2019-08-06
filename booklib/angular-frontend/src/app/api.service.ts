@@ -51,25 +51,30 @@ export class ApiService {
       
 
   private handleError(error: HttpErrorResponse) {
+    var errForUser: IErrMsg = {status: 0, errMsg: ''};
+    var msg: string = '';
     if (error.error instanceof ErrorEvent) {
       // A client-side or network error occurred. Handle it accordingly.
-      console.error('An error occurred:', error.error.message);
+      msg = 'An error occurred:' + error.error.message;
+      console.error(msg);
+      errForUser.errMsg = msg;
     } else {
       // The backend returned an unsuccessful response code.
       // The response body may contain clues as to what went wrong,
-      console.error(
-        `Backend returned code ${error.status}, ` +
-        `body was: ${error.error}`);
-      if (error.status == 401) {
-        console.log('Не получилось Вас узнать');
-        //this.openDialog();
-      }
-      if (error.status == 403) {
-        console.log('У Вас нет прав на данное действие');
-      }
+      msg = `Backend returned code ${error.status}, ` + `body was: ${error.error}`;
+      console.error(msg);
+      errForUser.errMsg = msg;
+      errForUser.status = error.status;
+      //if (error.status == 401) {
+      //  console.log('Не получилось Вас узнать');
+      //}
+      //if (error.status == 403) {
+      //  console.log('У Вас нет прав на данное действие');
+      //}
     }
     // return an observable with a user-facing error message
-    return throwError('Something bad happened; please try again later.');
+    //return throwError('Something bad happened; please try again later.');
+    return throwError(errForUser);
   };  
 
   getBooks(): Observable<IBook[]> {

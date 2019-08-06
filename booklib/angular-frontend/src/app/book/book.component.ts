@@ -16,7 +16,10 @@ export class BookComponent implements OnInit {
   constructor(private api: ApiService) { }
 
   ngOnInit() {
-    this.api.getBooks().subscribe(res => {console.log(res); this.books = res;}, err => {console.log(err);});
+    this.api.getBooks().subscribe(
+      res => {console.log(res); this.books = res;}
+      , (err: IErrMsg) => {console.log(err.errMsg);}
+    );
   }
 
 }

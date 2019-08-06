@@ -53,8 +53,8 @@ export class BookEditComponent implements OnInit {
     .subscribe(res => {
         let id = res['_id'];
         this.router.navigate(['/book-details', id]);
-      }, (err) => {
-        console.log(err);
+      }, (err: IErrMsg) => {
+        console.log(err.errMsg);
       }
     );
   }

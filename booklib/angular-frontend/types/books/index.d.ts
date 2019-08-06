@@ -9,3 +9,7 @@ interface IBook {
   updated_date: Date;
 }
 
+interface IErrMsg {
+  status: number;
+  errMsg: string;
+}
