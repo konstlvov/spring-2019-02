@@ -31,3 +31,9 @@ spring:
       host: orsapps-tst.abr.loc
       port: 27017
       database: mean-angular6
+---
+spring:
+  profiles: test
+  data:
+    mongodb:
+      database: mean-angular6

@@ -16,38 +16,52 @@
 
 package booklib;
 
-import booklib.BookRepository;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.reactive.server.EntityExchangeResult;
+import org.springframework.test.web.reactive.server.WebTestClient;
+import org.assertj.core.api.Assertions;
 
-import static org.hamcrest.Matchers.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import java.util.function.Consumer;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest
-@AutoConfigureMockMvc
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class ApplicationTests {
-
-	@Autowired
-	private MockMvc mockMvc;
 
   @Autowired
 	private BookRepository bookRepository;
- 
-  @Test
-  public void shouldReturnBookRepositoryIndex() throws Exception {
-    mockMvc.perform(get("/booklist")).andDo(print());
+
+	@Autowired
+	private WebTestClient webTestClient;
+
+	@Test
+  public void shouldReturnLoginPage() throws Exception {
+		webTestClient
+						.get().uri("/login")
+						.accept(MediaType.TEXT_PLAIN)
+						.exchange()
+						.expectStatus().isOk()
+						.expectBody(String.class).consumeWith(response -> {
+							Assertions.assertThat(response.getResponseBody().contains("<title>Please sign in</title>")).isTrue();
+				     })
+		;
   }
+
+	@Test
+	public void shouldReturnRedirectToLoginPage() throws Exception {
+		webTestClient
+						.get().uri("/fluxbooks")
+						.accept(MediaType.APPLICATION_JSON)
+						.exchange()
+						.expectStatus().isEqualTo(HttpStatus.FOUND)
+		.expectHeader().valueEquals("Location", "/login")
+		;
+	}
+
 }
 
