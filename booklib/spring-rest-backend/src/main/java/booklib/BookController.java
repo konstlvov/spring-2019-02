@@ -6,6 +6,11 @@ import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
+
+//@RequestMapping(value = "/api")
 @RestController
 @CrossOrigin
 public class BookController {
@@ -56,6 +61,12 @@ public class BookController {
 						.defaultIfEmpty(new ResponseEntity<>(HttpStatus.NOT_FOUND));
 	}
 
-
+	@RequestMapping("/fluxbooks/resource")
+	public Map<String,Object> home() {
+		Map<String,Object> model = new HashMap<String,Object>();
+		model.put("id", UUID.randomUUID().toString());
+		model.put("content", "Hello World");
+		return model;
+	}
 
 }

@@ -16,9 +16,11 @@ import java.net.URISyntaxException;
 @EnableWebFluxSecurity
 public class SecurityConfig {
 	private final UsersService us;
+	private final YamlConfig config;
 
-	public SecurityConfig(UsersService us) {
+	public SecurityConfig(UsersService us, YamlConfig config) {
 		this.us = us;
+		this.config = config;
 	}
 
 	@Bean
@@ -69,6 +71,7 @@ public class SecurityConfig {
 						.and().authorizeExchange().pathMatchers(HttpMethod.DELETE, "/fluxbooks/**").hasRole("admin")
 						.and().authorizeExchange().pathMatchers(HttpMethod.POST, "/fluxbooks/**").hasRole("admin")
 						.and().authorizeExchange().pathMatchers(HttpMethod.PUT, "/fluxbooks/**").hasRole("admin")
+						.and().authorizeExchange().pathMatchers(HttpMethod.GET, "/fluxbooks/**").hasRole("user")
 						.and().authorizeExchange().anyExchange().authenticated()// anyExchange должен идти последним в списке, иначе приложение не стартует
 						.and().formLogin().authenticationSuccessHandler(h)
 						.and().csrf().disable() // нужно, чтобы работали cross-origin запросы. В данном случае ангулярное приложение хостит тот же веб-контейнер, что и api, и это можно не писать
@@ -84,7 +87,12 @@ public class SecurityConfig {
 
 	@Bean
 	public SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http) throws URISyntaxException {
-		//return securityForAngularLiveDevServ(http);
-		return securityForAngularProd(http);
+		String sc = config.getSecurityConfig();
+		if (sc.equals("angular-live-dev")) {
+			return securityForAngularLiveDevServ(http);
+		}
+		else {
+			return securityForAngularProd(http);
+		}
 	}
 }

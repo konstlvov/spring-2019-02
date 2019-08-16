@@ -20,8 +20,10 @@ const httpOptions = {
 //const apiUrl = "http://localhost:8080/booklist"; // pointed to Spring backed autowired API: @RepositoryRestResource
 //const apiUrl = "http://localhost:8080/fluxbooks"; // pointed to WebFlux backed API implemented in BookController.java again
 //const apiUrl = "http://vm-oel71:8080/fluxbooks";
-const apiUrl = "http://localhost:8080/fluxbooks"; // pointed to WebFlux backed API implemented in BookController.java again
+//const apiUrl = "http://localhost:8080/api/fluxbooks"; // pointed to WebFlux backed API implemented in BookController.java again
 //const apiUrl = "http://orsapps-tst:8080/fluxbooks";
+//const apiUrl = "http://localhost:8080/fluxbooks/api"; // use with @RequestMapping(value = "/api") //annotation on BookController
+const apiUrl = "http://localhost:8080/fluxbooks";
 
 @Injectable({
   providedIn: 'root'
@@ -60,6 +62,12 @@ export class ApiService {
       console.error(msg);
       errForUser.errMsg = msg;
       errForUser.status = error.status;
+      if (error.error instanceof ProgressEvent) {
+        errForUser.errMsg += 'ProgressEvent';
+        errForUser.errMsg += '#' + error.error.lengthComputable;
+        errForUser.errMsg += '#' + error.error.loaded;
+        errForUser.errMsg += '#' + error.error.total;
+      }
     }
     // return an observable with a user-facing error message
     return throwError(errForUser);
