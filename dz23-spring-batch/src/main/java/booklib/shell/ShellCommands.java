@@ -21,7 +21,7 @@ public class ShellCommands {
 		this.ctx = ctx;
 	}
 
-	@ShellMethod("Loads data from MongoDB to Oracle")
+	@ShellMethod("Load data from MongoDB to Oracle")
 	public void m2o() throws JobParametersInvalidException, JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException {
 		System.out.println("about to load data from MongoDB to Oracle " + ctx.toString());
 		JobLauncher jobLauncher = ctx.getBean(JobLauncher.class);

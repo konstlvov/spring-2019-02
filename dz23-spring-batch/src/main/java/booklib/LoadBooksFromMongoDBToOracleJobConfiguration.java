@@ -39,8 +39,6 @@ public class LoadBooksFromMongoDBToOracleJobConfiguration {
 	@Autowired
 	MongoTemplate mongoTemplate;
 
-
-
 	@Bean
 	MongoItemReader<Book> mongoBookReader() {
 		HashMap<String, Sort.Direction> sortMap= new HashMap<>();

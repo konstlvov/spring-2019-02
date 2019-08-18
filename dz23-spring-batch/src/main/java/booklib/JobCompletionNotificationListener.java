@@ -16,7 +16,6 @@ public class JobCompletionNotificationListener extends JobExecutionListenerSuppo
 
 	private final JdbcTemplate jdbcTemplate;
 
-	@Autowired
 	public JobCompletionNotificationListener(JdbcTemplate jdbcTemplate) {
 		this.jdbcTemplate = jdbcTemplate;
 	}
