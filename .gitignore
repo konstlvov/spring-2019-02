@@ -2,3 +2,4 @@ nbactions.xml
 /.idea
 spring-shell.log
 /dz15-spring-rest-angular/spring-rest-backend/target/
+/dz23-spring-batch/src/main/resources/application.properties
