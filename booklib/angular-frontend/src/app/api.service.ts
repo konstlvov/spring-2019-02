@@ -24,6 +24,7 @@ const httpOptions = {
 //const apiUrl = "http://orsapps-tst:8080/fluxbooks";
 //const apiUrl = "http://localhost:8080/fluxbooks/api"; // use with @RequestMapping(value = "/api") //annotation on BookController
 const apiUrl = "http://localhost:8080/fluxbooks";
+const logoutUrl = "http://localhost:8080/logout";
 
 @Injectable({
   providedIn: 'root'
@@ -32,6 +33,20 @@ export class ApiService {
   authenticated: boolean = false;
 
   constructor(private http: HttpClient, private dialog: MatDialog) { }
+
+  public doLogout() {
+    return this.http.post(logoutUrl, httpOptions).pipe(
+      catchError(this.handleError)
+    )
+    .subscribe(res => {
+      console.log('successfull logout');
+      window.location.href = '/login?logout';
+    }, err => {
+      console.log('error during logout');
+      window.location.href = '/login?logout';
+    })
+    ;
+  }
 
   public MessageBox(title: string, msg: string) {
     const dialogConfig = new MatDialogConfig();
@@ -62,11 +77,17 @@ export class ApiService {
       console.error(msg);
       errForUser.errMsg = msg;
       errForUser.status = error.status;
+      if (error.status == 500) {
+        // this happens when database (e. g. MongoDB) becomes unavailable
+        errForUser.errMsg = 'Внутренняя ошибка сервера. Попробуйте зайти позже.';
+      }
       if (error.error instanceof ProgressEvent) {
-        errForUser.errMsg += 'ProgressEvent';
-        errForUser.errMsg += '#' + error.error.lengthComputable;
-        errForUser.errMsg += '#' + error.error.loaded;
-        errForUser.errMsg += '#' + error.error.total;
+        // this happens when web container which hosts Angular bundle becomes unavailable
+        if (error.error.lengthComputable == false
+          && error.error.loaded == 0
+          && error.error.total == 0) {
+          errForUser.errMsg = 'К сожалению, наблюдаются перебои с работой сайта. Попробуйте зайти позже.';
+        }
       }
     }
     // return an observable with a user-facing error message

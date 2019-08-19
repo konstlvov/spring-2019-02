@@ -14,26 +14,38 @@ import java.util.UUID;
 @RestController
 @CrossOrigin
 public class BookController {
-
+	private Book fallbackBook;
 	BookRepository bookRepository;
 
 	public BookController(BookRepository br) {
 		this.bookRepository = br;
+		this.fallbackBook = new Book();
+		this.fallbackBook.setTitle("Book is not available due to internal server error");
 	}
 
 	@GetMapping("/fluxbooks")
 	public Flux<Book> getAllBooks() {
-		return bookRepository.findAll();
+		return bookRepository
+						.findAll()
+						.onErrorReturn(this.fallbackBook)
+						;
 	}
 
 	@GetMapping(path={"/fluxbooks/{id}"})
 	public Mono<Book> findOne(@PathVariable("id") String id) {
-		return bookRepository.findById(id);
+		return bookRepository
+						.findById(id)
+						.onErrorReturn(this.fallbackBook)
+						;
 	}
 
 	@PostMapping("/fluxbooks")
-	public Mono<Book> addBook(@RequestBody Book book) {
-		return bookRepository.save(book);
+	public Mono<ResponseEntity<Book>> addBook(@RequestBody Book book) {
+		return bookRepository
+						.save(book)
+						.map(savedBook -> new ResponseEntity<>(savedBook, HttpStatus.CREATED))
+						.onErrorReturn(new ResponseEntity<>(this.fallbackBook, HttpStatus.INTERNAL_SERVER_ERROR))
+						;
 	}
 
 	@PutMapping("/fluxbooks/{id}")
@@ -50,7 +62,9 @@ public class BookController {
 							return bookRepository.save(existingBook);
 						})
 						.map(updatedBook -> new ResponseEntity<>(updatedBook, HttpStatus.OK))
-						.defaultIfEmpty(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+						.defaultIfEmpty(new ResponseEntity<>(HttpStatus.NOT_FOUND))
+						.onErrorReturn(new ResponseEntity<>(this.fallbackBook, HttpStatus.INTERNAL_SERVER_ERROR))
+						;
 	}
 
 	@DeleteMapping("/fluxbooks/{id}")
@@ -58,15 +72,9 @@ public class BookController {
 		return bookRepository.findById(id)
 						.flatMap(existingBook -> bookRepository.delete(existingBook)
 										.then(Mono.just(new ResponseEntity<Void>(HttpStatus.OK))))
-						.defaultIfEmpty(new ResponseEntity<>(HttpStatus.NOT_FOUND));
-	}
-
-	@RequestMapping("/fluxbooks/resource")
-	public Map<String,Object> home() {
-		Map<String,Object> model = new HashMap<String,Object>();
-		model.put("id", UUID.randomUUID().toString());
-		model.put("content", "Hello World");
-		return model;
+						.defaultIfEmpty(new ResponseEntity<>(HttpStatus.NOT_FOUND))
+						.onErrorReturn(new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR))
+						;
 	}
 
 }

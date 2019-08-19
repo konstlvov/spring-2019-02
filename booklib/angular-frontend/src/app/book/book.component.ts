@@ -14,6 +14,10 @@ export class BookComponent implements OnInit {
   displayedColumns = ['isbn', 'title', 'author'];
   dataSource = new BookDataSource(this.api);  
   constructor(private api: ApiService) { }
+	
+	public routerLogout() {
+		this.api.doLogout();
+	}
 
   ngOnInit() {
     this.api.getBooks().subscribe(
