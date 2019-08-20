@@ -10,6 +10,7 @@ import { BookDetailComponent } from './book-detail/book-detail.component';
 import { BookCreateComponent } from './book-create/book-create.component';
 import { BookEditComponent } from './book-edit/book-edit.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ApiService } from './api.service';
 
 import {
   MatInputModule,
@@ -20,9 +21,18 @@ import {
   MatIconModule,
   MatButtonModule,
   MatCardModule,
-  MatFormFieldModule } from "@angular/material";
+  MatFormFieldModule,
+  MatDialogModule } from "@angular/material";
+
+import { MsgboxComponent } from './msgbox/msgbox.component';
+
 
 const appRoutes: Routes = [
+  {
+    path: 'logout',
+    redirectTo: '/logout',
+    pathMatch: 'full'
+  },
   {
     path: 'books',
     component: BookComponent,
@@ -55,7 +65,8 @@ const appRoutes: Routes = [
     BookComponent,
     BookDetailComponent,
     BookCreateComponent,
-    BookEditComponent
+    BookEditComponent,
+    MsgboxComponent
   ],
   imports: [
     RouterModule.forRoot(appRoutes),
@@ -72,9 +83,11 @@ const appRoutes: Routes = [
     MatIconModule,
     MatButtonModule,
     MatCardModule,
-    MatFormFieldModule    
+    MatFormFieldModule,
+    MatDialogModule    
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [ApiService],
+  bootstrap: [AppComponent],
+  entryComponents: [MsgboxComponent]
 })
 export class AppModule { }

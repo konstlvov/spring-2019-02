@@ -24,8 +24,17 @@ export class BookDetailComponent implements OnInit {
     this.api.deleteBook(id)
     .subscribe(res => {
         this.router.navigate(['/books']);
-      }, (err) => {
-        console.log(err);
+      }, (err: IErrMsg) => {
+        console.log(err.errMsg);
+        if (err.status == 401) {
+          this.api.MessageBox('Ошибка', 'Не получилось Вас узнать. Пожалуйста, войдите под своим логином и паролем.');
+        }
+        else if (err.status == 403) {
+          this.api.MessageBox('Ошибка', 'Похоже, у Вас недостаточно прав для удаления записи.');
+        }
+        else {
+          this.api.MessageBox('Ошибка', err.errMsg);
+        }
       }
     );
   }

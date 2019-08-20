@@ -6,57 +6,75 @@ import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
+
+//@RequestMapping(value = "/api")
+@RestController
 @CrossOrigin
 public class BookController {
+	private Book fallbackBook;
+	BookRepository bookRepository;
 
-    BookRepository bookRepository;
+	public BookController(BookRepository br) {
+		this.bookRepository = br;
+		this.fallbackBook = new Book();
+		this.fallbackBook.setTitle("Book is not available due to internal server error");
+	}
 
-    public BookController(BookRepository br) {
-        this.bookRepository = br;
-    }
+	@GetMapping("/fluxbooks")
+	public Flux<Book> getAllBooks() {
+		return bookRepository
+						.findAll()
+						.onErrorReturn(this.fallbackBook)
+						;
+	}
 
-    @GetMapping("/fluxbooks")
-    public Flux<Book> getAllBooks() {
-        return bookRepository.findAll();
-    }
+	@GetMapping(path={"/fluxbooks/{id}"})
+	public Mono<Book> findOne(@PathVariable("id") String id) {
+		return bookRepository
+						.findById(id)
+						.onErrorReturn(this.fallbackBook)
+						;
+	}
 
-    @GetMapping(path={"/fluxbooks/{id}"})
-    public Mono<Book> findOne(@PathVariable("id") String id) {
-        return bookRepository.findById(id);
-    }
+	@PostMapping("/fluxbooks")
+	public Mono<ResponseEntity<Book>> addBook(@RequestBody Book book) {
+		return bookRepository
+						.save(book)
+						.map(savedBook -> new ResponseEntity<>(savedBook, HttpStatus.CREATED))
+						.onErrorReturn(new ResponseEntity<>(this.fallbackBook, HttpStatus.INTERNAL_SERVER_ERROR))
+						;
+	}
 
-    @PostMapping("/fluxbooks")
-    public Mono<Book> addBook(@RequestBody Book book) {
-        return bookRepository.save(book);
-    }
+	@PutMapping("/fluxbooks/{id}")
+	public Mono<ResponseEntity<Book>> updateBook(@PathVariable("id") String id, @RequestBody Book book) {
+		return bookRepository.findById(id)
+						.flatMap(existingBook -> {
+							existingBook.setIsbn(book.getIsbn());
+							existingBook.setTitle(book.getTitle());
+							existingBook.setAuthor(book.getAuthor());
+							existingBook.setPublisher(book.getPublisher());
+							existingBook.setpublished_year(book.getpublished_year());
+							existingBook.setupdated_date(book.getupdated_date());
+							existingBook.setDescription(book.getDescription());
+							return bookRepository.save(existingBook);
+						})
+						.map(updatedBook -> new ResponseEntity<>(updatedBook, HttpStatus.OK))
+						.defaultIfEmpty(new ResponseEntity<>(HttpStatus.NOT_FOUND))
+						.onErrorReturn(new ResponseEntity<>(this.fallbackBook, HttpStatus.INTERNAL_SERVER_ERROR))
+						;
+	}
 
-    @PutMapping("/fluxbooks/{id}")
-    public Mono<ResponseEntity<Book>> updateBook(@PathVariable("id") String id, @RequestBody Book book) {
-        //Mono<Book> ob = bookRepository.findById(id);
-        return bookRepository.findById(id)
-          .flatMap(existingBook -> {
-              //existingBook.setText(book.getText());
-              existingBook.setIsbn(book.getIsbn());
-              existingBook.setTitle(book.getTitle());
-              existingBook.setAuthor(book.getAuthor());
-              existingBook.setPublisher(book.getPublisher());
-              existingBook.setpublished_year(book.getpublished_year());
-              existingBook.setupdated_date(book.getupdated_date());
-              existingBook.setDescription(book.getDescription());
-              return bookRepository.save(existingBook);
-          })
-          .map(updatedBook -> new ResponseEntity<>(updatedBook, HttpStatus.OK))
-          .defaultIfEmpty(new ResponseEntity<>(HttpStatus.NOT_FOUND));
-    }
-
-    @DeleteMapping("/fluxbooks/{id}")
-    public Mono<ResponseEntity<Void>> deleteBook(@PathVariable(value = "id") String id) {
-        return bookRepository.findById(id)
-          .flatMap(existingBook -> bookRepository.delete(existingBook)
-                                .then(Mono.just(new ResponseEntity<Void>(HttpStatus.OK))))
-          .defaultIfEmpty(new ResponseEntity<>(HttpStatus.NOT_FOUND));
-    }
-
-
+	@DeleteMapping("/fluxbooks/{id}")
+	public Mono<ResponseEntity<Void>> deleteBook(@PathVariable(value = "id") String id) {
+		return bookRepository.findById(id)
+						.flatMap(existingBook -> bookRepository.delete(existingBook)
+										.then(Mono.just(new ResponseEntity<Void>(HttpStatus.OK))))
+						.defaultIfEmpty(new ResponseEntity<>(HttpStatus.NOT_FOUND))
+						.onErrorReturn(new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR))
+						;
+	}
 
 }

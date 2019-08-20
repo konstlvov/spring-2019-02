@@ -38,9 +38,19 @@ export class BookCreateComponent implements OnInit {
     .subscribe(res => {
         let id = res['_id'];
         this.router.navigate(['/book-details', id]);
-      }, (err) => {
-        console.log(err);
+      }, (err: IErrMsg) => {
+        console.log(err.errMsg);
+        if (err.status == 401) {
+          this.api.MessageBox('Ошибка', 'Не получилось Вас узнать. Пожалуйста, войдите под своим логином и паролем.');
+        }
+        else if (err.status == 403) {
+          this.api.MessageBox('Ошибка', 'Похоже, у Вас недостаточно прав для добавления записи.');
+        }
+        else {
+          this.api.MessageBox('Ошибка', err.errMsg);
+        }
       });
   }  
 
 }
+
