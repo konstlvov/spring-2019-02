@@ -16,9 +16,11 @@ import java.util.UUID;
 public class BookController {
 	private Book fallbackBook;
 	BookRepository bookRepository;
+	private final BookService bs;
 
-	public BookController(BookRepository br) {
+	public BookController(BookRepository br, BookService bs) {
 		this.bookRepository = br;
+		this.bs = bs;
 		this.fallbackBook = new Book();
 		this.fallbackBook.setTitle("Book is not available due to internal server error");
 	}
@@ -72,6 +74,16 @@ public class BookController {
 		return bookRepository.findById(id)
 						.flatMap(existingBook -> bookRepository.delete(existingBook)
 										.then(Mono.just(new ResponseEntity<Void>(HttpStatus.OK))))
+						.defaultIfEmpty(new ResponseEntity<>(HttpStatus.NOT_FOUND))
+						.onErrorReturn(new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR))
+						;
+	}
+
+	@PostMapping("/fluxbooks/order/{id}")
+	public Mono<ResponseEntity<Void>> postBookOrder(@PathVariable(value = "id") String id) {
+		return bookRepository.findById(id)
+						.flatMap(existingBook -> {bs.postBookOrder(existingBook); return Mono.just(existingBook);})
+						.map(orderedBook -> new ResponseEntity<Void>(HttpStatus.OK))
 						.defaultIfEmpty(new ResponseEntity<>(HttpStatus.NOT_FOUND))
 						.onErrorReturn(new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR))
 						;

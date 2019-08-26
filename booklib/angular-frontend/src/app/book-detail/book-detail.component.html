@@ -23,5 +23,6 @@
   <mat-card-actions>
     <a mat-raised-button color="primary" [routerLink]="['/book-edit', book._id]"><mat-icon>edit</mat-icon></a>
     <a mat-raised-button color="warn" (click)="deleteBook(book._id)"><mat-icon>delete</mat-icon></a>
+    <a mat-raised-button color="primary" (click)="orderBook(book._id)"><mat-icon>Order</mat-icon></a>
   </mat-card-actions>
 </mat-card>

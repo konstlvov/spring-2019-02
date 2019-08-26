@@ -17,19 +17,3 @@ public class YamlConfig {
 		this.security_config = s;
 	}
 }
-
-//public class YAMLConfig {
-//
-//	private String name;
-//	public String getName(){
-//		return name;
-//		// return "*" + name + "*"; // this will also work as expected
-//	}
-//
-//	public void setName(String n){
-//		this.name = n;
-//	}
-//
-//	// Upd. Выяснил, что тривиальные геттеры и сеттеры можно не писать
-//
-//}

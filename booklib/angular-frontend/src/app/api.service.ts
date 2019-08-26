@@ -128,4 +128,12 @@ export class ApiService {
       );
   }  
 
+  orderBook(id: string): Observable<{}> {
+    const url = `${apiUrl}/order/${id}`;
+    return this.http.post<IBook>(url, httpOptions)
+      .pipe(
+        catchError(this.handleError)
+      );
+  }  
+
 }

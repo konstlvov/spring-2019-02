@@ -31,8 +31,11 @@ spring:
       host: orsapps-tst.abr.loc
       port: 27017
       database: mean-angular6
-security_config: prod
-#security-config: angular-live-dev
+  rabbitmq:
+    host: orsapps-tst.abr.loc
+    port: 5672
+#security_config: prod
+security-config: angular-live-dev
 ---
 spring:
   profiles: test

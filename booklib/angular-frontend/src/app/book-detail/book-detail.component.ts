@@ -39,4 +39,16 @@ export class BookDetailComponent implements OnInit {
     );
   }
 
+  orderBook(id) {
+    this.api.orderBook(id)
+      .subscribe(
+        res => {
+          this.router.navigate(['/books']);
+        }
+        , err => {
+          this.api.MessageBox('Какая-то ошибка...', err.errMsg);
+        })
+    ;
+  }
+
 }
