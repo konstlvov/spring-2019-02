@@ -1,6 +1,7 @@
 package com.abr.springpatternsamples;
 
 import org.springframework.stereotype.Component;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -15,5 +16,15 @@ public class ResponderRegistry {
 
 	public Responder get(String key) {
 		return registeredResponders.get(key);
+	}
+
+	public Responder getByRequestBody(String requestBody) throws NotImplementedException {
+		for (Map.Entry<String, Responder> e: registeredResponders.entrySet()) {
+			if (e.getValue().canRespond(requestBody)) {
+				return e.getValue();
+			}
+		}
+		System.err.println("For request " + requestBody + " responder is not implemented yet");
+		throw new NotImplementedException();
 	}
 }

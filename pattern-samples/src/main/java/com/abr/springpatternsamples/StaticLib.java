@@ -14,6 +14,7 @@ import java.io.InputStream;
  * @author lvov_k
  */
 public class StaticLib {
+    private StaticLib() {} // this class is a set of static procedures, and should not be instantiated
     public static String fastConvertStreamToString(InputStream inputStream) throws IOException{
         try(ByteArrayOutputStream result = new ByteArrayOutputStream()) {
             byte[] buffer = new byte[1024];

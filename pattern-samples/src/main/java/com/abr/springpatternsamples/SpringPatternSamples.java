@@ -9,6 +9,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import static java.util.stream.Collectors.toMap;
 
@@ -49,6 +50,16 @@ public class SpringPatternSamples {
             ResponderRegistry respReg = ctx.getBean(ResponderRegistry.class);
             r = respReg.get("MsgClientAccountListRq");
             System.out.println(r.getResponse());
+            //
+	        String rqBody = "///<MsgClientAccountListRq2>///";
+            try {
+            	r = respReg.getByRequestBody(rqBody);
+	            System.out.println(r.getResponse());
+            }
+            catch(NotImplementedException ne) {
+	            System.err.println("Responder for request body " + rqBody + " is not implemented");
+            }
+
         };
     }
 }
