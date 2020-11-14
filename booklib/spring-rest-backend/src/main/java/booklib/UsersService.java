@@ -15,6 +15,9 @@ public class UsersService {
 		this.users = new ArrayList<>();
 	}
 
+	//	collection of users must contain something like:
+	//	{ "_id" : ObjectId("5d48739a2afd623d483e27b7"), "login" : "ivanov", "password" : "ivanov", "roles" : [ "admin", "user" ] }
+	//	{ "_id" : ObjectId("5d4873c82afd623d483e27b8"), "login" : "petrov", "password" : "petrov", "roles" : [ "user" ] }
 	public ArrayList<UserDetails> getUsers(){
 		org.springframework.security.core.userdetails.User.UserBuilder userBuilder = org.springframework.security.core.userdetails.User.withDefaultPasswordEncoder();
 		for(User u: userRepo.findAll()) {

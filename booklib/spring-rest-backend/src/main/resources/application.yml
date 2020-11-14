@@ -15,6 +15,7 @@ spring:
       database: tsstarter
       username: tsstarter
       password: tsstarter00
+security_config: prod
 ---
 spring:
   profiles: udelny
@@ -23,6 +24,9 @@ spring:
       host: vm-oel75
       port: 27017
       database: mean-angular6
+# do not use 2-space indent before security-config parameter below
+security_config: prod
+#security-config: angular-live-dev
 ---
 spring:
   profiles: abr-docker
@@ -34,8 +38,6 @@ spring:
   rabbitmq:
     host: orsapps-tst.abr.loc
     port: 5672
-#security_config: prod
-security-config: angular-live-dev
 ---
 spring:
   profiles: test
