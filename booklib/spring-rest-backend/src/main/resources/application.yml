@@ -5,6 +5,7 @@ spring:
       host: vm-dit-lvov.abr.loc 
       port: 8200
       database: mean-angular6
+security_config: prod
 ---
 spring:
   profiles: cloud
