@@ -12,7 +12,8 @@ const httpOptions = {
     //'Content-Type': 'application/x-www-form-urlencoded'
     , 'Accept': 'application/json, application/xml, text/plain, */*'
   })
-  ,withCredentials: true // disable this when security is disabled on backend
+  //,withCredentials: false // use when security is disabled on backend
+  ,withCredentials: true  // use when security is enabled on backend
 };
 
 //const apiUrl = "/api"; // pointer to Express backed API
@@ -25,6 +26,7 @@ const httpOptions = {
 //const apiUrl = "http://localhost:8080/fluxbooks/api"; // use with @RequestMapping(value = "/api") //annotation on BookController
 const apiUrl = "http://localhost:8080/fluxbooks";
 const logoutUrl = "http://localhost:8080/logout";
+const currentUserUrl = 'http://localhost:8080/cu';
 
 @Injectable({
   providedIn: 'root'
@@ -93,6 +95,10 @@ export class ApiService {
     // return an observable with a user-facing error message
     return throwError(errForUser);
   };  
+
+  public getCurrentUser(): Observable<string> {
+    return this.http.get<string>(currentUserUrl, httpOptions).pipe(catchError(this.handleError));
+  }
 
   getBooks(): Observable<IBook[]> {
     return this.http.get<IBook[]>(apiUrl, httpOptions).pipe(

@@ -1,1 +1,1 @@
-ng build --prod --base-href "http://localhost:8080/" && copy_to_static.cmd
+node_modules\.bin\ng build --prod --base-href "http://localhost:8080/" && copy_to_static.cmd

@@ -12,7 +12,8 @@ export class BookComponent implements OnInit {
 
   books: IBook[];
   displayedColumns = ['isbn', 'title', 'author'];
-  dataSource = new BookDataSource(this.api);  
+  currentUser: string;
+  dataSource = new BookDataSource(this.api);
   constructor(private api: ApiService) { }
 	
 	public routerLogout() {
@@ -35,6 +36,9 @@ export class BookComponent implements OnInit {
         }
       }
     );
+    this.api.getCurrentUser().subscribe(
+      res => {console.log('user res', res); this.currentUser = res;},
+      err => {console.log('user err', err); this.currentUser = '#err#';});
   }
 
 }
